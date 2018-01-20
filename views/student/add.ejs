@@ -48,19 +48,13 @@ including header content which is common for all pages
 								</td>
 							</tr>
 							<tr>
-								<td>year</td>
-								<td>
-									<input type="text" name="year" value="<%= year %>" />
-								</td>
-							</tr>
-							<tr>
 								<td>gender</td>
 								<td>
 									<input type="text" name="gender" value="<%= gender %>" />
 								</td>
 							</tr>
 							<% for(var i=0; i<events.length; i++) {%>
-								<input type="radio" name="gender" value="male" checked>
+								<input type="checkbox" name="event" value="<%= events[i].event_name%>">
 								<%= events[i].event_name%>
 									<br>
 									<% } %>
@@ -70,8 +64,6 @@ including header content which is common for all pages
 												<input type="submit" name="Submit" value="Add" />
 											</td>
 										</tr>
-
-
 						</table>
 					</form>
 
