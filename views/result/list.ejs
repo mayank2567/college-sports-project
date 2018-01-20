@@ -1,0 +1,145 @@
+<!--
+including header content which is common for all pages
+-->
+<%- include ../layouts/header.ejs %>
+
+	<% if (messages.error) { %>
+		<p style="color:red">
+			<%- messages.error %>
+		</p>
+		<% } %>
+
+			<% if (messages.success) { %>
+				<p style="color:green">
+					<%- messages.success %>
+				</p>
+				<% } %>
+					<form action="/result" method="post" name="form">
+						<table width="25%" border="0">
+
+							<input type="hidden" name="url" value="add" />
+							<select name="event">
+								<option selected value="Select">Please Select a Event</option>
+								<% for(var i=0; i<data.length; i++) {%>
+									<option value="<%= data[i].event_name%>">
+										<%= data[i].event_name%>
+									</option>
+									<br>
+									<% } %>
+							</select>
+
+							<tr>
+								<td></td>
+								<td>
+									<input type="submit" name="Submit" value="Add" />
+								</td>
+							</tr>
+						</table>
+					</form>
+					<table style="display : <%= success %>" width='80%' border=0>
+
+						<tr style='text-align:left; background-color:#CCC'>
+							<th>ID</th>
+							<th>Event Name</th>
+							<th>First</th>
+							<th>Second</th>
+							<th>Third</th>
+							<th>Action</th>
+						</tr>
+
+						<!--
+		Using FOREACH LOOP for the students array
+		
+		myArray.forEach(function(el, index) {
+			// el - current element, i - index
+		});
+	-->
+						<% if (result) { %>
+							<% let i = 0%>
+								<% result.forEach(function(event){ %>
+
+									<tr>
+										<td>
+											<%= ++i %>
+										</td>
+										<td>
+											<%= event_name %>
+										</td>
+										<td>
+											<%= event.first %>
+										</td>
+										<td>
+											<%= event.second %>
+										</td>
+										<td>
+											<%= event.third %>
+										</td>
+										<!-- <td>
+											<div style="float:left">
+												<a href='/events/edit/<%= event.id %>'>Edit</a> &nbsp;
+												<form method="post" action="/events/delete/<%= event.id %>" style="float:right">
+													<input type="submit" name="delete" value='Delete' onClick="return confirm('Are you sure you want to delete?')" />
+													<input type="hidden" name="_method" value="DELETE" />
+												</form>
+											</div>
+										</td> -->
+									</tr>
+									<% }) %>
+										<% } %>
+
+					</table>
+					<table style="display : <%= success %>" width='80%' border=0>
+
+						<tr style='text-align:left; background-color:#CCC'>
+							<th>ID</th>
+							<th>Name</th>
+							<th>year</th>
+							<th>course</th>
+							<th>Rol no</th>
+							<th>Branch</th>
+							<th>Gender</th>
+							<th>Action</th>
+						</tr>
+
+						<!--
+								Using FOREACH LOOP for the students array
+								
+								myArray.forEach(function(el, index) {
+									// el - current element, i - index
+								});
+							-->
+						<% if (students) { %>
+							<% let i = 0%>
+								<% students.forEach(function(student){ %>
+
+									<tr>
+										<td>
+											<%= ++i %>
+										</td>
+										<td>
+											<%= student.name  %>
+										</td>
+										<td>
+											<%= student.year %>
+										</td>
+										<td>
+											<%= student.course %>
+										</td>
+										<td>
+											<%= student.rollno %>
+										</td>
+										<td>
+											<%= student.branch %>
+										</td>
+										<td>
+											<%= student.gender %>
+										</td>
+									</tr>
+									<% }) %>
+										<% } %>
+
+					</table>
+					<!--
+including footer content which is common for all pages
+-->
+					<%- include ../layouts/footer.ejs %>
