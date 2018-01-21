@@ -14,33 +14,22 @@ including header content which is common for all pages
 					<%- messages.success %>
 				</p>
 				<% } %>
-
-					<form action="/events/add" method="post" name="form1">
+					<form action="/attendance/attend" method="post" name="form">
 						<table width="25%" border="0">
-							<tr>
-								<td>Name</td>
-								<td>
-									<input type="text" name="event_name" id="event_name" value="<%= event_name %>" />
-								</td>
-							</tr>
-							<tr>
-								<td>Type</td>
-								<td>
-									<input type="text" name="event_type" value="<%= event_type %>" />
-								</td>
-							</tr>
-							<tr>
-								<td>Category</td>
-								<td>
-									<input type="text" name="event_cat" value="<%= event_cat %>" />
-								</td>
-							</tr>
-							<tr>
-								<td>gender</td>
-								<td>
-									<input type="text" name="gender" value="<%= gender %>" />
-								</td>
-							</tr>
+
+							<select name="event_id" id='eventSelect'>
+								<!-- <option value="Select">Please Select a Event</option> -->
+								<optgroup label="Select Table">
+									<option value="">Select Event</option>
+									<% if (data) { %>
+										<% data.forEach(function(row){ %>
+											<option value="<%= row.id %>">
+												<%= row.event_name %>
+											</option>
+											<% }) %>
+												<% } %>
+								</optgroup>
+							</select>
 							<tr>
 								<td></td>
 								<td>
@@ -49,7 +38,72 @@ including header content which is common for all pages
 							</tr>
 						</table>
 					</form>
+					<form action="/attendance/add" method="post" name="form">
 
+						<table style="display : <%= success %>" width='80%' border=0>
+							<tr style='text-align:left; background-color:#CCC'>
+								<th>ID</th>
+								<th>Event Name</th>
+								<th>Student Name</th>
+								<th>Roll No</th>
+								<th>Branch</th>
+								<th>Year</th>
+								<th>Gender</th>
+								<th>Attendance</th>
+							</tr>
+							<!--
+		Using FOREACH LOOP for the students array
+		
+		myArray.forEach(function(el, index) {
+			// el - current element, i - index
+		});
+	-->
+							<% if (students) { %>
+								<% let i = 0%>
+									<% students.forEach(function(student){ %>
+
+										<tr>
+
+											<% if (event_id) { %>
+												<input type="hidden" name="event_id" value="<%= event_id %>" />
+
+												<% } %>
+
+													<td>
+														<%= ++i %>
+													</td>
+													<td>
+														<%= event_name %>
+													</td>
+													<td>
+														<%= student.name %>
+													</td>
+													<td>
+														<%= student.rollno %>
+															<input type="hidden" name="rollno" value="<%= student.rollno %>" />
+													</td>
+													<td>
+														<%= student.attendence %>
+													</td>
+													<td>
+														<select name="attendence" id='attendence'>
+															<!-- <option value="Select">Please Select a Event</option> -->
+															<option "<%= (student.attendence == 'yes')?'selected':'' %>" value="yes">Yes</option>
+															<option "<%= (student.attendence == 'no' || student.attendence == '')?'selected':'' %>" value="no">No</option>
+														</select>
+
+													</td>
+										</tr>
+										<% }) %>
+											<% } %>
+												<tr>
+													<td></td>
+													<td>
+														<input type="submit" name="Submit" value="Update" />
+													</td>
+												</tr>
+						</table>
+					</form>
 					<!--
 including footer content which is common for all pages
 -->

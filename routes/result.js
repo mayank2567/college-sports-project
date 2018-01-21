@@ -31,7 +31,7 @@ app.get('/', function (req, res, next) {
 app.post('/', function (req, res, next) {
 	var students = [];
 	req.getConnection(function (error, conn) {
-		conn.query('SELECT id FROM events  where event_name = ?', req.body.event, function (err, rows, fields) {
+		conn.query('SELECT id FROM events where event_name = ?', req.body.event, function (err, rows, fields) {
 			conn.query('SELECT * FROM result where event_id = ' + parseInt(rows[0].id), function (err, rows, fields) {
 				conn.query('SELECT rollno FROM event_student where event_id = ' + parseInt(rows[0].id), function (err, student_rollno, fields) {
 					debugger

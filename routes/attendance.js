@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 
+var events;
 // SHOW LIST OF events
 app.get('/', function (req, res, next) {
 	req.getConnection(function (error, conn) {
@@ -8,39 +9,177 @@ app.get('/', function (req, res, next) {
 			//if(err) throw err
 			if (err) {
 				req.flash('error', err)
-				res.render('event/list', {
-					title: 'event List',
+				res.render('attendance/list', {
+					title: 'Select Event',
 					data: ''
 				})
 			} else {
-				// render to views/event/list.ejs template file
-				res.render('event/list', {
-					title: 'event List',
-					data: rows
-				})
+				events = rows;
+				// render to views/student/list.ejs template file
+				res.render('attendance/list', {
+					title: 'Select Event',
+					data: rows,
+					success: 'none',
+					result: '',
+					students: '',
+					attendance: ''
+				});
 			}
-		})
-	})
-})
+		});
+	});
+});
+
+app.post('/', function (req, res, next) {
+	req.getConnection(function (error, conn) {
+		conn.query('SELECT * FROM event_student where event_id = ' + parseInt(req.body.event_id), function (err, rows, fields) {
+			let sql = 'SELECT * FROM students WHERE';
+			if (rows.length == 0) {
+				res.render('attendance/list', {
+					title: 'No Item Found',
+					data: events,
+					success: 'none',
+					attendance: '',
+					event_name: '',
+					students: ''
+				});
+				return;
+			}
+			for (let i = 0; i < rows.length; i++) {
+				sql = sql + ' rollno = ' + parseInt(rows[i].rollno);
+				if (i < rows.length - 1)
+					sql += ' or ';
+			}
+
+			conn.query(sql, function (err, student, fields) {
+				for (let i = 0; i < student.length; i++) {
+					for (let j = 0; j < rows.length; j++) {
+						if (student[i].rollno == rows[j].rollno) {
+
+							student[i].attendence = rows[j].attendence;
+						}
+					}
+				}
+				debugger
+				if (err) {
+					req.flash('error', err)
+					res.render('attendance/list', {
+						title: 'Select Event',
+						data: '',
+						success: 'node',
+						attendance: '',
+						event_name: '',
+						students: ''
+					})
+				} else {
+					// render to views/student/list.ejs template file
+					res.render('attendance/list', {
+						title: 'Select Event',
+						data: events,
+						success: 'block',
+						attendance: rows,
+						event_name: '',
+						bool: '',
+						students: student
+					});
+				}
+			});
+
+
+		});
+	});
+});
+
+app.post('/attend', function (req, res, next) {
+	req.getConnection(function (error, conn) {
+		conn.query('SELECT * FROM event_student where event_id = ' + parseInt(req.body.event_id), function (err, rows, fields) {
+			let sql = 'SELECT * FROM students WHERE';
+			if (rows.length == 0) {
+				res.render('attendance/list', {
+					title: 'No Item Found',
+					data: events,
+					success: 'none',
+					attendance: '',
+					event_name: '',
+					students: ''
+				});
+				return;
+			}
+			for (let i = 0; i < rows.length; i++) {
+				sql = sql + ' rollno = ' + parseInt(rows[i].rollno);
+				if (i < rows.length - 1)
+					sql += ' or ';
+			}
+
+			conn.query(sql, function (err, student, fields) {
+				for (let i = 0; i < student.length; i++) {
+					for (let j = 0; j < rows.length; j++) {
+						if (student[i].rollno == rows[j].rollno) {
+
+							student[i].attendence = rows[j].attendence;
+						}
+					}
+				}
+				if (err) {
+					req.flash('error', err)
+					res.render('attendance/add', {
+						title: 'Select Event',
+						data: '',
+						success: 'node',
+						attendance: '',
+						event_name: '',
+						students: ''
+					})
+				} else {
+					// render to views/student/list.ejs template file
+					debugger
+					res.render('attendance/add', {
+						title: 'Select Event',
+						data: events,
+						success: 'block',
+						attendance: rows,
+						event_name: '',
+						event_id: req.body.event_id,
+						students: student
+					});
+				}
+			});
+
+
+		});
+	});
+});
+
+
 
 // SHOW ADD event FORM
 app.get('/add', function (req, res, next) {
-	// render to views/event/add.ejs
-	res.render('event/add', {
-		title: 'Add New event',
-		event_name: '',
-		event_type: '',
-		gender: '',
-		event_cat: ''
-	})
+	req.getConnection(function (error, conn) {
+		conn.query('SELECT * FROM events ORDER BY id DESC', function (err, rows, fields) {
+			//if(err) throw err
+			if (err) {
+				req.flash('error', err)
+				res.render('attendance/add', {
+					title: 'Select Event',
+					data: ''
+				})
+			} else {
+				events = rows;
+				// render to views/student/list.ejs template file
+				res.render('attendance/add', {
+					title: 'Select Event',
+					data: rows,
+					success: 'none',
+					result: '',
+					students: '',
+					attendance: ''
+				});
+			}
+		});
+	});
 })
 
 // ADD NEW event POST ACTION
 app.post('/add', function (req, res, next) {
-	req.assert('event_name', 'Name is required').notEmpty() //Validate name
-	req.assert('event_cat', 'year is required').notEmpty() //Validate year
-	req.assert('event_type', 'A valid course is required').notEmpty() //Validate course
-	req.assert('gender', 'gender is required').notEmpty()
 	var errors = req.validationErrors()
 
 	if (!errors) { //No errors were found.  Passed Validation!
@@ -54,61 +193,28 @@ app.post('/add', function (req, res, next) {
 		req.sanitize('comment').escape(); // returns 'a &lt;span&gt;comment&lt;/span&gt;'
 		req.sanitize('username').trim(); // returns 'a event'
 		********************************************/
-		var event = {
-			event_name: req.sanitize('event_name').escape().trim(),
-			event_type: req.sanitize('event_type').escape().trim(),
-			event_cat: req.sanitize('event_cat').escape().trim(),
-			gender: req.sanitize('gender').escape().trim()
-		}
+		debugger;
 
+		let attendance = {};
 		req.getConnection(function (error, conn) {
-			conn.query('INSERT INTO events SET ?', event, function (err, result) {
-				//if(err) throw err
-				if (err) {
-					req.flash('error', err)
+			for (let i = 0; i < req.body.rollno.length; i++) {
+				debugger
+				conn.query('UPDATE event_student SET attendence = ? WHERE rollno = ? and event_id = ?', [req.body.attendence[i], parseInt(req.body.rollno[i]), req.body.event_id[0]], function (err, result) {
+					if (err) {
+						req.flash('error', err)
 
-					// render to views/event/add.ejs
-					res.render('event/add', {
-						title: 'Add New event',
-						event_name: event.event_name,
-						event_type: event.event_type,
-						event_cat: event.event_cat,
-						gender: event.gender
-					})
-				} else {
-					req.flash('success', 'Data added successfully!')
+						// render to views/event/add.ejs
+						res.redirect('/add');
+						// return;
+					}
+				});
 
-					// render to views/event/add.ejs
-					res.render('event/add', {
-						title: 'Add New event',
-						event_name: '',
-						event_type: '',
-						gender: '',
-						event_cat: ''
-					})
-				}
-			})
-		})
-	} else { //Display errors to event
-		var error_msg = ''
-		errors.forEach(function (error) {
-			error_msg += error.msg + '<br>'
-		})
-		req.flash('error', error_msg)
-
-		/**
-		 * Using req.body.name 
-		 * because req.param('name') is deprecated
-		 */
-		res.render('event/add', {
-			title: 'Add New event',
-			event_name: req.body.event_name,
-			event_type: req.body.event_type,
-			event_cat: req.body.event_cat,
-			gender: req.body.gender
+			}
+			req.flash('success', 'Updated Attendence');
+			res.redirect('add');
 		})
 	}
-})
+});
 
 // SHOW EDIT event FORM
 app.get('/edit/(:id)', function (req, res, next) {

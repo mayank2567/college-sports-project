@@ -14,18 +14,42 @@ including header content which is common for all pages
 					<%- messages.success %>
 				</p>
 				<% } %>
+					<form action="/attendance" method="post" name="form">
+						<table width="25%" border="0">
 
-					<table width='80%' border=0>
+							<select name="event_id" id='eventSelect'>
+								<!-- <option value="Select">Please Select a Event</option> -->
+								<optgroup label="Select Table">
+									<option value="">Select Event</option>
+									<% if (data) { %>
+										<% data.forEach(function(row){ %>
+											<option value="<%= row.id %>">
+												<%= row.event_name %>
+											</option>
+											<% }) %>
+												<% } %>
+								</optgroup>
+							</select>
+							<tr>
+								<td></td>
+								<td>
+									<input type="submit" name="Submit" value="Add" />
+								</td>
+							</tr>
+						</table>
+					</form>
 
+					<table style="display : <%= success %>" width='80%' border=0>
 						<tr style='text-align:left; background-color:#CCC'>
 							<th>ID</th>
-							<th>Event Type</th>
 							<th>Event Name</th>
+							<th>Student Name</th>
+							<th>Roll No</th>
+							<th>Branch</th>
+							<th>Year</th>
 							<th>Gender</th>
-							<th>Event Category</th>
-							<th>Action</th>
+							<th>Attendance</th>
 						</tr>
-
 						<!--
 		Using FOREACH LOOP for the students array
 		
@@ -33,35 +57,27 @@ including header content which is common for all pages
 			// el - current element, i - index
 		});
 	-->
-						<% if (data) { %>
+						<% if (students) { %>
 							<% let i = 0%>
-								<% data.forEach(function(event){ %>
+								<% students.forEach(function(student){ %>
 
 									<tr>
 										<td>
 											<%= ++i %>
 										</td>
 										<td>
-											<%= event.event_type %>
+											<%= event_name %>
 										</td>
 										<td>
-											<%= event.event_name %>
+											<%= student.name %>
 										</td>
 										<td>
-											<%= event.gender %>
+											<%= student.rollno %>
 										</td>
 										<td>
-											<%= event.event_cat %>
+											<%= student.attendence %>
 										</td>
-										<td>
-											<div style="float:left">
-												<a href='/events/edit/<%= event.id %>'>Edit</a> &nbsp;
-												<form method="post" action="/events/delete/<%= event.id %>" style="float:right">
-													<input type="submit" name="delete" value='Delete' onClick="return confirm('Are you sure you want to delete?')" />
-													<input type="hidden" name="_method" value="DELETE" />
-												</form>
-											</div>
-										</td>
+
 									</tr>
 									<% }) %>
 										<% } %>

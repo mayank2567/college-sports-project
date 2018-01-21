@@ -2,7 +2,7 @@
 including header content which is common for all pages
 -->
 <%- include ../layouts/header.ejs %>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	
 
 	<% if (messages.error) { %>
 		<p style="color:red">
@@ -22,7 +22,7 @@ including header content which is common for all pages
 								<select name="event_id" id='eventSelect'>
 									<!-- <option value="Select">Please Select a Event</option> -->
 									<optgroup label="Select Table">
-										<option value="">Select Month Year</option>
+										<option value="">Select Event</option>
 										<% data.forEach(function(row){ %>
 											<option value="<%= row.id %>">
 												<%= row.event_name %>
