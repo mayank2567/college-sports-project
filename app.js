@@ -4,7 +4,7 @@ var morgan = require('morgan');
 app.use(morgan('dev'));
 
 
-
+app.use('/assets', express.static(__dirname + '/views/assets/'));
 var mysql = require('mysql')
 
 /**
