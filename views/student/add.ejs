@@ -14,188 +14,65 @@ including header content which is common for all pages
 					<%- messages.success %>
 				</p>
 				<% } %>
-				<!DOCTYPE html>
-<html lang="en">
-<head>
-	<!-- Meta tags -->
-	<title>Registration</title>
-	<meta name="keywords" content="Appoint My Doctor Form Responsive widget, Flat Web Templates, Android Compatible web template, 
-	Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- stylesheets -->
-	<link rel="stylesheet" href="/assets/css/datastyle.css">
-	<link rel="stylesheet" href="/assets/css/font-awesome.html">
-	<!-- google fonts  -->
-	<link href="/assets/googlefonts/googlefonts.css" rel="stylesheet">
-	<link href="/assets/googlefonts/googlefonts.css" rel="stylesheet">
-</head>
-<body>
-	<div class="w3ls-banner">
-	<div class="heading">
-				<h1>Students Registration</h1>
-	</div>
-		<div class="container">
-			<div class="heading">
-				<h2>Please Enter Details</h2>
-			</div>
-		
-		
-			<div class="agile-form">
-				<form action="" method="post">
-					<ul class="field-list">
-						<li>
-							<label class="form-label"> 
-								Full Name 
-								<span class="form-required"> * </span>
-							</label>
-							<div class="form-input">
-								<input type="text" name="student_name" placeholder="Enter Students Name" required >
-							</div>
-						</li>
-						<li>
-							<label class="form-label">
-							   Gender
-							   <span class="form-required"> * </span>
-							</label>
-							<div class="form-input">
-							    <label for="m">Male</label>
-								<input type="radio" name="gender" value="Male" id="m">
-                                &nbsp;&nbsp;&nbsp;
-							    <label for="f">Female</label>
-								<input type="radio" name="gender" value="Female" id="f">
-							</div>
-						<li>
-						<li> 
-							<label class="form-label">
-							   University Roll NO.
-							   <span class="form-required"> * </span>
-							</label>
-							<div class="form-input">
-								<input type="text" name="roll_number" placeholder="University Roll Number" required >
-							</div>
-						</li>
-						<li>
-							<label class="form-label">
-							   Course
-							   <span class="form-required"> * </span>
-							</label>
-							<div class="form-input">
-								<span class="form-sub-label">
-									<select name="course" required>
-										<option disabled="true" selected>Select Course</option>
-										<option value="B.Tech"> B.Tech </option>
-										<option value="MCA"> MCA </option>
-										<option value="M.Tech"> M.Tech </option>
-										<option value="MBA"> MBA </option>
-										
-									</select>
-							
-							</div>
-						</li>
+					<!DOCTYPE html>
 
-                             <li>
-							<label class="form-label">
-							   Branch
-							   <span class="form-required"> * </span>
-							</label>
-							<div class="form-input">
-								<span class="form-sub-label">
-									<select name="course" required>
-										<option disabled="true" selected>Select Branch</option>
-										<option value="B.Tech">Applied Science </option>
-										
-									</select>
-							
-							</div>
-						</li>
-						<li>
-							<label class="form-label">
-							   Year
-							   <span class="form-required"> * </span>
-							</label>
-							<div class="form-input">
-								<span class="form-sub-label">
-									<select name="course" required>
-										<option disabled="true" selected>Select Year</option>
-										<option value="B.Tech">First Year</option>
-										
-									</select>
-							
-							</div>
-						</li>
+					<body style="padding-top:6cm">
+						<form action="/students/add" method="post" name="form1">
+							<table width="25%" border="0">
+								<tr>
+									<td>Name</td>
+									<td>
+										<input type="text" name="name" id="name" value="<%= name %>" />
+									</td>
+								</tr>
+								<tr>
+									<td>year</td>
+									<td>
+										<input type="text" name="year" value="<%= year %>" />
+									</td>
+								</tr>
+								<tr>
+									<td>course</td>
+									<td>
+										<input type="text" name="course" value="<%= course %>" />
+									</td>
+								</tr>
+								<tr>
+									<td>roll no</td>
+									<td>
+										<input type="text" name="rollno" value="<%= rollno %>" />
+									</td>
+								</tr>
+								<tr>
+									<td>branch</td>
+									<td>
+										<input type="text" name="branch" value="<%= branch %>" />
+									</td>
+								</tr>
+								<tr>
+									<td>gender</td>
+									<td>
+										<input type="text" name="gender" value="<%= gender %>" />
+									</td>
+								</tr>
+								<% for(var i=0; i<events.length; i++) {%>
+									<input type="checkbox" name="event" value="<%= events[i].event_name%>">
+									<%= events[i].event_name%>
+										<br>
+										<% } %>
+											<tr>
+												<td></td>
+												<td>
+													<input type="submit" name="Submit" value="Add" />
+												</td>
+											</tr>
+							</table>
+						</form>
+					</body>
 
 
-					
-					
-						
-						
-					</ul>
-					<input type="submit" value="Registration">
-				</form>	
-			</div>
-		</div>
-	</div>
-</body>
-</html> 
-				<body style="padding-top:6cm">
-					<form action="/students/add" method="post" name="form1">
-						<table width="25%" border="0">
-							<tr>
-								<td>Name</td>
-								<td>
-									<input type="text" name="name" id="name" value="<%= name %>" />
-								</td>
-							</tr>
-							<tr>
-								<td>year</td>
-								<td>
-									<input type="text" name="year" value="<%= year %>" />
-								</td>
-							</tr>
-							<tr>
-								<td>course</td>
-								<td>
-									<input type="text" name="course" value="<%= course %>" />
-								</td>
-							</tr>
-							<tr>
-								<td>roll no</td>
-								<td>
-									<input type="text" name="rollno" value="<%= rollno %>" />
-								</td>
-							</tr>
-							<tr>
-								<td>branch</td>
-								<td>
-									<input type="text" name="branch" value="<%= branch %>" />
-								</td>
-							</tr>
-							<tr>
-								<td>gender</td>
-								<td>
-									<input type="text" name="gender" value="<%= gender %>" />
-								</td>
-							</tr>
-							<% for(var i=0; i<events.length; i++) {%>
-								<input type="checkbox" name="event" value="<%= events[i].event_name%>">
-								<%= events[i].event_name%>
-									<br>
-									<% } %>
-										<tr>
-											<td></td>
-											<td>
-												<input type="submit" name="Submit" value="Add" />
-											</td>
-										</tr>
-						</table>
-					</form>
-				</body>
-						
-					
 
-					
+
 
 					<!--
 including footer content which is common for all pages
