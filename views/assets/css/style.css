@@ -951,6 +951,9 @@ body.mobile-nav-active #mobile-nav-toggle {
   background: #343b40;
   padding: 30px 0;
   color: #fff;
+  bottom: 0px;
+  position: 100vh;
+  width: 100%;
   font-size: 14px;
 }
 
