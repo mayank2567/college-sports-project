@@ -28,7 +28,6 @@ app.get('/add', function (req, res, next) {
 
 	req.getConnection(function (error, conn) {
 		conn.query('SELECT * FROM events ', function (err, rows, fields) {
-			debugger
 			// render to views/student/add.ejs
 			res.render('student/add', {
 				title: 'Add New student',
@@ -73,8 +72,10 @@ app.post('/add', function (req, res, next) {
 			gender: req.sanitize('gender').escape().trim(),
 			branch: req.sanitize('branch').escape().trim()
 		}
-
+		var event = [];
 		req.getConnection(function (error, conn) {
+
+
 			conn.query('INSERT INTO students SET ?', student, function (err, result) {
 				//if(err) throw err
 				if (err) {
@@ -91,18 +92,25 @@ app.post('/add', function (req, res, next) {
 						branch: student.branch
 					})
 				} else {
+					for (let i = 0; i < req.body.event.length; i++) {
+						let currEvent = [];
+						currEvent.push(req.body.event[i]);
+						conn.query('SELECT id from events where event_name = ?', currEvent, function (err, rows, fields) {
+							let entry = {
+								rollno: parseInt(student.rollno),
+								event_id: rows[0].id
+							};
+							conn.query('INSERT INTO event_student SET ?', entry, function (err, result) {
+							});		
+						});
+					}
+
+					
+					
 					req.flash('success', 'Data added successfully!')
 
 					// render to views/student/add.ejs
-					res.render('student/add', {
-						title: 'Add New student',
-						name: '',
-						year: '',
-						course: '',
-						rollno: '',
-						gender: '',
-						branch: ''
-					})
+					res.redirect('/students');
 				}
 			})
 		})
@@ -124,7 +132,8 @@ app.post('/add', function (req, res, next) {
 			course: req.body.course,
 			rollno: req.body.rollno,
 			gender: req.body.gender,
-			branch: req.body.branch
+			branch: req.body.branch,
+			event: ''
 		})
 	}
 })
