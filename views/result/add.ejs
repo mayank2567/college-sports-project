@@ -1,0 +1,55 @@
+<!--
+including header content which is common for all pages
+-->
+<%- include ../layouts/header.ejs %>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+	<% if (messages.error) { %>
+		<p style="color:red">
+			<%- messages.error %>
+		</p>
+		<% } %>
+
+			<% if (messages.success) { %>
+				<p style="color:green">
+					<%- messages.success %>
+				</p>
+				<% } %>
+					<form action="/result/add" method="post" name="form">
+						<table width="25%" border="0">
+							<% if (data) { %>
+
+								<select name="event_id" id='eventSelect'>
+									<!-- <option value="Select">Please Select a Event</option> -->
+									<optgroup label="Select Table">
+										<option value="">Select Month Year</option>
+										<% data.forEach(function(row){ %>
+											<option value="<%= row.id %>">
+												<%= row.event_name %>
+											</option>
+											<% }) %>
+									</optgroup>
+								</select>
+								<% } %>
+
+									<tr>
+										<td>
+											<input type="text" name="first" />
+										</td>
+										<td>
+											<input type="text" name="second" />
+										</td>
+										<td>
+											<input type="text" name="third" />
+										</td>
+										<td>
+											<input type="submit" name="Submit" value="Add" />
+										</td>
+									</tr>
+						</table>
+					</form>
+
+					<!--
+including footer content which is common for all pages
+-->
+					<%- include ../layouts/footer.ejs %>
