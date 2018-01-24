@@ -5,13 +5,13 @@ including header content which is common for all pages
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 	<% if (messages.error) { %>
-		<p style="color:red">
+		<p class="alert alert-danger">
 			<%- messages.error %>
 		</p>
 		<% } %>
 
 			<% if (messages.success) { %>
-				<p style="color:green">
+				<p class="alert alert-success">
 					<%- messages.success %>
 				</p>
 				<% } %>
