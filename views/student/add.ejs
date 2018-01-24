@@ -16,7 +16,40 @@ including header content which is common for all pages
 				<% } %>
 					<!DOCTYPE html>
 
+					<head>
+						<link href="/assets/css/formstyle.css" rel="stylesheet">
+					</head>
+
 					<body style="padding-top:6cm">
+						<div id="k1">
+							<form action="">
+								<label for="name">Name</label>
+								<input type="text" id="name" name="name" placeholder="Your name.." value="<%= name %>">
+
+								<label for="year">Year</label>
+								<input type="text" id="year" name="year" placeholder="Year.." value="<%= year %>">
+
+								<label for="course">Course</label>
+								<input type="text" id="course" name="course" value="<%= course %>">
+
+								<label for="rollno">Roll No.</label>
+								<input type="text" id="rollno" name="rollno" placeholder="Roll No.." value="<%= rollno %>">
+
+								<label for="branch">Branch</label>
+								<input type="text" id="branch" name="branch" value="<%= branch %>">
+
+
+
+								<label for="country">Country</label>
+								<select id="country" name="country">
+									<option value="australia">Australia</option>
+									<option value="canada">Canada</option>
+									<option value="usa">USA</option>
+								</select>
+
+								<input type="submit" value="Submit">
+							</form>
+						</div>
 						<form action="/students/add" method="post" name="form1">
 							<table width="25%" border="0">
 								<tr>
