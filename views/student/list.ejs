@@ -3,62 +3,171 @@ including header content which is common for all pages
 -->
 <%- include ../layouts/header.ejs %>
 
-<% if (messages.error) { %>
-	<p style="color:red"><%- messages.error %></p>
-<% } %>
+	<% if (messages.error) { %>
+		<p class="alert alert-danger">
+			<%- messages.error %>
+		</p>
+		<% } %>
 
-<% if (messages.success) { %>
-	<p style="color:green"><%- messages.success %></p>
-<% } %>	
+			<% if (messages.success) { %>
+				<p class="alert alert-success">
+					<%- messages.success %>
+				</p>
+				<% } %>
+					<div style="padding-top:300px">
+						<table width='80%' border=0>
 
-<table width='80%' border=0>
+							<tr style='text-align:left; background-color:#CCC'>
+								<th>ID</th>
+								<th>Name</th>
+								<th>year</th>
+								<th>course</th>
+								<th>Rol no</th>
+								<th>Branch</th>
+								<th>Gender</th>
+								<th>Action</th>
+							</tr>
 
-	<tr style='text-align:left; background-color:#CCC'>
-		<th>ID</th>
-		<th>Name</th>
-		<th>year</th>
-		<th>course</th>
-		<th>Rol no</th>
-		<th>Branch</th>
-		<th>Gender</th>
-		<th>Action</th>
-	</tr>
-	
-	<!--
+							<!--
 		Using FOREACH LOOP for the students array
 		
 		myArray.forEach(function(el, index) {
 			// el - current element, i - index
 		});
 	-->
-	<% if (data) { %>
-	<% let i = 0%>
-	<% data.forEach(function(student){ %>
-	
-		<tr>
-			<td><%= ++i %></td>
-			<td><%= student.name %></td>
-			<td><%= student.year %></td>
-			<td><%= student.course %></td>
-			<td><%= student.rollno %></td>
-			<td><%= student.branch %></td>
-			<td><%= student.gender %></td>
-			<td>
-				<div style="float:left">
-					<a href='/students/edit/<%= student.id %>'>Edit</a> &nbsp;							
-					<form method="post" action="/students/delete/<%= student.id %>" style="float:right">
-						<input type="submit" name="delete" value='Delete' onClick="return confirm('Are you sure you want to delete?')" />
-						<input type="hidden" name="_method" value="DELETE" />
-					</form>
-				</div>
-			</td>
-		</tr>
-	<% }) %>
-	<% } %>
+							<% if (data) { %>
+								<% let i = 0%>
+									<% data.forEach(function(student){ %>
 
-</table>
+										<tr>
+											<td>
+												<%= ++i %>
+											</td>
+											<td>
+												<%= student.name %>
+											</td>
+											<td>
+												<%= student.year %>
+											</td>
+											<td>
+												<%= student.course %>
+											</td>
+											<td>
+												<%= student.rollno %>
+											</td>
+											<td>
+												<%= student.branch %>
+											</td>
+											<td>
+												<%= student.gender %>
+											</td>
+											<td>
+												<div style="float:left">
+													<a href='/students/edit/<%= student.id %>'>Edit</a> &nbsp;
+													<form method="post" action="/students/delete/<%= student.id %>" style="float:right">
+														<input type="submit" name="delete" value='Delete' onClick="return confirm('Are you sure you want to delete?')" />
+														<input type="hidden" name="_method" value="DELETE" />
+													</form>
+												</div>
+											</td>
+										</tr>
+										<% }) %>
+											<% } %>
 
-<!--
+						</table>
+						<table id="myTable">
+							<thead>
+								<tr>
+									<th>ENO</th>
+									<th>EMPName</th>
+									<th>Country</th>
+									<th>Salary</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>001</td>
+									<td>Anusha</td>
+									<td>India</td>
+									<td>10000</td>
+								</tr>
+								<tr>
+									<td>002</td>
+									<td>Charles</td>
+									<td>United Kingdom</td>
+									<td>28000</td>
+								</tr>
+								<tr>
+									<td>003</td>
+									<td>Sravani</td>
+									<td>Australia</td>
+									<td>7000</td>
+								</tr>
+								<tr>
+									<td>004</td>
+									<td>Amar</td>
+									<td>India</td>
+									<td>18000</td>
+								</tr>
+								<tr>
+									<td>005</td>
+									<td>Lakshmi</td>
+									<td>India</td>
+									<td>12000</td>
+								</tr>
+								<tr>
+									<td>006</td>
+									<td>James</td>
+									<td>Canada</td>
+									<td>50000</td>
+								</tr>
+
+								<tr>
+									<td>007</td>
+									<td>Ronald</td>
+									<td>US</td>
+									<td>75000</td>
+								</tr>
+								<tr>
+									<td>008</td>
+									<td>Mike</td>
+									<td>Belgium</td>
+									<td>100000</td>
+								</tr>
+								<tr>
+									<td>009</td>
+									<td>Andrew</td>
+									<td>Argentina</td>
+									<td>45000</td>
+								</tr>
+
+								<tr>
+									<td>010</td>
+									<td>Stephen</td>
+									<td>Austria</td>
+									<td>30000</td>
+								</tr>
+								<tr>
+									<td>011</td>
+									<td>Sara</td>
+									<td>China</td>
+									<td>750000</td>
+								</tr>
+								<tr>
+									<td>012</td>
+									<td>JonRoot</td>
+									<td>Argentina</td>
+									<td>65000</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<script>
+						$(document).ready(function () {
+							$('#myTable').dataTable();
+						});
+					</script>
+					<!--
 including footer content which is common for all pages
 -->
-<%- include ../layouts/footer.ejs %>
+					<%- include ../layouts/footer.ejs %>

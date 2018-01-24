@@ -4,19 +4,19 @@ including header content which is common for all pages
 <%- include ../layouts/header.ejs %>
 
 	<% if (messages.error) { %>
-		<p style="color:red">
+		<p class="alert alert-danger">
 			<%- messages.error %>
 		</p>
 		<% } %>
 
 			<% if (messages.success) { %>
-				<p style="color:green">
+				<p class="alert alert-success">
 					<%- messages.success %>
 				</p>
 				<% } %>
 					<!DOCTYPE html>
 
-					<body style="padding-top:6cm">
+					<div style="padding-top:6cm">
 						<form action="/students/add" method="post" name="form1">
 							<table width="25%" border="0">
 								<tr>
@@ -68,7 +68,7 @@ including header content which is common for all pages
 											</tr>
 							</table>
 						</form>
-					</body>
+					</div>
 
 
 
