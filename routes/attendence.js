@@ -4,18 +4,18 @@ var app = express();
 // SHOW LIST OF events
 app.get('/', function (req, res, next) {
 	req.getConnection(function (error, conn) {
-		conn.query('SELECT * FROM events ORDER BY id DESC', function (err, rows, fields) {
+		conn.query('SELECT * FROM attendence ORDER BY id DESC', function (err, rows, fields) {
 			//if(err) throw err
 			if (err) {
 				req.flash('error', err)
-				res.render('event/list', {
-					title: 'event List',
+				res.render('attendence/list', {
+					title: 'attendence List',
 					data: ''
 				})
 			} else {
-				// render to views/event/list.ejs template file
-				res.render('event/list', {
-					title: 'event List',
+				// render to views/attendence/list.ejs template file
+				res.render('attendence/list', {
+					title: 'attendence List',
 					data: rows
 				})
 			}
@@ -26,7 +26,7 @@ app.get('/', function (req, res, next) {
 // SHOW ADD event FORM
 app.get('/add', function (req, res, next) {
 	// render to views/event/add.ejs
-	res.render('event/add', {
+	res.render('attendence/add', {
 		title: 'Add New event',
 		event_name: '',
 		event_type: '',
@@ -62,7 +62,7 @@ app.post('/add', function (req, res, next) {
 		}
 
 		req.getConnection(function (error, conn) {
-			conn.query('INSERT INTO events SET ?', event, function (err, result) {
+			conn.query('INSERT INTO attendence SET ?', event, function (err, result) {
 				//if(err) throw err
 				if (err) {
 					req.flash('error', err)
@@ -79,7 +79,7 @@ app.post('/add', function (req, res, next) {
 					req.flash('success', 'Data added successfully!')
 
 					// render to views/event/add.ejs
-					res.render('event/add', {
+					res.render('attendence/add', {
 						title: 'Add New event',
 						event_name: '',
 						event_type: '',
@@ -100,7 +100,7 @@ app.post('/add', function (req, res, next) {
 		 * Using req.body.name 
 		 * because req.param('name') is deprecated
 		 */
-		res.render('event/add', {
+		res.render('attendence/add', {
 			title: 'Add New event',
 			event_name: req.body.event_name,
 			event_type: req.body.event_type,
@@ -182,7 +182,7 @@ app.put('/edit/(:id)', function (req, res, next) {
 					req.flash('success', 'Data updated successfully!')
 
 					// render to views/event/add.ejs
-					res.render('event/edit', {
+					res.render('attendence/edit', {
 						title: 'Edit event',
 						id: req.params.id,
 						event_name: req.body.event_name,
@@ -204,7 +204,7 @@ app.put('/edit/(:id)', function (req, res, next) {
 		 * Using req.body.name 
 		 * because req.param('name') is deprecated
 		 */
-		res.render('event/edit', {
+		res.render('attendence/edit', {
 			title: 'Edit event',
 			id: req.params.id,
 			event_name: req.body.event_name,

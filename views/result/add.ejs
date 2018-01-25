@@ -15,6 +15,41 @@ including header content which is common for all pages
 					<%- messages.success %>
 				</p>
 				<% } %>
+
+					<head>
+						<link href="/assets/css/formstyle.css" rel="stylesheet">
+					</head>
+
+					<div id="k1">
+						<form action="">
+							<% if (data) { %>
+
+								<select name="event_id" id='eventSelect'>
+									<!-- <option value="Select">Please Select a Event</option> -->
+									<optgroup label="Select Table">
+										<option value="">Select Month Year</option>
+										<% data.forEach(function(row){ %>
+											<option value="<%= row.id %>">
+												<%= row.event_name %>
+											</option>
+											<% }) %>
+									</optgroup>
+								</select>
+								<% } %>
+
+									<label for="first">First</label>
+									<input type="text" id="first" name="first">
+
+									<label for="second">Second</label>
+									<input type="text" id="second" name="second">
+
+									<label for="third">Third</label>
+									<input type="text" id="third" name="third">
+
+									<input type="submit" value="Submit">
+						</form>
+					</div>
+
 					<form action="/result/add" method="post" name="form">
 						<table width="25%" border="0">
 							<% if (data) { %>

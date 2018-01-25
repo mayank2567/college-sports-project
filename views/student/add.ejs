@@ -20,94 +20,95 @@ including header content which is common for all pages
 						<link href="/assets/css/formstyle.css" rel="stylesheet">
 					</head>
 
-					<body style="padding-top:6cm">
-						<div id="k1">
-							<form action="">
-								<label for="name">Name</label>
-								<input type="text" id="name" name="name" placeholder="Your name.." value="<%= name %>">
 
-								<label for="year">Year</label>
-								<input type="text" id="year" name="year" placeholder="Year.." value="<%= year %>">
+					<div id="k1">
+						<form action="">
+							<label for="name">Name</label>
+							<input type="text" id="name" name="name" placeholder="Your name.." value="<%= name %>">
 
-								<label for="course">Course</label>
-								<input type="text" id="course" name="course" value="<%= course %>">
+							<label for="year">Year</label>
+							<input type="text" id="year" name="year" placeholder="Year.." value="<%= year %>">
 
-								<label for="rollno">Roll No.</label>
-								<input type="text" id="rollno" name="rollno" placeholder="Roll No.." value="<%= rollno %>">
+							<label for="course">Course</label>
+							<input type="text" id="course" name="course" value="<%= course %>">
 
-								<label for="branch">Branch</label>
-								<input type="text" id="branch" name="branch" value="<%= branch %>">
+							<label for="rollno">Roll No.</label>
+							<input type="text" id="rollno" name="rollno" placeholder="Roll No.." value="<%= rollno %>">
+
+							<label for="branch">Branch</label>
+							<input type="text" id="branch" name="branch" value="<%= branch %>">
 
 
 
-								<label for="country">Country</label>
-								<select id="country" name="country">
-									<option value="australia">Australia</option>
-									<option value="canada">Canada</option>
-									<option value="usa">USA</option>
-								</select>
+							<label for="gender">gender</label>
+							<input type="text" id="gender" name="gender" value="<%= gender %>">
 
-								<input type="submit" value="Submit">
-							</form>
-						</div>
-						<form action="/students/add" method="post" name="form1">
-							<table width="25%" border="0">
-								<tr>
-									<td>Name</td>
-									<td>
-										<input type="text" name="name" id="name" value="<%= name %>" />
-									</td>
-								</tr>
-								<tr>
-									<td>year</td>
-									<td>
-										<input type="text" name="year" value="<%= year %>" />
-									</td>
-								</tr>
-								<tr>
-									<td>course</td>
-									<td>
-										<input type="text" name="course" value="<%= course %>" />
-									</td>
-								</tr>
-								<tr>
-									<td>roll no</td>
-									<td>
-										<input type="text" name="rollno" value="<%= rollno %>" />
-									</td>
-								</tr>
-								<tr>
-									<td>branch</td>
-									<td>
-										<input type="text" name="branch" value="<%= branch %>" />
-									</td>
-								</tr>
-								<tr>
-									<td>gender</td>
-									<td>
-										<input type="text" name="gender" value="<%= gender %>" />
-									</td>
-								</tr>
-								<% for(var i=0; i<events.length; i++) {%>
-									<input type="checkbox" name="event" value="<%= events[i].event_name%>">
-									<%= events[i].event_name%>
-										<br>
-										<% } %>
-											<tr>
-												<td></td>
-												<td>
-													<input type="submit" name="Submit" value="Add" />
-												</td>
-											</tr>
-							</table>
+							<% for(var i=0; i<events.length; i++) {%>
+								<input type="checkbox" name="event" value="<%= events[i].event_name%>">
+								<%= events[i].event_name%>
+									<br>
+									<% } %>
+										<input type="submit" value="Submit">
 						</form>
-						</div>
+					</div>
+					<form action="/students/add" method="post" name="form1">
+						<table width="25%" border="0">
+							<tr>
+								<td>Name</td>
+								<td>
+									<input type="text" name="name" id="name" value="<%= name %>" />
+								</td>
+							</tr>
+							<tr>
+								<td>year</td>
+								<td>
+									<input type="text" name="year" value="<%= year %>" />
+								</td>
+							</tr>
+							<tr>
+								<td>course</td>
+								<td>
+									<input type="text" name="course" value="<%= course %>" />
+								</td>
+							</tr>
+							<tr>
+								<td>roll no</td>
+								<td>
+									<input type="text" name="rollno" value="<%= rollno %>" />
+								</td>
+							</tr>
+							<tr>
+								<td>branch</td>
+								<td>
+									<input type="text" name="branch" value="<%= branch %>" />
+								</td>
+							</tr>
+							<tr>
+								<td>gender</td>
+								<td>
+									<input type="text" name="gender" value="<%= gender %>" />
+								</td>
+							</tr>
+							<% for(var i=0; i<events.length; i++) {%>
+								<input type="checkbox" name="event" value="<%= events[i].event_name%>">
+								<%= events[i].event_name%>
+									<br>
+									<% } %>
+										<tr>
+											<td></td>
+											<td>
+												<input type="submit" name="Submit" value="Add" />
+											</td>
+										</tr>
+						</table>
+					</form>
+					</div>
 
 
 
 
 
-						<!--
+					<!--
 including footer content which is common for all pages
 -->
-						<%- include ../layouts/footer.ejs %>
+					<%- include ../layouts/footer.ejs %>

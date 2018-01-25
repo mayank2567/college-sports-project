@@ -15,6 +15,27 @@ including header content which is common for all pages
 				</p>
 				<% } %>
 
+					<head>
+						<link href="/assets/css/formstyle.css" rel="stylesheet">
+					</head>
+
+					<div id="k1">
+						<form action="">
+							<label for="event_name">Name</label>
+							<input type="text" id="event_name" name="event_name" placeholder="Your name.." value="<%= event_name %>">
+
+							<label for="event_type">Type</label>
+							<input type="text" id="event_type" name="event_type" placeholder="Year.." value="<%= event_type %>">
+
+							<label for="event_cat">Category</label>
+							<input type="text" id="event_cat" name="event_cat" value="<%= event_cat %>">
+
+							<label for="rollno">gender</label>
+							<input type="text" id="gender" name="gender" placeholder="Roll No.." value="<%= gender %>">
+
+							<input type="submit" name="Submit" value="Add">
+						</form>
+					</div>
 					<form action="/events/add" method="post" name="form1">
 						<table width="25%" border="0">
 							<tr>

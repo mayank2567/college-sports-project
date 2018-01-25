@@ -15,7 +15,34 @@ including header content which is common for all pages
 				</p>
 				<% } %>
 
-					<div style="padding-top:300px">
+					<head>
+						<link href="/assets/css/formstyle.css" rel="stylesheet">
+					</head>
+
+					<div id="k1">
+						<form action="">
+							<label for="name">Name</label>
+							<input type="text" id="name" name="name" placeholder="Your name.." value="<%= name %>">
+
+							<label for="year">year</label>
+							<input type="text" id="year" name="year" placeholder="Year.." value="<%= year %>">
+
+							<label for="course">course</label>
+							<input type="text" id="course" name="course" value="<%= course %>">
+
+							<label for="rollno">roll no</label>
+							<input type="text" id="rollno" name="rollno" placeholder="Roll No.." value="<%= rollno %>">
+
+							<label for="branch">Branch</label>
+							<input type="text" id="branch" name="branch" value="<%= branch %>">
+
+							<label for="gender">gender</label>
+							<input type="text" id="gender" name="gender" value="<%= gender %>">
+
+							<input type="submit" name="Submit" value="Add">
+						</form>
+					</div>
+					<div>
 						<form action="/students/edit/<%= id %>" method="post" name="form1">
 							<table width="25%" border="0">
 								<tr>

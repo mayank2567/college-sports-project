@@ -46,7 +46,7 @@ var students = require('./routes/students');
 var events = require('./routes/events');
 var selectEvent = require('./routes/selectEvent');
 var result = require('./routes/result');
-var attendance = require('./routes/attendance');
+var attendence = require('./routes/attendence');
 
 
 
@@ -124,7 +124,7 @@ app.use('/students', students);
 app.use('/events', events);
 app.use('/selectEvent', selectEvent);
 app.use('/result', result);
-app.use('/attendance', attendance);
+app.use('/attendence', attendence);
 
 app.listen(3000, function () {
 	console.log('Server running at port 3000: http://127.0.0.1:3000')
