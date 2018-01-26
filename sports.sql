@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 19, 2018 at 08:14 AM
+-- Generation Time: Jan 26, 2018 at 05:37 AM
 -- Server version: 10.1.29-MariaDB
 -- PHP Version: 7.2.0
 
@@ -53,12 +53,9 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`id`, `event_type`, `event_name`, `gender`, `event_cat`) VALUES
-(2, 'Field', 'Field 2', 'Male', '1'),
-(3, 'Field', 'Field 3', 'Male', '1'),
-(4, 'Track', 'Track1', 'Male', '2'),
-(5, 'Tug of War', 'Tug1', 'Male', '3'),
-(6, 'Relay', 'test', 'Male', '2'),
-(7, 'new', 'new tfridayest', 'sda', 'mayank');
+(1, 'Field', 'Tug of War', 'Male', 'Field'),
+(2, 'raciong', 'Race', 'male', 'race'),
+(3, 'water', 'Swimming', 'female', 'swim');
 
 -- --------------------------------------------------------
 
@@ -78,17 +75,12 @@ CREATE TABLE `event_student` (
 --
 
 INSERT INTO `event_student` (`id`, `rollno`, `event_id`, `attendence`) VALUES
-(1, '101', '5', ''),
-(2, '101', '4', ''),
-(3, '101', '2', ''),
-(4, '101', '1', 'Yes'),
-(5, '102', '5', ''),
-(6, '102', '2', ''),
-(7, '102', '1', 'No'),
-(8, '103', '5', ''),
-(9, '103', '4', ''),
-(10, '103', '2', ''),
-(11, '103', '1', 'Yes');
+(1, '1', '1', ''),
+(2, '1', '2', 'no'),
+(3, '2', '2', 'no'),
+(4, '2', '3', 'yes'),
+(5, '3', '2', 'no'),
+(6, '3', '3', 'yes');
 
 -- --------------------------------------------------------
 
@@ -110,8 +102,7 @@ CREATE TABLE `result` (
 --
 
 INSERT INTO `result` (`id`, `event_id`, `registration_id`, `first`, `second`, `third`) VALUES
-(1, '1', '1', '101', '102', '103'),
-(2, '1', '1', '101', '101', '103');
+(1, '3', '', '2', '2', '1');
 
 -- --------------------------------------------------------
 
@@ -134,11 +125,9 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `name`, `course`, `rollno`, `branch`, `year`, `gender`) VALUES
-(2, 'Gurpreet k', 'MCA@a.com', '102', 'Computer Science', 'Second', 'Male'),
-(3, 'Jassi Singh', 'B.Tech', '103', 'Computer Science', 'Third', 'Male'),
-(4, 'test', 'MBA', '1223', 'Civil Engineering', 'First', 'Male'),
-(5, 'asd', 'A@a.com', '', '', '123', ''),
-(7, 'sad', 'saf', 'das', 'adsf', 'f,,f,', 'd');
+(1, 'A', 'a', '1', 'a', 'a', 'male'),
+(2, 'b', 'b', '2', 'b', 'b', 'b'),
+(3, 'c', 'c', '3', 'c', 'c', 'male');
 
 --
 -- Indexes for dumped tables
@@ -188,25 +177,25 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `event_student`
 --
 ALTER TABLE `event_student`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `result`
 --
 ALTER TABLE `result`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
