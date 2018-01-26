@@ -1,0 +1,84 @@
+<!--
+including header content which is common for all pages
+-->
+<%- include ../layouts/header.ejs %>
+
+	<% if (messages.error) { %>
+		<p class="alert alert-danger">
+			<%- messages.error %>
+		</p>
+		<% } %>
+
+			<% if (messages.success) { %>
+				<p class="alert alert-success">
+					<%- messages.success %>
+				</p>
+				<% } %>
+					<form action="/attendence" method="post" name="form" style="padding-top:200px;">
+						<table width="25%" border="0">
+
+
+							<select name="event_id">
+								<option selected value="Select">Please Select a Event</option>
+								<% for(var i=0; i<data.length; i++) {%>
+									<option value="<%= data[i].id%>">
+										<%= data[i].event_name%>
+									</option>
+									<br>
+									<% } %>
+							</select>
+
+							<tr>
+								<td></td>
+								<td>
+									<input type="submit" name="Submit" value="Add" />
+								</td>
+							</tr>
+						</table>
+					</form>
+					<table style="display : <%= success %>" width='80%' border=0>
+
+						<tr style='text-align:left; background-color:#CCC'>
+							<th>ID</th>
+							<th>Event Name</th>
+							<th>First</th>
+							<th>Second</th>
+							<th>Third</th>
+							<th>Action</th>
+						</tr>
+						<% if (students) { %>
+							<% let i = 0%>
+								<% students.forEach(function(srudent){ %>
+
+									<tr>
+										<td>
+											<%= ++i %>
+										</td>
+										<td>
+											<%= event_name %>
+										</td>
+										<td>
+											<%= srudent.name %>
+										</td>
+										<td>
+											<%= srudent.branch %>
+										</td>
+										<td>
+											<%= srudent.course %>
+										</td>
+										<td>
+											<%= srudent.gender %>
+										</td>
+										<td>
+											<%= srudent.attendence %>
+										</td>
+
+									</tr>
+									<% }) %>
+										<% } %>
+
+					</table>
+					<!--
+including footer content which is common for all pages
+-->
+					<%- include ../layouts/footer.ejs %>

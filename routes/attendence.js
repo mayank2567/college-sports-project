@@ -5,25 +5,27 @@ var events;
 // SHOW LIST OF events
 app.get('/', function (req, res, next) {
 	req.getConnection(function (error, conn) {
+
 		conn.query('SELECT * FROM events ORDER BY id DESC', function (err, rows, fields) {
 			//if(err) throw err
+
 			if (err) {
 				req.flash('error', err)
-				res.render('attendance/list', {
-					title: 'Select Event',
-					data: ''
+				res.render('attendence/list', {
+					title: 'attendence List',
+					data: '',
+					success: 'none',
+					students: ''
 				})
 			} else {
+				// render to views/attendence/list.ejs template file
 				events = rows;
-				// render to views/student/list.ejs template file
-				res.render('attendance/list', {
-					title: 'Select Event',
+				res.render('attendence/list', {
+					title: 'attendence List',
 					data: rows,
 					success: 'none',
-					result: '',
-					students: '',
-					attendance: ''
-				});
+					students: ''
+				})
 			}
 		});
 	});
@@ -31,8 +33,10 @@ app.get('/', function (req, res, next) {
 
 app.post('/', function (req, res, next) {
 	req.getConnection(function (error, conn) {
+
 		conn.query('SELECT * FROM event_student where event_id = ' + parseInt(req.body.event_id), function (err, rows, fields) {
 			let sql = 'SELECT * FROM students WHERE';
+
 			if (rows.length == 0) {
 				res.render('attendance/list', {
 					title: 'No Item Found',
@@ -59,20 +63,22 @@ app.post('/', function (req, res, next) {
 						}
 					}
 				}
-				debugger
+
 				if (err) {
 					req.flash('error', err)
 					res.render('attendance/list', {
 						title: 'Select Event',
-						data: '',
-						success: 'node',
+						data: events,
+						success: 'none',
 						attendance: '',
 						event_name: '',
 						students: ''
 					})
 				} else {
+					events;
+
 					// render to views/student/list.ejs template file
-					res.render('attendance/list', {
+					res.render('attendence/list', {
 						title: 'Select Event',
 						data: events,
 						success: 'block',
@@ -121,7 +127,7 @@ app.post('/attend', function (req, res, next) {
 				}
 				if (err) {
 					req.flash('error', err)
-					res.render('attendance/add', {
+					res.render('attendence/add', {
 						title: 'Select Event',
 						data: '',
 						success: 'node',
@@ -132,7 +138,7 @@ app.post('/attend', function (req, res, next) {
 				} else {
 					// render to views/student/list.ejs template file
 					debugger
-					res.render('attendance/add', {
+					res.render('attendence/add', {
 						title: 'Select Event',
 						data: events,
 						success: 'block',
@@ -158,14 +164,14 @@ app.get('/add', function (req, res, next) {
 			//if(err) throw err
 			if (err) {
 				req.flash('error', err)
-				res.render('attendance/add', {
+				res.render('attendence/add', {
 					title: 'Select Event',
 					data: ''
 				})
 			} else {
 				events = rows;
 				// render to views/student/list.ejs template file
-				res.render('attendance/add', {
+				res.render('attendence/add', {
 					title: 'Select Event',
 					data: rows,
 					success: 'none',
@@ -288,7 +294,7 @@ app.put('/edit/(:id)', function (req, res, next) {
 					req.flash('success', 'Data updated successfully!')
 
 					// render to views/event/add.ejs
-					res.render('event/edit', {
+					res.render('attendence/edit', {
 						title: 'Edit event',
 						id: req.params.id,
 						event_name: req.body.event_name,
@@ -310,7 +316,7 @@ app.put('/edit/(:id)', function (req, res, next) {
 		 * Using req.body.name 
 		 * because req.param('name') is deprecated
 		 */
-		res.render('event/edit', {
+		res.render('attendence/edit', {
 			title: 'Edit event',
 			id: req.params.id,
 			event_name: req.body.event_name,
