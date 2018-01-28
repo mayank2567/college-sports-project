@@ -20,7 +20,7 @@ including header content which is common for all pages
 					</head>
 
 					<div id="k1">
-						<form action="">
+						<form action="/events/edit/<%= id %>" method="post" name="form1">
 							<label for="event_name">Name</label>
 							<input type="text" id="event_name" name="event_name" placeholder="Your name.." value="<%= event_name %>">
 
@@ -41,16 +41,18 @@ including header content which is common for all pages
 							<label for="rollno">Gender</label>
 							<input type="text" id="gender" name="gender" placeholder="Roll No.." value="<%= gender %>">
 							<select id="gender" name="gender" value="<%= gender %>">
-								<option value="australia">Australia</option>
+								<option value="male">Male</option>
+								<option value="female">Female</option>
 
 							</select>
 
 
-							<input type="submit" name="Submit" value="Add">
+							<input type="submit" name="Submit" value="Edit">
+							<input type="hidden" name="_method" value="PUT" />
 						</form>
 					</div>
 
-					<form action="/events/edit/<%= id %>" method="post" name="form1">
+					<!--	<form action="/events/edit/<%= id %>" method="post" name="form1">
 						<table width="25%" border="0">
 							<tr>
 								<td>Name</td>
@@ -84,7 +86,7 @@ including header content which is common for all pages
 							</tr>
 						</table>
 						<input type="hidden" name="_method" value="PUT" />
-					</form>
+					</form>-->
 
 					<!--
 including footer content which is common for all pages

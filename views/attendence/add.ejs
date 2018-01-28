@@ -39,9 +39,9 @@ including header content which is common for all pages
 							</tr>
 						</table>
 					</form>
-					<form action="/attendence/add" method="post" name="form" style="padding-top:200px;">
+					<form action="/attendence/add" method="post" name="form" style="padding-top:10px;">
 
-						<table style="display : <%= success %>" width='80%' border=0>
+						<!-- <table style="display : <%= success %>" width='80%' border=0>
 							<tr style='text-align:left; background-color:#CCC'>
 								<th>ID</th>
 								<th>Event Name</th>
@@ -51,15 +51,15 @@ including header content which is common for all pages
 								<th>Year</th>
 								<th>Gender</th>
 								<th>Attendance</th>
-							</tr>
-							<!--
+							</tr> -->
+						<!--
 		Using FOREACH LOOP for the students array
 		
 		myArray.forEach(function(el, index) {
 			// el - current element, i - index
 		});
 	-->
-							<% if (students) { %>
+						<!--		<% if (students) { %>
 								<% let i = 0%>
 									<% students.forEach(function(student){ %>
 
@@ -87,9 +87,9 @@ including header content which is common for all pages
 														<%= student.attendence %>
 													</td>
 													<td>
-														<select name="attendence" id='attendence'>
-															<!-- <option value="Select">Please Select a Event</option> -->
-															<option "<%= (student.attendence == 'yes')?'selected':'' %>" value="yes">Yes</option>
+														<select name="attendence" id='attendence'> -->
+						<!-- <option value="Select">Please Select a Event</option> -->
+						<!--	<option "<%= (student.attendence == 'yes')?'selected':'' %>" value="yes">Yes</option>
 															<option "<%= (student.attendence == 'no' || student.attendence == '')?'selected':'' %>" value="no">No</option>
 														</select>
 
@@ -103,7 +103,95 @@ including header content which is common for all pages
 														<input type="submit" name="Submit" value="Update" />
 													</td>
 												</tr>
-						</table>
+						</table>   -->
+
+
+						<div>
+							<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Event Name</th>
+										<th>Student Name</th>
+										<th>Roll No</th>
+										<th>Branch</th>
+										<th>Year</th>
+										<th>Gender</th>
+										<th>Attendance</th>
+
+									</tr>
+								</thead>
+								<tfoot>
+									<tr>
+										<th>ID</th>
+										<th>Event Name</th>
+										<th>Student Name</th>
+										<th>Roll No</th>
+										<th>Branch</th>
+										<th>Year</th>
+										<th>Gender</th>
+										<th>Attendance</th>
+
+									</tr>
+								</tfoot>
+								<tbody>
+									<% if (students) { %>
+										<% let i = 0%>
+											<% students.forEach(function(student){ %>
+
+												<tr>
+
+													<% if (event_id) { %>
+														<input type="hidden" name="event_id" value="<%= event_id %>" />
+
+														<% } %>
+
+															<td>
+																<%= ++i %>
+															</td>
+															<td>
+																<%= event_name %>
+															</td>
+															<td>
+																<%= student.name %>
+															</td>
+															<td>
+																<%= student.rollno %>
+																	<input type="hidden" name="rollno" value="<%= student.rollno %>" />
+															</td>
+															<td>
+																<%= student.attendence %>
+															</td>
+															<td>
+																<select name="attendence" id='attendence'>
+																	<!-- <option value="Select">Please Select a Event</option> -->
+																	<option "<%= (student.attendence == 'yes')?'selected':'' %>" value="yes">Yes</option>
+																	<option "<%= (student.attendence == 'no' || student.attendence == '')?'selected':'' %>" value="no">No</option>
+																</select>
+
+															</td>
+												</tr>
+												<% }) %>
+													<% } %>
+														<tr>
+															<td></td>
+															<td></td>
+															<td></td>
+															<td>
+																<input type="submit" name="Submit" value="Update" />
+															</td>
+															<td></td>
+															<td></td>
+														</tr>
+								</tbody>
+							</table>
+							<script>
+								$(document).ready(function () {
+									$('#example').DataTable();
+								});
+							</script>
+						</div>
+
 					</form>
 					<!--
 including footer content which is common for all pages

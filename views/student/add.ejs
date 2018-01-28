@@ -22,23 +22,28 @@ including header content which is common for all pages
 
 
 					<div id="k1">
-						<form action="">
+						<form action="/students/add" method="post" name="form1">
 							<label for="name">Name</label>
 							<input type="text" id="name" name="name" placeholder="Your name.." value="<%= name %>">
 
 							<label for="year">Year</label>
-							<input type="text" id="year" name="year" placeholder="Year.." value="<%= year %>">
+
 							<select id="year" name="year" value="<%= year %>">
-								<option value="australia">Australia</option>
+								<option value="first">First Year</option>
+								<option value="second">Second Year</option>
+								<option value="third">Third Year</option>
+								<option value="fourth">Fourth Year</option>
 
 							</select>
 
 
 							<label for="course">Course</label>
-							<input type="text" id="course" name="course" value="<%= course %>">
-							<select id="course" name="course" value="<%= course %>">
-								<option value="australia">Australia</option>
 
+							<select id="course" name="course" value="<%= course %>">
+								<option value="Btech">B.Tech</option>
+								<option value="Mtech">M.Tech</option>
+								<option value="MCA">MCA</option>
+								<option value="MBA">MBA</option>
 							</select>
 
 
@@ -46,19 +51,24 @@ including header content which is common for all pages
 							<input type="text" id="rollno" name="rollno" placeholder="Roll No.." value="<%= rollno %>">
 
 							<label for="branch">Branch</label>
-							<input type="text" id="branch" name="branch" value="<%= branch %>">
-							<select id="branch" name="branch" value="<%= branch %>">
-								<option value="australia">Australia</option>
 
+							<select id="branch" name="branch" value="<%= branch %>">
+								<option value="CSE">CSE</option>
+								<option value="IT">IT</option>
+								<option value="ECE">ECE</option>
+								<option value="EE">EE</option>
+								<option value="ME">ME</option>
+								<option value="PE">PE</option>
+								<option value="CE">CE</option>
 							</select>
 
 
 
 							<label for="gender">Gender</label>
-							<input type="text" id="gender" name="gender" value="<%= gender %>">
-							<select id="gender" name="gender" value="<%= gender %>">
-								<option value="australia">Australia</option>
 
+							<select id="gender" name="gender" value="<%= gender %>">
+								<option value="male">Male</option>
+								<option value="female">Female</option>
 							</select>
 
 
@@ -70,7 +80,7 @@ including header content which is common for all pages
 										<input type="submit" value="Submit">
 						</form>
 					</div>
-					<form action="/students/add" method="post" name="form1">
+					<!--	<form action="/students/add" method="post" name="form1">
 						<table width="25%" border="0">
 							<tr>
 								<td>Name</td>
@@ -120,8 +130,8 @@ including header content which is common for all pages
 											</td>
 										</tr>
 						</table>
-					</form>
-					</div>
+					</form>  -->
+
 
 
 
