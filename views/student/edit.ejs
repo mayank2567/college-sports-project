@@ -24,20 +24,36 @@ including header content which is common for all pages
 							<label for="name">Name</label>
 							<input type="text" id="name" name="name" placeholder="Your name.." value="<%= name %>">
 
-							<label for="year">year</label>
+							<label for="year">Year</label>
 							<input type="text" id="year" name="year" placeholder="Year.." value="<%= year %>">
+							<select id="year" name="year" value="<%= year %>">
+								<option value="australia">Australia</option>
 
-							<label for="course">course</label>
+							</select>
+
+							<label for="course">Course</label>
 							<input type="text" id="course" name="course" value="<%= course %>">
+							<select id="course" name="course" value="<%= course %>">
+								<option value="australia">Australia</option>
 
-							<label for="rollno">roll no</label>
+							</select>
+
+							<label for="rollno">Roll No</label>
 							<input type="text" id="rollno" name="rollno" placeholder="Roll No.." value="<%= rollno %>">
 
 							<label for="branch">Branch</label>
 							<input type="text" id="branch" name="branch" value="<%= branch %>">
+							<select id="branch" name="branch" value="<%= branch %>">
+								<option value="australia">Australia</option>
 
-							<label for="gender">gender</label>
+							</select>
+
+							<label for="gender">Gender</label>
 							<input type="text" id="gender" name="gender" value="<%= gender %>">
+							<select id="gender" name="gender" value="<%= gender %>">
+								<option value="australia">Australia</option>
+
+							</select>
 
 							<input type="submit" name="Submit" value="Add">
 						</form>

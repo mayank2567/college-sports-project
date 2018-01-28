@@ -28,20 +28,39 @@ including header content which is common for all pages
 
 							<label for="year">Year</label>
 							<input type="text" id="year" name="year" placeholder="Year.." value="<%= year %>">
+							<select id="year" name="year" value="<%= year %>">
+								<option value="australia">Australia</option>
+
+							</select>
+
 
 							<label for="course">Course</label>
 							<input type="text" id="course" name="course" value="<%= course %>">
+							<select id="course" name="course" value="<%= course %>">
+								<option value="australia">Australia</option>
+
+							</select>
+
 
 							<label for="rollno">Roll No.</label>
 							<input type="text" id="rollno" name="rollno" placeholder="Roll No.." value="<%= rollno %>">
 
 							<label for="branch">Branch</label>
 							<input type="text" id="branch" name="branch" value="<%= branch %>">
+							<select id="branch" name="branch" value="<%= branch %>">
+								<option value="australia">Australia</option>
+
+							</select>
 
 
 
-							<label for="gender">gender</label>
+							<label for="gender">Gender</label>
 							<input type="text" id="gender" name="gender" value="<%= gender %>">
+							<select id="gender" name="gender" value="<%= gender %>">
+								<option value="australia">Australia</option>
+
+							</select>
+
 
 							<% for(var i=0; i<events.length; i++) {%>
 								<input type="checkbox" name="event" value="<%= events[i].event_name%>">

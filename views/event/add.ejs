@@ -26,12 +26,23 @@ including header content which is common for all pages
 
 							<label for="event_type">Type</label>
 							<input type="text" id="event_type" name="event_type" placeholder="Year.." value="<%= event_type %>">
+							<select id="event_type" name="event_type" value="<%= event_type %>">
+								<option value="australia">Australia</option>
+
+							</select>
 
 							<label for="event_cat">Category</label>
-							<input type="text" id="event_cat" name="event_cat" value="<%= event_cat %>">
+							<select id="event_cat" name="event_cat" value="<%= event_cat %>">
+								<option value="australia">Australia</option>
 
-							<label for="rollno">gender</label>
+							</select>
+
+							<label for="rollno">Gender</label>
 							<input type="text" id="gender" name="gender" placeholder="Roll No.." value="<%= gender %>">
+							<select id="gender" name="gender" value="<%= gender %>">
+								<option value="australia">Australia</option>
+
+							</select>
 
 							<input type="submit" name="Submit" value="Add">
 						</form>
