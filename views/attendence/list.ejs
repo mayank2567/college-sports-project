@@ -14,6 +14,11 @@ including header content which is common for all pages
 					<%- messages.success %>
 				</p>
 				<% } %>
+
+					<head>
+						<link href="/assets/css/formstyle.css" rel="stylesheet">
+					</head>
+
 					<form action="/attendence" method="post" name="form" style="padding-top:200px;">
 						<table width="25%" border="0">
 
@@ -29,10 +34,9 @@ including header content which is common for all pages
 							</select>
 
 							<tr>
-								<td></td>
-								<td>
-									<input type="submit" name="Submit" value="Add" />
-								</td>
+
+								<input type="submit" name="Submit" value="Search" />
+
 							</tr>
 						</table>
 					</form>
@@ -80,16 +84,17 @@ including header content which is common for all pages
 					</table>   -->
 
 
-					<div>
+					<div style="padding-left:120px;padding-right:120px">
 						<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
 							<thead>
 								<tr>
 									<th>ID</th>
 									<th>Event Name</th>
-									<th>First</th>
-									<th>Second</th>
-									<th>Third</th>
-									<th>Action</th>
+									<th>Name</th>
+									<th>Branch</th>
+									<th>Course</th>
+									<th>Gender</th>
+									<th>Attendance</th>
 
 								</tr>
 							</thead>
@@ -97,10 +102,11 @@ including header content which is common for all pages
 								<tr>
 									<th>ID</th>
 									<th>Event Name</th>
-									<th>First</th>
-									<th>Second</th>
-									<th>Third</th>
-									<th>Action</th>
+									<th>Name</th>
+									<th>Branch</th>
+									<th>Course</th>
+									<th>Gender</th>
+									<th>Attendance</th>
 
 								</tr>
 							</tfoot>

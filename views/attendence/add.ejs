@@ -36,14 +36,14 @@ including header content which is common for all pages
 												<!-- </optgroup> -->
 							</select>
 							<tr>
-								<td></td>
-								<td>
-									<input type="submit" name="Submit" value="Add" />
-								</td>
+
+
+								<input type="submit" name="Submit" value="Add" />
+
 							</tr>
 						</table>
 					</form>
-					<form action="/attendence/add" method="post" name="form" style="padding-top:10px;">
+					<form action="/attendence/add" method="post" name="form" style="padding-top:0px !important">
 
 						<!-- <table style="display : <%= success %>" width='80%' border=0>
 							<tr style='text-align:left; background-color:#CCC'>
@@ -121,7 +121,6 @@ including header content which is common for all pages
 										<th>Branch</th>
 										<th>Year</th>
 										<th>Gender</th>
-
 										<th>Present</th>
 										<th>Absent</th>
 									</tr>
@@ -135,8 +134,6 @@ including header content which is common for all pages
 										<th>Branch</th>
 										<th>Year</th>
 										<th>Gender</th>
-
-
 										<th>Present</th>
 										<th>Absent</th>
 
@@ -180,6 +177,7 @@ including header content which is common for all pages
 															</td>
 															<td>
 																<input class="present" type="radio" name="attendence" value="Present" checked>
+
 															</td>
 															<td>
 																<!-- <select name="attendence" id='attendence'>
@@ -200,7 +198,7 @@ including header content which is common for all pages
 												</tr>
 												<% }) %>
 													<% } %>
-														<tr>
+														<!--	<tr>
 															<td></td>
 															<td></td>
 															<td></td>
@@ -209,14 +207,16 @@ including header content which is common for all pages
 															</td>
 															<td></td>
 															<td></td>
-														</tr>
+														</tr>   -->
 								</tbody>
 							</table>
+							<input type="submit" name="Submit" value="Update" />
 							<script>
 								$(document).ready(function () {
 									$('#example').DataTable();
 								});
 							</script>
+
 						</div>
 
 					</form>
