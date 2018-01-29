@@ -1,6 +1,10 @@
 <!--
 including header content which is common for all pages
 -->
+
+<head>
+	<link href="/assets/css/formstyle.css" rel="stylesheet">
+</head>
 <%- include ../layouts/header.ejs %>
 
 	<% if (messages.error) { %>
@@ -14,11 +18,32 @@ including header content which is common for all pages
 					<%- messages.success %>
 				</p>
 				<% } %>
-					<!DOCTYPE html>
+					<div id="results" class="col-md-6">Your captured image will appear here...</div>
 
-					<head>
-						<link href="/assets/css/formstyle.css" rel="stylesheet">
-					</head>
+					<h1>WebcamJS Test Page</h1>
+					<h3>Demonstrates simple 320x240 capture &amp; display</h3>
+
+					<div id="my_camera" class="col-md-6"></div>
+					<input class="col-md-12" type=button value="Take Snapshot" onClick="take_snapshot()">
+					<!-- First, include the Webcam.js JavaScript Library -->
+
+					<!-- Configure a few settings and attach camera -->
+					<script language="JavaScript">
+						Webcam.set({
+							width: 320,
+							height: 240,
+							image_format: 'jpeg',
+							jpeg_quality: 90
+						});
+						Webcam.attach('#my_camera');
+					</script>
+
+					<!-- A button for taking snaps -->
+
+
+
+
+					<!-- Code to handle taking the snapshot and displaying it locally -->
 
 
 					<div id="k1">
@@ -93,6 +118,7 @@ including header content which is common for all pages
 							<tr>
 								<td>roll no</td>
 								<td>
+									<input id="photo" type="hidden" name="photo" value="" />
 									<input type="text" name="rollno" value="<%= rollno %>" />
 								</td>
 							</tr>
@@ -124,7 +150,20 @@ including header content which is common for all pages
 					</div>
 
 
+					<script language="JavaScript">
+						function take_snapshot() {
+							// take snapshot and get image data
+							Webcam.snap(function (data_uri) {
+								document.getElementById('photo').value = data_uri;
 
+								debugger
+								// display results in page
+								document.getElementById('results').innerHTML =
+									'<h2>Here is your image:</h2>' +
+									'<img src="' + data_uri + '"/>';
+							});
+						}
+					</script>
 
 
 					<!--

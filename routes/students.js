@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var fs = require('fs');
 
 // SHOW LIST OF students
 app.get('/', function (req, res, next) {
@@ -74,7 +75,12 @@ app.post('/add', function (req, res, next) {
 		}
 		var event = [];
 		req.getConnection(function (error, conn) {
-
+			let base64Image = req.body.photo.split(';base64,').pop();
+			fs.writeFile(`./photos/${req.body.rollno}.jpg`, base64Image, {
+				encoding: 'base64'
+			}, function (err) {
+				console.log('File created');
+			});
 
 			conn.query('INSERT INTO students SET ?', student, function (err, result) {
 				//if(err) throw err
@@ -100,13 +106,12 @@ app.post('/add', function (req, res, next) {
 								rollno: parseInt(student.rollno),
 								event_id: rows[0].id
 							};
-							conn.query('INSERT INTO event_student SET ?', entry, function (err, result) {
-							});		
+							conn.query('INSERT INTO event_student SET ?', entry, function (err, result) {});
 						});
 					}
 
-					
-					
+
+
 					req.flash('success', 'Data added successfully!')
 
 					// render to views/student/add.ejs
