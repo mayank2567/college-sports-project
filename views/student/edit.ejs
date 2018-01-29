@@ -25,16 +25,22 @@ including header content which is common for all pages
 							<input type="text" id="name" name="name" placeholder="Your name.." value="<%= name %>">
 
 							<label for="year">Year</label>
-							<input type="text" id="year" name="year" placeholder="Year.." value="<%= year %>">
+
 							<select id="year" name="year" value="<%= year %>">
-								<option value="australia">Australia</option>
+								<option value="First" <%=year=='field' ? 'selected' : ''%>>First Year</option>
+								<option value="Second" <%=year=='field' ? 'selected' : ''%>>Second Year</option>
+								<option value="Third" <%=year=='field' ? 'selected' : ''%>>Third Year</option>
+								<option value="Fourth" <%=year=='field' ? 'selected' : ''%>>Fourth Year</option>
 
 							</select>
 
 							<label for="course">Course</label>
-							<input type="text" id="course" name="course" value="<%= course %>">
+
 							<select id="course" name="course" value="<%= course %>">
-								<option value="australia">Australia</option>
+								<option value="B.Tech" <%=course=='B.Tech' ? 'selected' : ''%>>B.Tech</option>
+								<option value="M.Tech" <%=course=='M.Tech' ? 'selected' : ''%>>M.Tech</option>
+								<option value="MCA" <%=course=='MCA' ? 'selected' : ''%>>MCA</option>
+								<option value="MBA" <%=course=='MBA' ? 'selected' : ''%>>MBA</option>
 
 							</select>
 
@@ -44,8 +50,10 @@ including header content which is common for all pages
 							<label for="branch">Branch</label>
 							<input type="text" id="branch" name="branch" value="<%= branch %>">
 							<select id="branch" name="branch" value="<%= branch %>">
-								<option value="australia">Australia</option>
-
+								<option value="B.Tech" <%=branch=='B.Tech' ? 'selected' : ''%>>B.Tech</option>
+								<option value="M.Tech" <%=branch=='M.Tech' ? 'selected' : ''%>>M.Tech</option>
+								<option value="MCA" <%=branch=='MCA' ? 'selected' : ''%>>MCA</option>
+								<option value="MBA" <%=course=='MBA' ? 'selected' : ''%>>MBA</option>
 							</select>
 
 							<label for="gender">Gender</label>

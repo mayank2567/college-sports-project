@@ -25,24 +25,26 @@ including header content which is common for all pages
 							<input type="text" id="event_name" name="event_name" placeholder="Your name.." value="<%= event_name %>">
 
 							<label for="event_type">Type</label>
-							<input type="text" id="event_type" name="event_type" placeholder="Year.." value="<%= event_type %>">
+
 							<select id="event_type" name="event_type" value="<%= event_type %>">
-								<option value="australia">Australia</option>
+								<option value="field" <%=event_type=='field' ? 'selected' : ''%>>field</option>
+								<option value="track" <%=event_type=='track' ? 'selected' : ''%>>track</option>
 
 							</select>
 
 							<label for="event_cat">Category</label>
-							<input type="text" id="event_cat" name="event_cat" value="<%= event_cat %>">
-							<select id="event_cat" name="event_cat" value="<%= event_cat %>">
-								<option value="australia">Australia</option>
 
+							<select id="event_cat" name="event_cat" value="<%= event_cat %>">
+								<option value="field" <%=event_cat=='Field' ? 'selected' : ''%>>Field</option>
+								<option value="track" <%=event_cat=='Race' ? 'selected' : ''%>>Race</option>
+								<option value="track" <%=event_cat=='Swim' ? 'selected' : ''%>>Swim</option>
 							</select>
 
 							<label for="rollno">Gender</label>
-							<input type="text" id="gender" name="gender" placeholder="Roll No.." value="<%= gender %>">
+
 							<select id="gender" name="gender" value="<%= gender %>">
-								<option value="male">Male</option>
-								<option value="female">Female</option>
+								<option value="Male" <%=gender=='Male' ? 'selected' : ''%>>Male</option>
+								<option value="Female" <%=gender=='Female' ? 'selected' : ''%>>Female</option>
 
 							</select>
 
