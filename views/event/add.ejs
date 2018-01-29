@@ -23,11 +23,8 @@ including header content which is common for all pages
 						<form action="/events/add" method="post" name="form1">
 							<label for="event_name">Name</label>
 
-							<select id="event_name" name="event_name" value="<%= event_name %>">
-								<option value="water">Swimming</option>
-								<option value="race">Race</option>
-								<option value="tugofwar">Tug of War</option>
-							</select>
+							<input id="event_name" name="event_name" value="<%= event_name %>">
+
 
 							<label for="event_type">Type</label>
 

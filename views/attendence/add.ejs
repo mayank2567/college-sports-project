@@ -14,22 +14,26 @@ including header content which is common for all pages
 					<%- messages.success %>
 				</p>
 				<% } %>
+
+					<head>
+						<link href="/assets/css/formstyle.css" rel="stylesheet">
+					</head>
 					<form action="/attendence/attend" method="post" name="form" style="padding-top:200px;">
 
 						<table width="25%" border="0">
 
 							<select name="event_id" id='eventSelect'>
 								<!-- <option value="Select">Please Select a Event</option> -->
-								<optgroup label="Select Table">
-									<option value="">Select Event</option>
-									<% if (data) { %>
-										<% data.forEach(function(row){ %>
-											<option value="<%= row.id %>">
-												<%= row.event_name %>
-											</option>
-											<% }) %>
-												<% } %>
-								</optgroup>
+								<!-- <optgroup label="Select Event" selected> -->
+								<option value="" disabled selected>Select Event</option>
+								<% if (data) { %>
+									<% data.forEach(function(row){ %>
+										<option value="<%= row.id %>">
+											<%= row.event_name %>
+										</option>
+										<% }) %>
+											<% } %>
+												<!-- </optgroup> -->
 							</select>
 							<tr>
 								<td></td>
@@ -117,8 +121,9 @@ including header content which is common for all pages
 										<th>Branch</th>
 										<th>Year</th>
 										<th>Gender</th>
-										<th>Attendance</th>
 
+										<th>Present</th>
+										<th>Absent</th>
 									</tr>
 								</thead>
 								<tfoot>
@@ -130,7 +135,12 @@ including header content which is common for all pages
 										<th>Branch</th>
 										<th>Year</th>
 										<th>Gender</th>
-										<th>Attendance</th>
+
+
+										<th>Present</th>
+										<th>Absent</th>
+
+
 
 									</tr>
 								</tfoot>
@@ -160,16 +170,33 @@ including header content which is common for all pages
 																	<input type="hidden" name="rollno" value="<%= student.rollno %>" />
 															</td>
 															<td>
-																<%= student.attendence %>
+																<%= student.branch %>
 															</td>
 															<td>
-																<select name="attendence" id='attendence'>
+																<%= student.year %>
+															</td>
+															<td>
+																<%= student.gender %>
+															</td>
+															<td>
+																<input class="present" type="radio" name="attendence" value="Present" checked>
+															</td>
+															<td>
+																<!-- <select name="attendence" id='attendence'>
 																	<!-- <option value="Select">Please Select a Event</option> -->
-																	<option "<%= (student.attendence == 'yes')?'selected':'' %>" value="yes">Yes</option>
-																	<option "<%= (student.attendence == 'no' || student.attendence == '')?'selected':'' %>" value="no">No</option>
-																</select>
+																<!-- <option "<%= (student.attendence == 'yes')?'selected':'' %>" value="yes">Yes</option>
+																<option "<%= (student.attendence == 'no' || student.attendence == '')?'selected':'' %>" value="no">No</option>
+ -->
+
+																<!-- </select> -->
+																<input class="absent" name="attendence" type="radio" value="Absent">
+
 
 															</td>
+
+
+
+
 												</tr>
 												<% }) %>
 													<% } %>

@@ -45,22 +45,25 @@ including header content which is common for all pages
 							</select>
 
 							<label for="rollno">Roll No</label>
-							<input type="text" id="rollno" name="rollno" placeholder="Roll No.." value="<%= rollno %>">
+							<input type="number" id="rollno" name="rollno" placeholder="Roll No.." value="<%= rollno %>">
 
 							<label for="branch">Branch</label>
-							<input type="text" id="branch" name="branch" value="<%= branch %>">
+
 							<select id="branch" name="branch" value="<%= branch %>">
-								<option value="B.Tech" <%=branch=='B.Tech' ? 'selected' : ''%>>B.Tech</option>
-								<option value="M.Tech" <%=branch=='M.Tech' ? 'selected' : ''%>>M.Tech</option>
-								<option value="MCA" <%=branch=='MCA' ? 'selected' : ''%>>MCA</option>
-								<option value="MBA" <%=course=='MBA' ? 'selected' : ''%>>MBA</option>
+								<option value="CSE" <%=branch=='CSE' ? 'selected' : ''%>>CSE</option>
+								<option value="IT" <%=branch=='IT' ? 'selected' : ''%>>IT</option>
+								<option value="ECE" <%=branch=='ECE' ? 'selected' : ''%>>ECE</option>
+								<option value="EE" <%=branch=='EE' ? 'selected' : ''%>>EE</option>
+								<option value="ME" <%=branch=='ME' ? 'selected' : ''%>>ME</option>
+								<option value="PE" <%=branch=='PE' ? 'selected' : ''%>>PE</option>
+								<option value="CE" <%=branch=='CE' ? 'selected' : ''%>>CE</option>
 							</select>
 
 							<label for="gender">Gender</label>
-							<input type="text" id="gender" name="gender" value="<%= gender %>">
+
 							<select id="gender" name="gender" value="<%= gender %>">
-								<option value="male">Male</option>
-								<option value="female">Female</option>
+								<option value="Male" <%=gender=='Male' ? 'selected' : ''%>>Male</option>
+								<option value="Female" <%=gender=='Female' ? 'selected' : ''%>>Female</option>
 
 							</select>
 
