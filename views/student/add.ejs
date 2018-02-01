@@ -1,10 +1,6 @@
 <!--
 including header content which is common for all pages
 -->
-
-<head>
-	<link href="/assets/css/formstyle.css" rel="stylesheet">
-</head>
 <%- include ../layouts/header.ejs %>
 
 	<% if (messages.error) { %>
@@ -18,84 +14,104 @@ including header content which is common for all pages
 					<%- messages.success %>
 				</p>
 				<% } %>
-					<div id="results" class="col-md-6">Your captured image will appear here...</div>
+				<div id="results" class="col-md-6">Your captured image will appear here...</div>
 
-					<h1>WebcamJS Test Page</h1>
-					<h3>Demonstrates simple 320x240 capture &amp; display</h3>
+				<h1>WebcamJS Test Page</h1>
+				<h3>Demonstrates simple 320x240 capture &amp; display</h3>
 
-					<div id="my_camera" class="col-md-6"></div>
-					<input class="col-md-12" type=button value="Take Snapshot" onClick="take_snapshot()">
-					<!-- First, include the Webcam.js JavaScript Library -->
+				<div id="my_camera" class="col-md-6"></div>
+				<input class="col-md-12" type=button value="Take Snapshot" onClick="take_snapshot()">
+				<!-- First, include the Webcam.js JavaScript Library -->
 
-					<!-- Configure a few settings and attach camera -->
-					<script language="JavaScript">
-						Webcam.set({
-							width: 320,
-							height: 240,
-							image_format: 'jpeg',
-							jpeg_quality: 90
-						});
-						Webcam.attach('#my_camera');
-					</script>
+				<!-- Configure a few settings and attach camera -->
+				<script language="JavaScript">
+					Webcam.set({
+						width: 320,
+						height: 240,
+						image_format: 'jpeg',
+						jpeg_quality: 90
+					});
+					Webcam.attach('#my_camera');
+				</script>
 
-					<!-- A button for taking snaps -->
-
-
-
-
-					<!-- Code to handle taking the snapshot and displaying it locally -->
+					<head>
+						<link href="/assets/css/formstyle.css" rel="stylesheet">
+					</head>
 
 
 					<div id="k1">
-						<form action="">
+						<form action="/students/add" method="post" name="form1">
 							<label for="name">Name</label>
 							<input type="text" id="name" name="name" placeholder="Your name.." value="<%= name %>">
 
 							<label for="year">Year</label>
-							<input type="text" id="year" name="year" placeholder="Year.." value="<%= year %>">
+
 							<select id="year" name="year" value="<%= year %>">
-								<option value="australia">Australia</option>
+								<option value="First">First Year</option>
+								<option value="Second">Second Year</option>
+								<option value="Third">Third Year</option>
+								<option value="Fourth">Fourth Year</option>
 
 							</select>
 
 
 							<label for="course">Course</label>
-							<input type="text" id="course" name="course" value="<%= course %>">
-							<select id="course" name="course" value="<%= course %>">
-								<option value="australia">Australia</option>
 
+							<select id="course" name="course" value="<%= course %>">
+								<option value="Btech">B.Tech</option>
+								<option value="Mtech">M.Tech</option>
+								<option value="MCA">MCA</option>
+								<option value="MBA">MBA</option>
 							</select>
 
 
 							<label for="rollno">Roll No.</label>
-							<input type="text" id="rollno" name="rollno" placeholder="Roll No.." value="<%= rollno %>">
+							<input id="photo" type="hidden" name="photo" value="" />
+
+							<input type="number" id="rollno" name="rollno" placeholder="Roll No.." value="<%= rollno %>">
 
 							<label for="branch">Branch</label>
-							<input type="text" id="branch" name="branch" value="<%= branch %>">
-							<select id="branch" name="branch" value="<%= branch %>">
-								<option value="australia">Australia</option>
 
+							<select id="branch" name="branch" value="<%= branch %>">
+								<option value="CSE">CSE</option>
+								<option value="IT">IT</option>
+								<option value="ECE">ECE</option>
+								<option value="EE">EE</option>
+								<option value="ME">ME</option>
+								<option value="PE">PE</option>
+								<option value="CE">CE</option>
 							</select>
 
 
 
 							<label for="gender">Gender</label>
-							<input type="text" id="gender" name="gender" value="<%= gender %>">
+
 							<select id="gender" name="gender" value="<%= gender %>">
-								<option value="australia">Australia</option>
-
+								<option value="male">Male</option>
+								<option value="female">Female</option>
 							</select>
+							<div class="col-md-12">
+								<label style="text-align:center;">Events</label>
+							</div>
+							<table>
+
+								<% for(var i=0; i<events.length; i++) {%>
+
+									<div class="col-md-6" style="border-top:1px;">
+
+										<input id="event" type="checkbox" name="event" value="<%= events[i].event_name%>">
+										<label for="event">
+											<%= events[i].event_name%>
+										</label>
+									</div>
 
 
-							<% for(var i=0; i<events.length; i++) {%>
-								<input type="checkbox" name="event" value="<%= events[i].event_name%>">
-								<%= events[i].event_name%>
-									<br>
 									<% } %>
-										<input type="submit" value="Submit">
+							</table>
+							<input type="submit" value="Submit">
 						</form>
 					</div>
-					<form action="/students/add" method="post" name="form1">
+					<!--	<form action="/students/add" method="post" name="form1">
 						<table width="25%" border="0">
 							<tr>
 								<td>Name</td>
@@ -118,7 +134,6 @@ including header content which is common for all pages
 							<tr>
 								<td>roll no</td>
 								<td>
-									<input id="photo" type="hidden" name="photo" value="" />
 									<input type="text" name="rollno" value="<%= rollno %>" />
 								</td>
 							</tr>
@@ -146,8 +161,8 @@ including header content which is common for all pages
 											</td>
 										</tr>
 						</table>
-					</form>
-					</div>
+					</form>  -->
+
 
 
 					<script language="JavaScript">
@@ -155,7 +170,6 @@ including header content which is common for all pages
 							// take snapshot and get image data
 							Webcam.snap(function (data_uri) {
 								document.getElementById('photo').value = data_uri;
-
 								debugger
 								// display results in page
 								document.getElementById('results').innerHTML =

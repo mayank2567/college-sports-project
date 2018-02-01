@@ -20,45 +20,59 @@ including header content which is common for all pages
 					</head>
 
 					<div id="k1">
-						<form action="">
+						<form action="/students/edit/<%= id %>" method="post" name="form1">
 							<label for="name">Name</label>
 							<input type="text" id="name" name="name" placeholder="Your name.." value="<%= name %>">
 
 							<label for="year">Year</label>
-							<input type="text" id="year" name="year" placeholder="Year.." value="<%= year %>">
+
 							<select id="year" name="year" value="<%= year %>">
-								<option value="australia">Australia</option>
+								<option value="First" <%=year=='field' ? 'selected' : ''%>>First Year</option>
+								<option value="Second" <%=year=='field' ? 'selected' : ''%>>Second Year</option>
+								<option value="Third" <%=year=='field' ? 'selected' : ''%>>Third Year</option>
+								<option value="Fourth" <%=year=='field' ? 'selected' : ''%>>Fourth Year</option>
 
 							</select>
 
 							<label for="course">Course</label>
-							<input type="text" id="course" name="course" value="<%= course %>">
+
 							<select id="course" name="course" value="<%= course %>">
-								<option value="australia">Australia</option>
+								<option value="B.Tech" <%=course=='B.Tech' ? 'selected' : ''%>>B.Tech</option>
+								<option value="M.Tech" <%=course=='M.Tech' ? 'selected' : ''%>>M.Tech</option>
+								<option value="MCA" <%=course=='MCA' ? 'selected' : ''%>>MCA</option>
+								<option value="MBA" <%=course=='MBA' ? 'selected' : ''%>>MBA</option>
 
 							</select>
 
 							<label for="rollno">Roll No</label>
-							<input type="text" id="rollno" name="rollno" placeholder="Roll No.." value="<%= rollno %>">
+							<input type="number" id="rollno" name="rollno" placeholder="Roll No.." value="<%= rollno %>">
 
 							<label for="branch">Branch</label>
-							<input type="text" id="branch" name="branch" value="<%= branch %>">
-							<select id="branch" name="branch" value="<%= branch %>">
-								<option value="australia">Australia</option>
 
+							<select id="branch" name="branch" value="<%= branch %>">
+								<option value="CSE" <%=branch=='CSE' ? 'selected' : ''%>>CSE</option>
+								<option value="IT" <%=branch=='IT' ? 'selected' : ''%>>IT</option>
+								<option value="ECE" <%=branch=='ECE' ? 'selected' : ''%>>ECE</option>
+								<option value="EE" <%=branch=='EE' ? 'selected' : ''%>>EE</option>
+								<option value="ME" <%=branch=='ME' ? 'selected' : ''%>>ME</option>
+								<option value="PE" <%=branch=='PE' ? 'selected' : ''%>>PE</option>
+								<option value="CE" <%=branch=='CE' ? 'selected' : ''%>>CE</option>
 							</select>
 
 							<label for="gender">Gender</label>
-							<input type="text" id="gender" name="gender" value="<%= gender %>">
+
 							<select id="gender" name="gender" value="<%= gender %>">
-								<option value="australia">Australia</option>
+								<option value="Male" <%=gender=='Male' ? 'selected' : ''%>>Male</option>
+								<option value="Female" <%=gender=='Female' ? 'selected' : ''%>>Female</option>
+
 							</select>
 
-							<input type="submit" name="Submit" value="Add">
+							<input type="submit" name="Submit" value="Edit">
+							<input type="hidden" name="_method" value="PUT" />
 						</form>
 					</div>
 					<div>
-						<form action="/students/edit/<%= id %>" method="post" name="form1">
+						<!--		<form action="/students/edit/<%= id %>" method="post" name="form1">
 							<table width="25%" border="0">
 								<tr>
 									<td>Name</td>
@@ -111,9 +125,9 @@ including header content which is common for all pages
 							</table>
 							<input type="hidden" name="_method" value="PUT" />
 						</form>
-					</div>
+					</div> -->
 
-					<!--
+						<!--
 including footer content which is common for all pages
 -->
-					<%- include ../layouts/footer.ejs %>
+						<%- include ../layouts/footer.ejs %>
