@@ -4,13 +4,13 @@ including header content which is common for all pages
 <%- include ../layouts/header.ejs %>
 
 	<% if (messages.error) { %>
-		<p class="alert alert-danger">
+		<p class="alert alert-danger" style="z-index:999;">
 			<%- messages.error %>
 		</p>
 		<% } %>
 
 			<% if (messages.success) { %>
-				<p class="alert alert-success">
+				<p class="alert alert-success" style="z-index:999;">
 					<%- messages.success %>
 				</p>
 				<% } %>
@@ -20,6 +20,8 @@ including header content which is common for all pages
 					</head>
 
 					<form action="/attendence" method="post" name="form" style="padding-top:200px;">
+						<h1>View attendence of the Event</h1>
+
 						<table width="25%" border="0">
 
 
@@ -35,7 +37,7 @@ including header content which is common for all pages
 
 							<tr>
 
-								<input type="submit" name="Submit" value="Search" />
+								<input type="submit" name="Submit" value="View" />
 
 							</tr>
 						</table>

@@ -4,13 +4,13 @@ including header content which is common for all pages
 <%- include ../layouts/header.ejs %>
 
 	<% if (messages.error) { %>
-		<p class="alert alert-danger">
+		<p class="alert alert-danger" style="z-index:999;">
 			<%- messages.error %>
 		</p>
 		<% } %>
 
 			<% if (messages.success) { %>
-				<p class="alert alert-success">
+				<p class="alert alert-success" style="z-index:999;">
 					<%- messages.success %>
 				</p>
 				<% } %>
@@ -19,7 +19,7 @@ including header content which is common for all pages
 						<link href="/assets/css/formstyle.css" rel="stylesheet">
 					</head>
 					<form action="/attendence/attend" method="post" name="form" style="padding-top:200px;">
-
+						<h1>Mark attendence of Event</h1>
 						<table width="25%" border="0">
 
 							<select name="event_id" id='eventSelect'>

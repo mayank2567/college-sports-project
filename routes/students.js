@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var fs = require('fs');
 
+var event;
 // SHOW LIST OF students
 app.get('/', function (req, res, next) {
 	req.getConnection(function (error, conn) {
@@ -14,6 +15,7 @@ app.get('/', function (req, res, next) {
 					data: ''
 				})
 			} else {
+
 				// render to views/student/list.ejs template file
 				res.render('student/list', {
 					title: 'student List',
@@ -29,6 +31,8 @@ app.get('/add', function (req, res, next) {
 
 	req.getConnection(function (error, conn) {
 		conn.query('SELECT * FROM events ', function (err, rows, fields) {
+			event = rows;
+			debugger
 			// render to views/student/add.ejs
 			res.render('student/add', {
 				title: 'Add New student',
@@ -52,10 +56,19 @@ app.post('/add', function (req, res, next) {
 	req.assert('rollno', 'rollno is required').notEmpty()
 	req.assert('gender', 'gender is required').notEmpty()
 	req.assert('branch', 'branch is required').notEmpty()
+	req.assert('photo', 'Snap is required').notEmpty()
+	req.assert('event', 'Please select a Event').notEmpty()
 	var errors = req.validationErrors()
 
-	if (!errors) { //No errors were found.  Passed Validation!
 
+
+
+	if (!errors) { //No errors were found.  Passed Validation!
+		if (!req.body.event.isArray) {
+			let temp = req.body.event;
+			req.body.event = [];
+			req.body.event.push(temp);
+		}
 		/********************************************
 		 * Express-validator module
 		 
@@ -86,17 +99,24 @@ app.post('/add', function (req, res, next) {
 				//if(err) throw err
 				if (err) {
 					req.flash('error', err)
+					req.getConnection(function (error, conn) {
+						conn.query('SELECT * FROM events ', function (err, rows, fields) {
+							event = rows;
+							debugger
+							// render to views/student/add.ejs
+							res.render('student/add', {
+								name: student.name,
+								year: student.year,
+								course: student.course,
+								rollno: student.rollno,
+								gender: student.gender,
+								branch: student.branch,
+								title: 'Add New student',
+								events: rows
+							});
+						});
+					});
 
-					// render to views/student/add.ejs
-					res.render('student/add', {
-						title: 'Add New student',
-						name: student.name,
-						year: student.year,
-						course: student.course,
-						rollno: student.rollno,
-						gender: student.gender,
-						branch: student.branch
-					})
 				} else {
 					for (let i = 0; i < req.body.event.length; i++) {
 						let currEvent = [];
@@ -113,9 +133,26 @@ app.post('/add', function (req, res, next) {
 
 
 					req.flash('success', 'Data added successfully!')
-
+					event;
+					debugger
 					// render to views/student/add.ejs
-					res.redirect('/students');
+					req.getConnection(function (error, conn) {
+						conn.query('SELECT * FROM events ', function (err, rows, fields) {
+							event = rows;
+							debugger
+							// render to views/student/add.ejs
+							res.render('student/add', {
+								title: 'Add New student',
+								name: '',
+								year: '',
+								course: '',
+								rollno: '',
+								gender: '',
+								branch: '',
+								events: rows
+							});
+						});
+					});
 				}
 			})
 		})
@@ -130,16 +167,25 @@ app.post('/add', function (req, res, next) {
 		 * Using req.body.name 
 		 * because req.param('name') is deprecated
 		 */
-		res.render('student/add', {
-			title: 'Add New student',
-			name: req.body.name,
-			year: req.body.year,
-			course: req.body.course,
-			rollno: req.body.rollno,
-			gender: req.body.gender,
-			branch: req.body.branch,
-			event: ''
-		})
+		debugger
+		event;
+		req.getConnection(function (error, conn) {
+			conn.query('SELECT * FROM events ', function (err, rows, fields) {
+				event = rows;
+				debugger
+				// render to views/student/add.ejs
+				res.render('student/add', {
+					title: 'Add New student',
+					name: '',
+					year: '',
+					course: '',
+					rollno: '',
+					gender: '',
+					branch: '',
+					events: rows
+				});
+			});
+		});
 	}
 })
 

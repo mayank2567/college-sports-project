@@ -4,13 +4,13 @@ including header content which is common for all pages
 <%- include ../layouts/header.ejs %>
 
 	<% if (messages.error) { %>
-		<p class="alert alert-danger">
+		<p class="alert alert-danger" style="z-index:999;">
 			<%- messages.error %>
 		</p>
 		<% } %>
 
 			<% if (messages.success) { %>
-				<p class="alert alert-success">
+				<p class="alert alert-success" style="z-index:999;">
 					<%- messages.success %>
 				</p>
 				<% } %>
@@ -21,6 +21,7 @@ including header content which is common for all pages
 
 					<div id="k1">
 						<form action="/events/edit/<%= id %>" method="post" name="form1">
+							<h1>Edit the Event</h1>
 							<label for="event_name">Name</label>
 							<input type="text" id="event_name" name="event_name" placeholder="Your name.." value="<%= event_name %>">
 
