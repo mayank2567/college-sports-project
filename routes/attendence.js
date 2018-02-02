@@ -199,13 +199,17 @@ app.post('/add', function (req, res, next) {
 		req.sanitize('comment').escape(); // returns 'a &lt;span&gt;comment&lt;/span&gt;'
 		req.sanitize('username').trim(); // returns 'a event'
 		********************************************/
-		debugger;
 
-		let attendance = {};
+
+		let attendence = [];
+		for (let i = 0; i < req.body.rollno.length; i++) {
+			attendence.push(req.body[`attendence_${req.body.rollno[i]}`]);
+		}
+		debugger;
 		req.getConnection(function (error, conn) {
 			for (let i = 0; i < req.body.rollno.length; i++) {
 				debugger
-				conn.query('UPDATE event_student SET attendence = ? WHERE rollno = ? and event_id = ?', [req.body.attendence[i], parseInt(req.body.rollno[i]), req.body.event_id[0]], function (err, result) {
+				conn.query('UPDATE event_student SET attendence = ? WHERE rollno = ? and event_id = ?', [attendence[i], parseInt(req.body.rollno[i]), req.body.event_id[0]], function (err, result) {
 					if (err) {
 						req.flash('error', err)
 

@@ -176,7 +176,7 @@ including header content which is common for all pages
 																<%= student.gender %>
 															</td>
 															<td>
-																<input class="present" type="radio" name="attendence" value="Present" checked>
+																<input class="present" type="radio" name="attendence_<%= student.rollno %>" value="yes" checked>
 
 															</td>
 															<td>
@@ -187,7 +187,7 @@ including header content which is common for all pages
  -->
 
 																<!-- </select> -->
-																<input class="absent" name="attendence" type="radio" value="Absent">
+																<input class="absent" name="attendence_<%= student.rollno %>" type="radio" value="no">
 
 
 															</td>
