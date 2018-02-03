@@ -31,7 +31,9 @@ app.get('/', function (req, res, next) {
 	});
 });
 
+var event_name;
 app.post('/', function (req, res, next) {
+	event_name = req.body.event_name;
 	req.getConnection(function (error, conn) {
 
 		conn.query('SELECT * FROM event_student where event_id = ' + parseInt(req.body.event_id), function (err, rows, fields) {
@@ -83,7 +85,7 @@ app.post('/', function (req, res, next) {
 						data: events,
 						success: 'block',
 						attendance: rows,
-						event_name: '',
+						event_name: event_name,
 						bool: '',
 						students: student
 					});

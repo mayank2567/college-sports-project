@@ -24,7 +24,7 @@ including header content which is common for all pages
 
 						<table width="25%" border="0">
 
-
+							<input type="hidden" name="event_name" value="<%= data[i].event_name%>">
 							<select name="event_id">
 								<option selected value="Select">Please Select a Event</option>
 								<% for(var i=0; i<data.length; i++) {%>
@@ -86,7 +86,7 @@ including header content which is common for all pages
 					</table>   -->
 
 
-					<div style="padding-left:120px;padding-right:120px">
+					<div class="print" style="padding-left:120px;padding-right:120px">
 						<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
 							<thead>
 								<tr>
@@ -149,8 +149,29 @@ including header content which is common for all pages
 							$(document).ready(function () {
 								$('#example').DataTable();
 							});
+
+							function PrintElem(elem) {
+								Popup($(elem).html());
+							}
+
+							function Popup(data) {
+								var mywindow = window.open('', 'new div', 'height=400,width=600');
+								mywindow.document.write('<html><head><title>my div</title>');
+								/*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+								mywindow.document.write('</head><body >');
+								mywindow.document.write(data);
+								mywindow.document.write('</body></html>');
+
+								mywindow.print();
+								mywindow.close();
+
+								return true;
+							}
 						</script>
 					</div>
+
+					<input class="btn" style="margin-left:120px" type="button" value="Print" onclick="PrintElem('.print')" />
+
 					<!--
 including footer content which is common for all pages
 -->
