@@ -121,7 +121,7 @@ app.get('/edit/(:id)', function (req, res, next) {
 				req.flash('error', 'event not found with id = ' + req.params.id)
 				res.redirect('/events')
 			} else { // if event found
-				debugger
+				
 				// render to views/event/edit.ejs template file
 				res.render('event/edit', {
 					title: 'Edit event',

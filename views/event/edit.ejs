@@ -28,17 +28,17 @@ including header content which is common for all pages
 							<label for="event_type">Type</label>
 
 							<select id="event_type" name="event_type" value="<%= event_type %>">
-								<option value="field" <%=event_type=='field' ? 'selected' : ''%>>field</option>
-								<option value="track" <%=event_type=='track' ? 'selected' : ''%>>track</option>
+								<option value="field" <%=event_type=='Field' ? 'selected' : ''%>>Field</option>
+								<option value="track" <%=event_type=='Track' ? 'selected' : ''%>>Track</option>
 
 							</select>
 
 							<label for="event_cat">Category</label>
 
 							<select id="event_cat" name="event_cat" value="<%= event_cat %>">
-								<option value="field" <%=event_cat=='Field' ? 'selected' : ''%>>Field</option>
-								<option value="track" <%=event_cat=='Race' ? 'selected' : ''%>>Race</option>
-								<option value="track" <%=event_cat=='Swim' ? 'selected' : ''%>>Swim</option>
+								<option value="Field" <%=event_cat=='Field' ? 'selected' : ''%>>Field</option>
+								<option value="Track" <%=event_cat=='Track' ? 'selected' : ''%>>Track</option>
+								<option value="Others" <%=event_cat=='Others' ? 'selected' : ''%>>Others</option>
 							</select>
 
 							<label for="rollno">Gender</label>

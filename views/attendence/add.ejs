@@ -20,9 +20,11 @@ including header content which is common for all pages
 					</head>
 					<form action="/attendence/attend" method="post" name="form" style="padding-top:200px;">
 						<h1>Mark attendence of Event</h1>
+						<input type="hidden" name="event_name" id="event">
+
 						<table width="25%" border="0">
 
-							<select name="event_id" id='eventSelect'>
+							<select id="selectEvent" name="event_id" id='eventSelect'>
 								<!-- <option value="Select">Please Select a Event</option> -->
 								<!-- <optgroup label="Select Event" selected> -->
 								<option value="" disabled selected>Select Event</option>
@@ -38,7 +40,8 @@ including header content which is common for all pages
 							<tr>
 
 
-								<input type="submit" name="Submit" value="Add" />
+								<input id="showEvent" type="submit" name="Submit" value="View" />
+
 
 							</tr>
 						</table>
@@ -214,6 +217,11 @@ including header content which is common for all pages
 							<script>
 								$(document).ready(function () {
 									$('#example').DataTable();
+								});
+
+								$("#showEvent").click(function () {
+									$("#event").val($('#selectEvent').find(":selected").text().trim());
+
 								});
 							</script>
 

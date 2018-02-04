@@ -31,22 +31,22 @@ app.get('/', function (req, res, next) {
 app.post('/', function (req, res, next) {
 	var students = [];
 	req.getConnection(function (error, conn) {
-		debugger
+		
 		conn.query('SELECT id FROM events where event_name = ?', req.body.event, function (err, rows, fields) {
-			debugger
+			
 			conn.query('SELECT * FROM result where event_id = ' + parseInt(rows[0].id), function (err, rows, fields) {
 				if (rows)
 					conn.query('SELECT rollno FROM event_student where event_id = ' + parseInt(rows[0].id), function (err, student_rollno, fields) {
-						debugger
+						
 						let sql = 'SELECT * FROM students WHERE';
 						for (let i = 0; i < student_rollno.length; i++) {
 							sql = sql + ' rollno = ' + parseInt(student_rollno[i].rollno);
 							if (i < student_rollno.length - 1)
 								sql += ' or ';
 						}
-						debugger
+						
 						conn.query(sql, function (err, student, fields) {
-							debugger
+							
 							// if (i == student_rollno.length - 1) {
 							console.log("student ", student);
 							if (err) {
@@ -182,7 +182,7 @@ app.get('/edit/(:id)', function (req, res, next) {
 				req.flash('error', 'event not found with id = ' + req.params.id)
 				res.redirect('/events')
 			} else { // if event found
-				debugger
+				
 				// render to views/event/edit.ejs template file
 				res.render('event/edit', {
 					title: 'Edit event',

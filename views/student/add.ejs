@@ -93,23 +93,27 @@ including header content which is common for all pages
 								<label style="text-align:center;">Events</label>
 							</div>
 
+							<div id="checkboxes">
+								<% for(var i=0; i<events.length; i++) {%>
 
-							<% for(var i=0; i<events.length; i++) {%>
+									<div class="col-md-4" style="border-top:1px;">
 
-								<div class="col-md-4" style="border-top:1px;">
-
-									<input id="event" type="checkbox" name="event" value="<%= events[i].event_name%>">
-									<label for="event">
-										<%= events[i].event_name%>
-									</label>
+										<input class="chk <%= events[i].event_cat%>" id="event" type="checkbox" name="event" value="<%= events[i].event_name%>" test="<%= events[i].event_cat%>">
+										<label for="event">
+											<%= events[i].event_name%>
+										</label>
+									</div>
+									<% } %>
+							</div>
+							<div class="col-md-12">
+								<div class="col-md-4">
+									<input type="submit" value="Submit">
 								</div>
+							</div>
+					</div>
 
-
-								<% } %>
-
-									<input class="col-md-4" type="submit" value="Submit">
-						</form>
-
+					</form>
+					<input style=" margin-left:120px;margin-bottom:20px;" type="button" class="btn btn-danger" value="Reset Checkboxes" onclick="resetChk()">
 					</div>
 
 					<!-- First, include the Webcam.js JavaScript Library -->
@@ -123,22 +127,64 @@ including header content which is common for all pages
 							jpeg_quality: 90
 						});
 						Webcam.attach('#my_camera');
-					</script>
 
-
-
-					<script language="JavaScript">
 						function take_snapshot() {
 							// take snapshot and get image data
 							Webcam.snap(function (data_uri) {
 								document.getElementById('photo').value = data_uri;
-								debugger
+								
 								// display results in page
 								document.getElementById('results').innerHTML =
 
 									'<img src="' + data_uri + '"/>';
 							});
 						}
+						$("form").submit(function () {
+
+							$("input:checkbox").removeAttr("disabled");
+							
+						});
+
+						function resetChk() {
+							$('input:checkbox').removeAttr('checked');
+							$('input:checkbox').removeAttr('disabled');
+
+						}
+						$(document).ready(function () {
+
+							$(document).on('change', 'input[type="checkbox"]', function (e) {
+								var selected = [],
+									field = 0,
+									track = 0,
+									count = 0;
+								$('#checkboxes input:checked').each(function () {
+									selected.push($(this).attr('test'));
+									if ($(this).attr('test') == 'Field') {
+										field++;
+									}
+									if ($(this).attr('test') == 'Track') {
+										track++;
+									}
+									count++;
+								});
+								if (count > 2) {
+									$('#checkboxes').each(function () {
+										$('.chk').prop('disabled', true);
+									});
+								} else {
+									if (field > 1)
+										$('#checkboxes').each(function () {
+											$('.Field').prop('disabled', true);
+										});
+									if (track > 1)
+										$('#checkboxes').each(function () {
+											$('.Track').prop('disabled', true);
+										});
+								}
+								 //do your stuff here
+							});
+
+						});
 					</script>
 
 

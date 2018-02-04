@@ -35,12 +35,13 @@ var event_name;
 app.post('/', function (req, res, next) {
 	event_name = req.body.event_name;
 	req.getConnection(function (error, conn) {
-
+		console.log(event_name)
 		conn.query('SELECT * FROM event_student where event_id = ' + parseInt(req.body.event_id), function (err, rows, fields) {
 			let sql = 'SELECT * FROM students WHERE';
+			events;
 
-			if (rows.length == 0) {
-				res.render('attendance/list', {
+			if (rows && rows.length == 0) {
+				res.render('attendence/list', {
 					title: 'No Item Found',
 					data: events,
 					success: 'none',
@@ -68,7 +69,7 @@ app.post('/', function (req, res, next) {
 
 				if (err) {
 					req.flash('error', err)
-					res.render('attendance/list', {
+					res.render('attendence/list', {
 						title: 'Select Event',
 						data: events,
 						success: 'none',
@@ -78,7 +79,7 @@ app.post('/', function (req, res, next) {
 					})
 				} else {
 					events;
-
+					debugger
 					// render to views/student/list.ejs template file
 					res.render('attendence/list', {
 						title: 'Select Event',
@@ -96,8 +97,13 @@ app.post('/', function (req, res, next) {
 		});
 	});
 });
+app.get('/attend', function (req, res, next) {
+	res.redirect('/attendence/add')
+});
 
 app.post('/attend', function (req, res, next) {
+	event_name = req.body.event_name;
+	console.log("event_name ", event_name);
 	req.getConnection(function (error, conn) {
 		conn.query('SELECT * FROM event_student where event_id = ' + parseInt(req.body.event_id), function (err, rows, fields) {
 			let sql = 'SELECT * FROM students WHERE';
@@ -107,7 +113,7 @@ app.post('/attend', function (req, res, next) {
 					data: events,
 					success: 'none',
 					attendance: '',
-					event_name: '',
+					event_name: event_name,
 					students: ''
 				});
 				return;
@@ -134,18 +140,18 @@ app.post('/attend', function (req, res, next) {
 						data: '',
 						success: 'node',
 						attendance: '',
-						event_name: '',
+						event_name: event_name,
 						students: ''
 					})
 				} else {
 					// render to views/student/list.ejs template file
-					debugger
+
 					res.render('attendence/add', {
 						title: 'Select Event',
 						data: events,
 						success: 'block',
 						attendance: rows,
-						event_name: '',
+						event_name: event_name,
 						event_id: req.body.event_id,
 						students: student
 					});
@@ -201,13 +207,16 @@ app.post('/add', function (req, res, next) {
 		req.sanitize('comment').escape(); // returns 'a &lt;span&gt;comment&lt;/span&gt;'
 		req.sanitize('username').trim(); // returns 'a event'
 		********************************************/
-
+		if (!Array.isArray(req.body.rollno)) {
+			let temp = req.body.rollno;
+			req.body.rollno = [];
+			req.body.rollno.push(temp);
+		}
 
 		let attendence = [];
 		for (let i = 0; i < req.body.rollno.length; i++) {
 			attendence.push(req.body[`attendence_${req.body.rollno[i]}`]);
-		}
-		debugger;
+		};
 		req.getConnection(function (error, conn) {
 			for (let i = 0; i < req.body.rollno.length; i++) {
 				debugger
@@ -216,12 +225,15 @@ app.post('/add', function (req, res, next) {
 						req.flash('error', err)
 
 						// render to views/event/add.ejs
-						res.redirect('/add');
+						res.redirect('add');
 						// return;
 					}
+
+					debugger
 				});
 
 			}
+			debugger
 			req.flash('success', 'Updated Attendence');
 			res.redirect('add');
 		})
@@ -239,7 +251,7 @@ app.get('/edit/(:id)', function (req, res, next) {
 				req.flash('error', 'event not found with id = ' + req.params.id)
 				res.redirect('/events')
 			} else { // if event found
-				debugger
+
 				// render to views/event/edit.ejs template file
 				res.render('event/edit', {
 					title: 'Edit event',

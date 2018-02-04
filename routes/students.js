@@ -32,7 +32,7 @@ app.get('/add', function (req, res, next) {
 	req.getConnection(function (error, conn) {
 		conn.query('SELECT * FROM events ', function (err, rows, fields) {
 			event = rows;
-			debugger
+
 			// render to views/student/add.ejs
 			res.render('student/add', {
 				title: 'Add New student',
@@ -102,7 +102,7 @@ app.post('/add', function (req, res, next) {
 					req.getConnection(function (error, conn) {
 						conn.query('SELECT * FROM events ', function (err, rows, fields) {
 							event = rows;
-							debugger
+
 							// render to views/student/add.ejs
 							res.render('student/add', {
 								name: student.name,
@@ -118,15 +118,20 @@ app.post('/add', function (req, res, next) {
 					});
 
 				} else {
-					for (let i = 0; i < req.body.event.length; i++) {
+					req;
+
+					for (let i = 0; i < req.body.event[0].length; i++) {
 						let currEvent = [];
-						currEvent.push(req.body.event[i]);
+						currEvent.push(req.body.event[0][i]);
 						conn.query('SELECT id from events where event_name = ?', currEvent, function (err, rows, fields) {
+
 							let entry = {
 								rollno: parseInt(student.rollno),
 								event_id: rows[0].id
 							};
-							conn.query('INSERT INTO event_student SET ?', entry, function (err, result) {});
+							conn.query('INSERT INTO event_student SET ?', entry, function (err, result) {
+								debugger
+							});
 						});
 					}
 
@@ -134,12 +139,12 @@ app.post('/add', function (req, res, next) {
 
 					req.flash('success', 'Data added successfully!')
 					event;
-					debugger
+
 					// render to views/student/add.ejs
 					req.getConnection(function (error, conn) {
 						conn.query('SELECT * FROM events ', function (err, rows, fields) {
 							event = rows;
-							debugger
+
 							// render to views/student/add.ejs
 							res.render('student/add', {
 								title: 'Add New student',
@@ -167,12 +172,12 @@ app.post('/add', function (req, res, next) {
 		 * Using req.body.name 
 		 * because req.param('name') is deprecated
 		 */
-		debugger
+
 		event;
 		req.getConnection(function (error, conn) {
 			conn.query('SELECT * FROM events ', function (err, rows, fields) {
 				event = rows;
-				debugger
+
 				// render to views/student/add.ejs
 				res.render('student/add', {
 					title: 'Add New student',

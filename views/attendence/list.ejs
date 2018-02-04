@@ -21,13 +21,13 @@ including header content which is common for all pages
 
 					<form action="/attendence" method="post" name="form" style="padding-top:200px;">
 						<h1>View attendence of the Event</h1>
-
+						<input type="hidden" name="event_name" id="event">
 						<table width="25%" border="0">
 
-							<input type="hidden" name="event_name" value="<%= data[i].event_name%>">
-							<select name="event_id">
+							<select id="selectEvent" name="event_id">
 								<option selected value="Select">Please Select a Event</option>
 								<% for(var i=0; i<data.length; i++) {%>
+
 									<option value="<%= data[i].id%>">
 										<%= data[i].event_name%>
 									</option>
@@ -37,11 +37,12 @@ including header content which is common for all pages
 
 							<tr>
 
-								<input type="submit" name="Submit" value="View" />
+								<input id="showEvent" type="submit" name="Submit" value="View" />
 
 							</tr>
 						</table>
 					</form>
+
 					<!--	<table style="display : <%= success %>" width='80%' border=0>
 
 						<tr style='text-align:left; background-color:#CCC'>
@@ -167,6 +168,11 @@ including header content which is common for all pages
 
 								return true;
 							}
+
+							$("#showEvent").click(function () {
+								$("#event").val($('#selectEvent').find(":selected").text().trim());
+								
+							});
 						</script>
 					</div>
 
