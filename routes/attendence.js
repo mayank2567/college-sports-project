@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var fs = require('fs');
 
 var events;
 // SHOW LIST OF events
@@ -58,15 +59,23 @@ app.post('/', function (req, res, next) {
 			}
 
 			conn.query(sql, function (err, student, fields) {
+				debugger
 				for (let i = 0; i < student.length; i++) {
 					for (let j = 0; j < rows.length; j++) {
 						if (student[i].rollno == rows[j].rollno) {
-
+							// fs.readFile(`./photos/${student[i].rollno}.jpg`, function (err, data) {
+							// 	var bitmap = new Buffer(data).toString('base64');
+							// 	bitmap = 'data:image/jpeg;base64,' + bitmap;
+							// 	student[i].photo = bitmap;
 							student[i].attendence = rows[j].attendence;
+							// if (i == student.length - 1) {
+
+							// }
+							// });
 						}
 					}
-				}
 
+				}
 				if (err) {
 					req.flash('error', err)
 					res.render('attendence/list', {
@@ -79,7 +88,8 @@ app.post('/', function (req, res, next) {
 					})
 				} else {
 					events;
-					debugger
+
+
 					// render to views/student/list.ejs template file
 					res.render('attendence/list', {
 						title: 'Select Event',
@@ -90,7 +100,9 @@ app.post('/', function (req, res, next) {
 						bool: '',
 						students: student
 					});
+
 				}
+
 			});
 
 

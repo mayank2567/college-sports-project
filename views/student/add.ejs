@@ -132,7 +132,6 @@ including header content which is common for all pages
 							// take snapshot and get image data
 							Webcam.snap(function (data_uri) {
 								document.getElementById('photo').value = data_uri;
-								
 								// display results in page
 								document.getElementById('results').innerHTML =
 
@@ -142,7 +141,7 @@ including header content which is common for all pages
 						$("form").submit(function () {
 
 							$("input:checkbox").removeAttr("disabled");
-							
+
 						});
 
 						function resetChk() {
@@ -181,7 +180,7 @@ including header content which is common for all pages
 											$('.Track').prop('disabled', true);
 										});
 								}
-								 //do your stuff here
+								//do your stuff here
 							});
 
 						});

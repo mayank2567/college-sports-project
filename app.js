@@ -5,6 +5,8 @@ app.use(morgan('dev'));
 
 
 app.use('/assets', express.static(__dirname + '/views/assets/'));
+app.use('/photos', express.static(__dirname + '/photos/'));
+
 var mysql = require('mysql')
 
 /**
