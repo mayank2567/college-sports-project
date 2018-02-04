@@ -1,0 +1,4 @@
+change the rollno to unique in the students table
+
+change the attendence to allow null in the event_students table
+

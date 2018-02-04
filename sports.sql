@@ -67,7 +67,7 @@ CREATE TABLE `event_student` (
   `id` int(255) NOT NULL,
   `rollno` varchar(255) NOT NULL,
   `event_id` varchar(255) NOT NULL,
-  `attendence` varchar(255) NOT NULL
+  `attendence` varchar(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -91,7 +91,7 @@ INSERT INTO `event_student` (`id`, `rollno`, `event_id`, `attendence`) VALUES
 CREATE TABLE `result` (
   `id` int(255) NOT NULL,
   `event_id` varchar(255) NOT NULL,
-  `registration_id` varchar(255) NOT NULL,
+  `registration_id` varchar(255),
   `first` varchar(255) NOT NULL,
   `second` varchar(255) NOT NULL,
   `third` varchar(255) NOT NULL
@@ -196,6 +196,10 @@ ALTER TABLE `result`
 --
 ALTER TABLE `students`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+COMMIT;
+
+ALTER TABLE `students`
+  MODIFY `rollno` int(255) NOT NULL UNIQUE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
