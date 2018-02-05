@@ -59,7 +59,7 @@ app.post('/', function (req, res, next) {
 			}
 
 			conn.query(sql, function (err, student, fields) {
-				debugger
+
 				for (let i = 0; i < student.length; i++) {
 					for (let j = 0; j < rows.length; j++) {
 						if (student[i].rollno == rows[j].rollno) {
@@ -231,7 +231,7 @@ app.post('/add', function (req, res, next) {
 		};
 		req.getConnection(function (error, conn) {
 			for (let i = 0; i < req.body.rollno.length; i++) {
-				debugger
+
 				conn.query('UPDATE event_student SET attendence = ? WHERE rollno = ? and event_id = ?', [attendence[i], parseInt(req.body.rollno[i]), req.body.event_id[0]], function (err, result) {
 					if (err) {
 						req.flash('error', err)
@@ -241,11 +241,11 @@ app.post('/add', function (req, res, next) {
 						// return;
 					}
 
-					debugger
+
 				});
 
 			}
-			debugger
+
 			req.flash('success', 'Updated Attendence');
 			res.redirect('add');
 		})

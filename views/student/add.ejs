@@ -86,8 +86,8 @@ including header content which is common for all pages
 							<label for="gender">Gender</label>
 
 							<select id="gender" name="gender" value="<%= gender %>">
-								<option value="male">Male</option>
-								<option value="female">Female</option>
+								<option value="Male">Male</option>
+								<option value="Female">Female</option>
 							</select>
 							<div class="col-md-12">
 								<label style="text-align:center;">Events</label>
@@ -95,9 +95,7 @@ including header content which is common for all pages
 
 							<div id="checkboxes">
 								<% for(var i=0; i<events.length; i++) {%>
-
 									<div class="col-md-4" style="border-top:1px;">
-
 										<input class="chk <%= events[i].event_cat%>" id="event" type="checkbox" name="event" value="<%= events[i].event_name%>" test="<%= events[i].event_cat%>">
 										<label for="event">
 											<%= events[i].event_name%>

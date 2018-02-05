@@ -28,11 +28,9 @@ app.get('/', function (req, res, next) {
 
 // SHOW ADD student FORM
 app.get('/add', function (req, res, next) {
-
 	req.getConnection(function (error, conn) {
 		conn.query('SELECT * FROM events ', function (err, rows, fields) {
 			event = rows;
-
 			// render to views/student/add.ejs
 			res.render('student/add', {
 				title: 'Add New student',
@@ -64,7 +62,7 @@ app.post('/add', function (req, res, next) {
 
 
 	if (!errors) { //No errors were found.  Passed Validation!
-		if (!req.body.event.isArray) {
+		if (req.body.event && !req.body.event.isArray) {
 			let temp = req.body.event;
 			req.body.event = [];
 			req.body.event.push(temp);
@@ -130,7 +128,7 @@ app.post('/add', function (req, res, next) {
 								event_id: rows[0].id
 							};
 							conn.query('INSERT INTO event_student SET ?', entry, function (err, result) {
-								debugger
+
 							});
 						});
 					}
@@ -197,26 +195,41 @@ app.post('/add', function (req, res, next) {
 // SHOW EDIT student FORM
 app.get('/edit/(:id)', function (req, res, next) {
 	req.getConnection(function (error, conn) {
-		conn.query('SELECT * FROM students WHERE id = ' + req.params.id, function (err, rows, fields) {
-			if (err) throw err
 
+		conn.query('SELECT * FROM students WHERE id = ' + req.params.id, function (err, rows, fields) {
+
+			if (err) throw err
 			// if student not found
 			if (rows.length <= 0) {
 				req.flash('error', 'student not found with id = ' + req.params.id)
 				res.redirect('/students')
 			} else { // if student found
-				// render to views/student/edit.ejs template file
-				res.render('student/edit', {
-					title: 'Edit student',
-					//data: rows[0],
-					id: rows[0].id,
-					name: rows[0].name,
-					year: rows[0].year,
-					course: rows[0].course,
-					rollno: rows[0].rollno,
-					gender: rows[0].gender,
-					branch: rows[0].branch
-				})
+				conn.query('SELECT * FROM events ', function (err, event, fields) {
+
+					conn.query('SELECT * FROM event_student where rollno = ?', [rows[0].rollno], function (err, event_student, fields) {
+						for (let i = 0; i < event.length; i++) {
+							for (let j = 0; j < event_student.length; j++) {
+								if (event[i].id == event_student[j].event_id) {
+									event[i].checked = true;
+								}
+							}
+						}
+
+						// render to views/student/edit.ejs template file
+						res.render('student/edit', {
+							title: 'Edit student',
+							//data: rows[0],
+							id: rows[0].id,
+							name: rows[0].name,
+							year: rows[0].year,
+							course: rows[0].course,
+							rollno: rows[0].rollno,
+							gender: rows[0].gender,
+							branch: rows[0].branch,
+							events: event
+						})
+					});
+				});
 			}
 		})
 	})
@@ -253,6 +266,12 @@ app.put('/edit/(:id)', function (req, res, next) {
 			branch: req.sanitize('branch').escape().trim()
 		}
 
+		if (req.body.event && !req.body.event.isArray) {
+			let temp = req.body.event;
+			req.body.event = [];
+			req.body.event.push(temp);
+		}
+		debugger
 		req.getConnection(function (error, conn) {
 			conn.query('UPDATE students SET ? WHERE id = ' + req.params.id, student, function (err, result) {
 				//if(err) throw err
@@ -271,19 +290,28 @@ app.put('/edit/(:id)', function (req, res, next) {
 						branch: req.body.branch
 					})
 				} else {
-					req.flash('success', 'Data updated successfully!')
 
+					conn.query('DELETE FROM event_student WHERE rollno = ?', req.body.rollno, function (err, result) {
+
+						for (let i = 0; i < req.body.event[0].length; i++) {
+							let currEvent = [];
+							currEvent.push(req.body.event[0][i]);
+							// conn.query('SELECT id from events where event_name = ?', currEvent, function (err, rows, fields) {
+
+							let entry = {
+								rollno: parseInt(req.body.rollno),
+								event_id: req.body.event[0][i]
+							};
+							conn.query('INSERT INTO event_student SET ?', entry, function (err, result) {
+
+							});
+							// });
+						}
+					});
+					req.flash('success', 'Data updated successfully!')
+					debugger
 					// render to views/student/add.ejs
-					res.render('student/edit', {
-						title: 'Edit student',
-						id: req.params.id,
-						name: req.body.name,
-						year: req.body.year,
-						course: req.body.course,
-						rollno: req.body.rollno,
-						gender: req.body.gender,
-						branch: req.body.branch
-					})
+					res.redirect(req.params.id);
 				}
 			})
 		})

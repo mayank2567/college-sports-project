@@ -27,10 +27,10 @@ including header content which is common for all pages
 							<label for="year">Year</label>
 
 							<select id="year" name="year" value="<%= year %>">
-								<option value="First" <%=year=='field' ? 'selected' : ''%>>First Year</option>
-								<option value="Second" <%=year=='field' ? 'selected' : ''%>>Second Year</option>
-								<option value="Third" <%=year=='field' ? 'selected' : ''%>>Third Year</option>
-								<option value="Fourth" <%=year=='field' ? 'selected' : ''%>>Fourth Year</option>
+								<option value="First" <%=year=='First' ? 'selected' : ''%>>First Year</option>
+								<option value="Second" <%=year=='Second' ? 'selected' : ''%>>Second Year</option>
+								<option value="Third" <%=year=='Third' ? 'selected' : ''%>>Third Year</option>
+								<option value="Fourth" <%=year=='Fourth' ? 'selected' : ''%>>Fourth Year</option>
 
 							</select>
 
@@ -67,67 +67,74 @@ including header content which is common for all pages
 
 							</select>
 
+							<div class="col-md-12">
+								<label style="text-align:center;">Events</label>
+							</div>
+
+							<div id="checkboxes">
+								<% for(var i=0; i<events.length; i++) {%>
+
+									<div class="col-md-4" style="border-top:1px;">
+
+										<input class="chk <%= events[i].event_cat%>" id="event" type="checkbox" name="event" value="<%= events[i].id%>" test="<%= events[i].event_cat%>"
+										    <%=events[i].checked ? 'checked' : ''%>>
+										<label for="event">
+											<%= events[i].event_name%>
+										</label>
+									</div>
+									<% } %>
+							</div>
+
 							<input type="submit" name="Submit" value="Edit">
 							<input type="hidden" name="_method" value="PUT" />
 						</form>
 					</div>
+					<input style=" margin-left:120px;margin-bottom:20px;" type="button" class="btn btn-danger" value="Reset Checkboxes" onclick="resetChk()">
 					<div>
-						<!--		<form action="/students/edit/<%= id %>" method="post" name="form1">
-							<table width="25%" border="0">
-								<tr>
-									<td>Name</td>
-									<td>
-										<input type="text" name="name" id="name" value="<%= name %>" />
-									</td>
-								</tr>
-								<tr>
-									<td>year</td>
-									<td>
-										<input type="text" name="year" value="<%= year %>" />
-									</td>
-								</tr>
-								<tr>
-									<td>course</td>
-									<td>
-										<input type="text" name="course" value="<%= course %>" />
-									</td>
-								</tr>
-								<tr>
-									<td>roll no</td>
-									<td>
-										<input type="text" name="rollno" value="<%= rollno %>" />
-									</td>
-								</tr>
-								<tr>
-									<td>branch</td>
-									<td>
-										<input type="text" name="branch" value="<%= branch %>" />
-									</td>
-								</tr>
-								<tr>
-									<td>year</td>
-									<td>
-										<input type="text" name="year" value="<%= year %>" />
-									</td>
-								</tr>
-								<tr>
-									<td>gender</td>
-									<td>
-										<input type="text" name="gender" value="<%= gender %>" />
-									</td>
-								</tr>
-								<tr>
-									<td></td>
-									<td>
-										<input type="submit" name="Submit" value="Edit" />
-									</td>
-								</tr>
-							</table>
-							<input type="hidden" name="_method" value="PUT" />
-						</form>
-					</div> -->
+						<script>
+							$("form").submit(function () {
+								$("input:checkbox").removeAttr("disabled");
+							});
 
-						<!--
-including footer content which is common for all pages
--->
+							function resetChk() {
+								$('input:checkbox').removeAttr('checked');
+								$('input:checkbox').removeAttr('disabled');
+
+							}
+							$(document).ready(function () {
+
+								$(document).on('change', 'input[type="checkbox"]', function (e) {
+									var selected = [],
+										field = 0,
+										track = 0,
+										count = 0;
+									$('#checkboxes input:checked').each(function () {
+										selected.push($(this).attr('test'));
+										if ($(this).attr('test') == 'Field') {
+											field++;
+										}
+										if ($(this).attr('test') == 'Track') {
+											track++;
+										}
+										count++;
+									});
+									if (count > 2) {
+										$('#checkboxes').each(function () {
+											$('.chk').prop('disabled', true);
+										});
+									} else {
+										if (field > 1)
+											$('#checkboxes').each(function () {
+												$('.Field').prop('disabled', true);
+											});
+										if (track > 1)
+											$('#checkboxes').each(function () {
+												$('.Track').prop('disabled', true);
+											});
+									}
+									//do your stuff here
+								});
+
+							});
+						</script>
 						<%- include ../layouts/footer.ejs %>
