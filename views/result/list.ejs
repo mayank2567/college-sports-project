@@ -21,13 +21,18 @@ including header content which is common for all pages
 
 					<form action="/result" method="post" name="form" style="padding-top:200px;">
 						<h1>View Result of Event</h1>
+						<br>
+						<input type="radio" name="gender" value="Male" checked> Male
+						<br>
+						<input type="radio" name="gender" value="Female"> Female
+						<br>
 						<table width="25%" border="0">
 
 							<input type="hidden" name="url" value="add" />
-							<select name="event">
+							<select id="selectEvent" name="event">
 								<option selected value="Select">Please Select a Event</option>
 								<% for(var i=0; i<data.length; i++) {%>
-									<option value="<%= data[i].event_name%>">
+									<option class="<%= data[i].gender%>" value="<%= data[i].event_name%>">
 										<%= data[i].event_name%>
 									</option>
 									<br>
@@ -302,6 +307,18 @@ including header content which is common for all pages
 						<script>
 							$(document).ready(function () {
 								$('#example1').DataTable();
+
+								$('#selectEvent option.Female').hide();
+								$('#selectEvent option.Male').show();
+								$('input[type=radio][name=gender]').change(function () {
+									if (this.value == 'Female') {
+										$('#selectEvent option.Male').hide();
+										$('#selectEvent option.Female').show();
+									} else {
+										$('#selectEvent option.Female').hide();
+										$('#selectEvent option.Male').show();
+									}
+								});
 							});
 						</script>
 					</div>

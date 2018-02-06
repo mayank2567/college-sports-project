@@ -21,6 +21,11 @@ including header content which is common for all pages
 
 					<form action="/attendence" method="post" name="form" style="padding-top:200px;">
 						<h1>View attendence of the Event</h1>
+						<br>
+						<input type="radio" name="gender" value="Male" checked> Male
+						<br>
+						<input type="radio" name="gender" value="Female"> Female
+						<br>
 						<input type="hidden" name="event_name" id="event">
 						<table width="25%" border="0">
 
@@ -28,7 +33,7 @@ including header content which is common for all pages
 								<option selected value="Select">Please Select a Event</option>
 								<% for(var i=0; i<data.length; i++) {%>
 
-									<option value="<%= data[i].id%>">
+									<option class="<%= data[i].gender%>" value="<%= data[i].id%>">
 										<%= data[i].event_name%>
 									</option>
 									<br>
@@ -114,6 +119,23 @@ including header content which is common for all pages
 						<script>
 							$(document).ready(function () {
 								$('#example ').DataTable();
+
+								$('#selectEvent option.Female').hide();
+								$('#selectEvent option.Male').show();
+								$('input[type=radio][name=gender]').change(function () {
+									if (this.value == 'Female') {
+										$('#selectEvent option.Male').hide();
+										$('#selectEvent option.Female').show();
+									} else {
+										$('#selectEvent option.Female').hide();
+										$('#selectEvent option.Male').show();
+									}
+								});
+
+							});
+							$("#showEvent").click(function () {
+								$("#event").val($('#selectEvent').find(":selected").text().trim());
+
 							});
 
 							function PrintElem(elem) {

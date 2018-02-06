@@ -73,16 +73,27 @@ including header content which is common for all pages
 
 							<div id="checkboxes">
 								<% for(var i=0; i<events.length; i++) {%>
+									<%if(events[i].gender == 'Male'){%>
+										<div class="col-md-4 male" style="border-top:1px;">
+											<input gender="<%= events[i].gender%>" class="chk <%= events[i].event_cat%>" id="event" type="checkbox" name="event" value="<%= events[i].event_name%>"
+											    test="<%= events[i].event_cat%>">
+											<label for="event">
+												<%= events[i].event_name%>
+											</label>
+										</div>
+										<% } %>
+											<%if(events[i].gender == 'Female'){%>
 
-									<div class="col-md-4" style="border-top:1px;">
+												<div class="col-md-4 female" style="border-top:1px;">
+													<input gender="<%= events[i].gender%>" class="chk <%= events[i].event_cat%>" id="event" type="checkbox" name="event" value="<%= events[i].event_name%>"
+													    test="<%= events[i].event_cat%>">
+													<label for="event">
+														<%= events[i].event_name%>
+													</label>
+												</div>
+												<% } %>
+													<% } %>
 
-										<input class="chk <%= events[i].event_cat%>" id="event" type="checkbox" name="event" value="<%= events[i].id%>" test="<%= events[i].event_cat%>"
-										    <%=events[i].checked ? 'checked' : ''%>>
-										<label for="event">
-											<%= events[i].event_name%>
-										</label>
-									</div>
-									<% } %>
 							</div>
 
 							<input type="submit" name="Submit" value="Edit">
@@ -102,7 +113,22 @@ including header content which is common for all pages
 
 							}
 							$(document).ready(function () {
-
+								if ("<%= gender %>" == "Male") {
+									$(".female").css("display", "none");
+									$(".male").css("display", "block");
+								} else {
+									$(".female").css("display", "block");
+									$(".male").css("display", "none");
+								}
+								$("#gender").change(function () {
+									if ($('option:selected', this).text() == "Male") {
+										$(".female").css("display", "none");
+										$(".male").css("display", "block");
+									} else {
+										$(".female").css("display", "block");
+										$(".male").css("display", "none");
+									}
+								});
 								$(document).on('change', 'input[type="checkbox"]', function (e) {
 									var selected = [],
 										field = 0,
@@ -116,8 +142,13 @@ including header content which is common for all pages
 										if ($(this).attr('test') == 'Track') {
 											track++;
 										}
-										count++;
+										if ($(this).attr('test') != 'Others') {
+											count++;
+										}
+										console.log("count ", count);
+
 									});
+
 									if (count > 2) {
 										$('#checkboxes').each(function () {
 											$('.chk').prop('disabled', true);

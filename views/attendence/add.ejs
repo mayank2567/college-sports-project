@@ -20,17 +20,22 @@ including header content which is common for all pages
 					</head>
 					<form action="/attendence/attend" method="post" name="form" style="padding-top:200px;">
 						<h1>Mark attendence of Event</h1>
+						<br>
+						<input type="radio" name="gender" value="Male" checked> Male
+						<br>
+						<input type="radio" name="gender" value="Female"> Female
+						<br>
 						<input type="hidden" name="event_name" id="event">
 
 						<table width="25%" border="0">
 
-							<select id="selectEvent" name="event_id" id='eventSelect'>
+							<select id="selectEvent" name="event_id">
 								<!-- <option value="Select">Please Select a Event</option> -->
 								<!-- <optgroup label="Select Event" selected> -->
 								<option value="" disabled selected>Select Event</option>
 								<% if (data) { %>
 									<% data.forEach(function(row){ %>
-										<option value="<%= row.id %>">
+										<option class="<%= row.gender%>" value="<%= row.id %>">
 											<%= row.event_name %>
 										</option>
 										<% }) %>
@@ -217,6 +222,18 @@ including header content which is common for all pages
 							<script>
 								$(document).ready(function () {
 									$('#example').DataTable();
+
+									$('#selectEvent option.Female').hide();
+									$('#selectEvent option.Male').show();
+									$('input[type=radio][name=gender]').change(function () {
+										if (this.value == 'Female') {
+											$('#selectEvent option.Male').hide();
+											$('#selectEvent option.Female').show();
+										} else {
+											$('#selectEvent option.Female').hide();
+											$('#selectEvent option.Male').show();
+										}
+									});
 								});
 
 								$("#showEvent").click(function () {

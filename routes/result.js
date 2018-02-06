@@ -34,10 +34,10 @@ app.post('/', function (req, res, next) {
 
 		conn.query('SELECT id FROM events where event_name = ?', req.body.event, function (err, rows, fields) {
 			debugger
-			conn.query('SELECT * FROM result where event_id = ' + parseInt(rows[0].id), function (err, rows, fields) {
+			conn.query('SELECT * FROM result where event_id = ' + parseInt(rows[0].id), function (err, result, fields) {
 				debugger
-				if (rows) {
-					conn.query('SELECT rollno FROM event_student where event_id = ' + parseInt(rows[0].event_id), function (err, student_rollno, fields) {
+				if (result[0]) {
+					conn.query('SELECT rollno FROM event_student where event_id = ' + parseInt(result[0].event_id), function (err, student_rollno, fields) {
 						let sql = 'SELECT * FROM students WHERE';
 						for (let i = 0; i < student_rollno.length; i++) {
 							sql = sql + ' rollno = ' + parseInt(student_rollno[i].rollno);
@@ -64,7 +64,7 @@ app.post('/', function (req, res, next) {
 								// render to views/event/list.ejs template file
 								res.render('result/list', {
 									title: 'result List',
-									result: rows,
+									result: result,
 									success: 'block',
 									event_name: req.body.event,
 									data: events,
@@ -76,6 +76,17 @@ app.post('/', function (req, res, next) {
 
 
 					});
+				} else {
+					events;
+					req.flash('error', "No results Entered")
+					res.render('result/list', {
+						title: 'result List',
+						result: '',
+						data: events,
+						success: 'none',
+						students: ''
+
+					})
 				}
 
 			});

@@ -5,7 +5,7 @@ including header content which is common for all pages
 
 
 	<% if (messages.error) { %>
-		<p class="alert alert-danger" style="z-index:999;" >
+		<p class="alert alert-danger" style="z-index:999;">
 			<%- messages.error %>
 		</p>
 		<% } %>
@@ -23,14 +23,19 @@ including header content which is common for all pages
 					<div id="k1">
 						<form action="/result/add" method="post" name="form">
 							<h1>Add Result of Event</h1>
+							<br>
+							<input type="radio" name="gender" value="Male" checked> Male
+							<br>
+							<input type="radio" name="gender" value="Female"> Female
+							<br>
 							<% if (data) { %>
 
-								<select name="event_id" id='eventSelect'>
+								<select name="event_id" id='selectEvent'>
 									<!-- <option value="Select">Please Select a Event</option> -->
 									<!--<optgroup label="Select Table">  -->
 									<option value="" disabled selected>Select Event</option>
 									<% data.forEach(function(row){ %>
-										<option value="<%= row.id %>">
+										<option class="<%= row.gender%>" value="<%= row.id %>">
 											<%= row.event_name %>
 										</option>
 										<% }) %>
@@ -51,40 +56,22 @@ including header content which is common for all pages
 						</form>
 					</div>
 
-					<!--	<form action="/result/add" method="post" name="form">
-						<table width="25%" border="0">
-							<% if (data) { %>
+					<script>
+						$(document).ready(function () {
 
-								<select name="event_id" id='eventSelect'>  -->
-					<!-- <option value="Select">Please Select a Event</option> -->
-					<!--	<optgroup label="Select Table">
-										<option value="">Select Event</option>
-										<% data.forEach(function(row){ %>
-											<option value="<%= row.id %>">
-												<%= row.event_name %>
-											</option>
-											<% }) %>
-									</optgroup>
-								</select>
-								<% } %>
-
-									<tr>
-										<td>
-											<input type="text" name="first" />
-										</td>
-										<td>
-											<input type="text" name="second" />
-										</td>
-										<td>
-											<input type="text" name="third" />
-										</td>
-										<td>
-											<input type="submit" name="Submit" value="Add" />
-										</td>
-									</tr>
-						</table>
-					</form>  -->
-
+							$('#selectEvent option.Female').hide();
+							$('#selectEvent option.Male').show();
+							$('input[type=radio][name=gender]').change(function () {
+								if (this.value == 'Female') {
+									$('#selectEvent option.Male').hide();
+									$('#selectEvent option.Female').show();
+								} else {
+									$('#selectEvent option.Female').hide();
+									$('#selectEvent option.Male').show();
+								}
+							});
+						});
+					</script>
 					<!--
 including footer content which is common for all pages
 -->

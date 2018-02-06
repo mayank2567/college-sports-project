@@ -36,7 +36,7 @@ var event_name;
 app.post('/', function (req, res, next) {
 	event_name = req.body.event_name;
 	req.getConnection(function (error, conn) {
-		console.log(event_name)
+		console.log("event_name", req.body.event_name)
 		conn.query('SELECT * FROM event_student where event_id = ' + parseInt(req.body.event_id), function (err, rows, fields) {
 			let sql = 'SELECT * FROM students WHERE';
 			events;
