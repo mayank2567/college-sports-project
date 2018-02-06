@@ -21,7 +21,94 @@ including header content which is common for all pages
 					</head>
 
 					<div id="k1">
-						<form action="/result/add" method="post" name="form">
+
+						<form action="/result" method="post" name="form" style="padding-top:200px;">
+							<h1>View Result of Event</h1>
+							<br>
+							<input type="radio" name="gender" value="Male" checked> Male
+							<br>
+							<input type="radio" name="gender" value="Female"> Female
+							<br>
+							<table width="25%" border="0">
+								<input type="hidden" name="from" value="add">
+								<input type="hidden" name="url" value="add" />
+								<select id="selectEvent" name="event">
+									<option selected value="Select">Please Select a Event</option>
+									<% for(var i=0; i<data.length; i++) {%>
+										<option class="<%= data[i].gender%>" value="<%= data[i].event_name%>">
+											<%= data[i].event_name%>
+										</option>
+										<br>
+										<% } %>
+								</select>
+
+								<tr>
+
+									<input type="submit" name="Submit" value="Search" />
+
+								</tr>
+							</table>
+						</form>
+						<table id="example1" class="table table-striped table-bordered" cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>ear</th>
+									<th>Course</th>
+									<th>Roll no</th>
+									<th>Branch</th>
+									<th>Gender</th>
+
+
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Year</th>
+									<th>Course</th>
+									<th>Roll No</th>
+									<th>Branch</th>
+									<th>Gender</th>
+
+
+								</tr>
+							</tfoot>
+							<tbody>
+								<% if (students) { %>
+									<% let i = 0%>
+										<% students.forEach(function(student){ %>
+
+											<tr>
+												<td>
+													<%= ++i %>
+												</td>
+												<td>
+													<%= student.name  %>
+												</td>
+												<td>
+													<%= student.year %>
+												</td>
+												<td>
+													<%= student.course %>
+												</td>
+												<td>
+													<%= student.rollno %>
+												</td>
+												<td>
+													<%= student.branch %>
+												</td>
+												<td>
+													<%= student.gender %>
+												</td>
+											</tr>
+											<% }) %>
+												<% } %>
+							</tbody>
+						</table>
+						<!-- <form action="/result/add" method="post" name="form">
 							<h1>Add Result of Event</h1>
 							<br>
 							<input type="radio" name="gender" value="Male" checked> Male
@@ -31,15 +118,14 @@ including header content which is common for all pages
 							<% if (data) { %>
 
 								<select name="event_id" id='selectEvent'>
-									<!-- <option value="Select">Please Select a Event</option> -->
-									<!--<optgroup label="Select Table">  -->
+								
 									<option value="" disabled selected>Select Event</option>
 									<% data.forEach(function(row){ %>
 										<option class="<%= row.gender%>" value="<%= row.id %>">
 											<%= row.event_name %>
 										</option>
 										<% }) %>
-											<!--	</optgroup>  -->
+											
 								</select>
 								<% } %>
 
@@ -53,11 +139,12 @@ including header content which is common for all pages
 									<input type="text" id="third" name="third">
 
 									<input type="submit" value="Submit">
-						</form>
+						</form> -->
 					</div>
 
 					<script>
 						$(document).ready(function () {
+							$('#example1').DataTable();
 
 							$('#selectEvent option.Female').hide();
 							$('#selectEvent option.Male').show();
