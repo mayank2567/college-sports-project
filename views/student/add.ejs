@@ -62,24 +62,34 @@ including header content which is common for all pages
 								<option value="MCA">MCA</option>
 								<option value="MBA">MBA</option>
 							</select>
+							<label for="branch">Branch</label>
 
+							<select id="branch" name="branch" value="<%= branch %>">
+								<option>Please Select Branch</option>
+								<option class="B.Tech" value="CSE">CSE</option>
+								<option class="B.Tech" value="IT">IT</option>
+								<option class="B.Tech" value="ECE">ECE</option>
+								<option class="B.Tech" value="EE">EE</option>
+								<option class="B.Tech" value="ME">ME</option>
+								<option class="B.Tech" value="PE">PE</option>
+								<option class="B.Tech" value="CE">CE</option>
+								<option class="M.Tech" value="CSE">CSE</option>
+								<option class="M.Tech" value="IT">IT</option>
+								<option class="M.Tech" value="ECE">ECE</option>
+								<option class="M.Tech" value="EE">EE</option>
+								<option class="M.Tech" value="ME">ME</option>
+								<option class="M.Tech" value="PE">PE</option>
+								<option class="M.Tech" value="CE">CE</option>
+								<option class="MBA" value="MBA">MBA</option>
+								<option class="MCA" value="MCA">MCA</option>
+							</select>
 
 							<label for="rollno">Roll No.</label>
 							<input id="photo" type="hidden" name="photo" value="" />
 
 							<input type="number" id="rollno" name="rollno" placeholder="Roll No.." value="<%= rollno %>">
 
-							<label for="branch">Branch</label>
 
-							<select id="branch" name="branch" value="<%= branch %>">
-								<option value="CSE">CSE</option>
-								<option value="IT">IT</option>
-								<option value="ECE">ECE</option>
-								<option value="EE">EE</option>
-								<option value="ME">ME</option>
-								<option value="PE">PE</option>
-								<option value="CE">CE</option>
-							</select>
 
 
 
@@ -98,7 +108,7 @@ including header content which is common for all pages
 									<%if(events[i].gender == 'Male'){%>
 										<div class="col-md-4 male" style="border-top:1px;">
 											<input gender="<%= events[i].gender%>" class="chk <%= events[i].event_cat%>" id="event" type="checkbox" name="event" value="<%= events[i].event_name%>"
-											    test="<%= events[i].event_cat%>">
+											 test="<%= events[i].event_cat%>">
 											<label for="event">
 												<%= events[i].event_name%>
 											</label>
@@ -108,7 +118,7 @@ including header content which is common for all pages
 
 												<div class="col-md-4 female" style="border-top:1px;">
 													<input gender="<%= events[i].gender%>" class="chk <%= events[i].event_cat%>" id="event" type="checkbox" name="event" value="<%= events[i].event_name%>"
-													    test="<%= events[i].event_cat%>">
+													 test="<%= events[i].event_cat%>">
 													<label for="event">
 														<%= events[i].event_name%>
 													</label>
@@ -216,6 +226,26 @@ including header content which is common for all pages
 								//do your stuff here
 							});
 
+						});
+
+						$(document).ready(function () {
+							//$("#branch").children('option:gt(0)').hide();
+							$("#branch > option").each(function () {
+								if ($(this).attr('class') != "B.Tech")
+									$(this).hide();
+							});
+							$("#course").change(function () {
+								var branch = $('#course :selected').text()
+								$("#branch > option").each(function () {
+
+									$(this).show();
+								});
+								$("#branch > option").each(function () {
+									if ($(this).attr('class') != branch)
+										$(this).hide();
+								});
+
+							});
 						});
 					</script>
 
