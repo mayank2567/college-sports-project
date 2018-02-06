@@ -11,7 +11,8 @@ app.get('/', function (req, res, next) {
 				req.flash('error', err)
 				res.render('result/list', {
 					title: 'Select Event',
-					data: ''
+					data: '',
+					students: ''
 				})
 			} else {
 				events = rows;
@@ -33,9 +34,7 @@ app.post('/', function (req, res, next) {
 	req.getConnection(function (error, conn) {
 
 		conn.query('SELECT id FROM events where event_name = ?', req.body.event, function (err, rows, fields) {
-			debugger
 			conn.query('SELECT * FROM result where event_id = ' + parseInt(rows[0].id), function (err, result, fields) {
-				debugger
 				if (result[0]) {
 					conn.query('SELECT rollno FROM event_student where event_id = ' + parseInt(result[0].event_id), function (err, student_rollno, fields) {
 						let sql = 'SELECT * FROM students WHERE';
@@ -44,7 +43,6 @@ app.post('/', function (req, res, next) {
 							if (i < student_rollno.length - 1)
 								sql += ' or ';
 						}
-						debugger
 						conn.query(sql, function (err, student, fields) {
 
 							// if (i == student_rollno.length - 1) {
@@ -61,15 +59,28 @@ app.post('/', function (req, res, next) {
 								})
 							} else {
 								events;
+								debugger
 								// render to views/event/list.ejs template file
-								res.render('result/list', {
-									title: 'result List',
-									result: result,
-									success: 'block',
-									event_name: req.body.event,
-									data: events,
-									students: student
-								})
+								if (req.body.from == "add") {
+									res.render('result/add', {
+										title: 'result Add',
+										result: result,
+										success: 'block',
+										event_name: req.body.event,
+										data: events,
+										students: student
+									})
+								} else {
+									res.render('result/list', {
+										title: 'result List',
+										result: result,
+										success: 'block',
+										event_name: req.body.event,
+										data: events,
+										students: student
+									})
+								}
+
 							}
 							// }
 						});
@@ -92,9 +103,9 @@ app.post('/', function (req, res, next) {
 			});
 			//if(err) throw err
 
-		})
-	})
-})
+		});
+	});
+});
 
 // SHOW ADD event FORM
 app.get('/add', function (req, res, next) {
@@ -106,14 +117,18 @@ app.get('/add', function (req, res, next) {
 				req.flash('error', err)
 				res.render('result/add', {
 					title: 'Select Event',
-					data: ''
+					data: '',
+					students: ''
 				})
 			} else {
+				events = rows;
 				// render to views/student/list.ejs template file
 				res.render('result/add', {
 					title: 'Select Event',
 					data: rows,
 					success: 'none',
+					result: '',
+					students: ''
 				});
 			}
 		});
@@ -175,7 +190,7 @@ app.post('/add', function (req, res, next) {
 		 * Using req.body.name 
 		 * because req.param('name') is deprecated
 		 */
-		res.render('event/add', {
+		res.render('result/add', {
 			title: 'Add New event',
 			data: ''
 			// event_name: req.body.event_name,
