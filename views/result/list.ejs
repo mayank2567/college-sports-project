@@ -320,6 +320,11 @@ including header content which is common for all pages
 									}
 								});
 							});
+							var select = $('#selectEvent');
+							select.html(select.find('option').sort(function (x, y) {
+								// to change to descending order switch "<" for ">"
+								return $(x).text() > $(y).text() ? 1 : -1;
+							}));
 						</script>
 					</div>
 					<input class="btn" style="margin-left:120px" type="button" value="Print Participants" onclick="PrintElem('.printPart')" />

@@ -54,7 +54,7 @@ app.post('/add', function (req, res, next) {
 	req.assert('rollno', 'rollno is required').notEmpty()
 	req.assert('gender', 'gender is required').notEmpty()
 	req.assert('branch', 'branch is required').notEmpty()
-	req.assert('photo', 'Snap is required').notEmpty()
+	// req.assert('photo', 'Snap is required').notEmpty()
 	req.assert('event', 'Please select a Event').notEmpty()
 	var errors = req.validationErrors()
 
@@ -117,12 +117,19 @@ app.post('/add', function (req, res, next) {
 
 				} else {
 					req;
+					req.body.event[0]
+					if (!Array.isArray(req.body.event[0])) {
+						let temp = req.body.event[0];
+						req.body.event[0] = [];
+						req.body.event[0].push(temp);
+					}
 
 					for (let i = 0; i < req.body.event[0].length; i++) {
 						let currEvent = [];
 						currEvent.push(req.body.event[0][i]);
+						debugger
 						conn.query('SELECT id from events where event_name = ?', currEvent, function (err, rows, fields) {
-
+							debugger
 							let entry = {
 								rollno: parseInt(student.rollno),
 								event_id: rows[0].id

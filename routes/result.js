@@ -61,25 +61,16 @@ app.post('/', function (req, res, next) {
 								events;
 								debugger
 								// render to views/event/list.ejs template file
-								if (req.body.from == "add") {
-									res.render('result/add', {
-										title: 'result Add',
-										result: result,
-										success: 'block',
-										event_name: req.body.event,
-										data: events,
-										students: student
-									})
-								} else {
-									res.render('result/list', {
-										title: 'result List',
-										result: result,
-										success: 'block',
-										event_name: req.body.event,
-										data: events,
-										students: student
-									})
-								}
+
+								res.render('result/list', {
+									title: 'result List',
+									result: result,
+									success: 'block',
+									event_name: req.body.event,
+									data: events,
+									students: student
+								})
+
 
 							}
 							// }
@@ -106,7 +97,60 @@ app.post('/', function (req, res, next) {
 		});
 	});
 });
+app.post('/view', function (req, res, next) {
+	var students = [];
+	req.getConnection(function (error, conn) {
 
+		conn.query('SELECT id FROM events where event_name = ?', req.body.event, function (err, rows, fields) {
+
+			conn.query('SELECT rollno FROM event_student where event_id = ' + parseInt(rows[0].id), function (err, student_rollno, fields) {
+				let sql = 'SELECT * FROM students WHERE';
+				for (let i = 0; i < student_rollno.length; i++) {
+					sql = sql + ' rollno = ' + parseInt(student_rollno[i].rollno);
+					if (i < student_rollno.length - 1)
+						sql += ' or ';
+				}
+				conn.query(sql, function (err, student, fields) {
+
+					// if (i == student_rollno.length - 1) {
+					console.log("student ", student);
+					if (err) {
+						req.flash('error', err)
+						res.render('result/list', {
+							title: 'result List',
+							result: '',
+							data: '',
+							success: 'none',
+							students: ''
+
+						})
+					} else {
+						events;
+
+						// render to views/event/list.ejs template file
+						res.render('result/add', {
+							title: 'result Add',
+							result: '',
+							success: 'block',
+							event_name: req.body.event,
+							data: events,
+							students: student
+						})
+
+					}
+					// }
+				});
+
+
+			});
+
+
+
+			//if(err) throw err
+
+		});
+	});
+});
 // SHOW ADD event FORM
 app.get('/add', function (req, res, next) {
 	// render to views/event/add.ejs
@@ -137,12 +181,21 @@ app.get('/add', function (req, res, next) {
 // conn.query('SELECT * FROM event_student ORDER BY id DESC', function (err, event, fields) {
 // ADD NEW event POST ACTION
 app.post('/add', function (req, res, next) {
-	req.assert('first', 'Name is required').notEmpty() //Validate name
-	req.assert('second', 'year is required').notEmpty() //Validate year
-	req.assert('third', 'A valid course is required').notEmpty() //Validate course
-	var errors = req.validationErrors()
-	if (!errors) { //No errors were found.  Passed Validation!
 
+
+	// req.assert('first', 'Name is required').notEmpty() //Validate name
+	// req.assert('second', 'year is required').notEmpty() //Validate year
+	// req.assert('third', 'A valid course is required').notEmpty() //Validate course
+	var errors = req.validationErrors()
+	debugger
+	if (!errors) {
+		var result = {};
+		//No errors were found.  Passed Validation!
+		result.first = req.body.rollno[req.body.position.indexOf("First")];
+		result.second = req.body.rollno[req.body.position.indexOf("Second")];
+		result.third = req.body.rollno[req.body.position.indexOf("Third")];
+		result.event_id = req.body.event_id;
+		debugger
 		/********************************************
 		 * Express-validator module
 		 
@@ -152,12 +205,6 @@ app.post('/add', function (req, res, next) {
 		req.sanitize('comment').escape(); // returns 'a &lt;span&gt;comment&lt;/span&gt;'
 		req.sanitize('username').trim(); // returns 'a event'
 		********************************************/
-		var result = {
-			first: req.sanitize('first').escape().trim(),
-			second: req.sanitize('second').escape().trim(),
-			third: req.sanitize('third').escape().trim(),
-			event_id: req.sanitize('event_id').escape().trim()
-		};
 
 		req.getConnection(function (error, conn) {
 			conn.query('INSERT INTO result SET ?', result, function (err, result) {

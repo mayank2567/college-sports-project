@@ -117,6 +117,7 @@ app.post('/attend', function (req, res, next) {
 	event_name = req.body.event_name;
 	console.log("event_name ", event_name);
 	req.getConnection(function (error, conn) {
+
 		conn.query('SELECT * FROM event_student where event_id = ' + parseInt(req.body.event_id), function (err, rows, fields) {
 			let sql = 'SELECT * FROM students WHERE';
 			if (rows.length == 0) {
@@ -225,17 +226,24 @@ app.post('/add', function (req, res, next) {
 			req.body.rollno.push(temp);
 		}
 
+		if (!Array.isArray(req.body.event_id)) {
+			let temp = req.body.event_id;
+			req.body.event_id = [];
+			req.body.event_id.push(temp);
+		}
+		debugger
 		let attendence = [];
 		for (let i = 0; i < req.body.rollno.length; i++) {
 			attendence.push(req.body[`attendence_${req.body.rollno[i]}`]);
 		};
+		debugger
 		req.getConnection(function (error, conn) {
 			for (let i = 0; i < req.body.rollno.length; i++) {
 
 				conn.query('UPDATE event_student SET attendence = ? WHERE rollno = ? and event_id = ?', [attendence[i], parseInt(req.body.rollno[i]), req.body.event_id[0]], function (err, result) {
 					if (err) {
 						req.flash('error', err)
-
+						debugger
 						// render to views/event/add.ejs
 						res.redirect('add');
 						// return;

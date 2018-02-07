@@ -108,7 +108,7 @@ including header content which is common for all pages
 									<%if(events[i].gender == 'Male'){%>
 										<div class="col-md-4 male" style="border-top:1px;">
 											<input gender="<%= events[i].gender%>" class="chk <%= events[i].event_cat%>" id="event" type="checkbox" name="event" value="<%= events[i].event_name%>"
-											 test="<%= events[i].event_cat%>">
+											    test="<%= events[i].event_cat%>">
 											<label for="event">
 												<%= events[i].event_name%>
 											</label>
@@ -117,8 +117,8 @@ including header content which is common for all pages
 											<%if(events[i].gender == 'Female'){%>
 
 												<div class="col-md-4 female" style="border-top:1px;">
-													<input gender="<%= events[i].gender%>" class="chk <%= events[i].event_cat%>" id="event" type="checkbox" name="event" value="<%= events[i].event_name%>"
-													 test="<%= events[i].event_cat%>">
+													<input gender="<%= events[i].gender%>" class="chk <%= events[i].event_cat%> " id="event" type="checkbox" name="event" value="<%= events[i].event_name%>"
+													    test="<%= events[i].event_cat%>">
 													<label for="event">
 														<%= events[i].event_name%>
 													</label>
@@ -211,7 +211,9 @@ including header content which is common for all pages
 								});
 								if (count > 2) {
 									$('#checkboxes').each(function () {
-										$('.chk').prop('disabled', true);
+										// $('.chk').prop('disabled', true);
+										$('.Field').prop('disabled', true);
+										$('.Track').prop('disabled', true);
 									});
 								} else {
 									if (field > 1)

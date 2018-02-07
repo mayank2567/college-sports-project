@@ -234,6 +234,12 @@ including header content which is common for all pages
 											$('#selectEvent option.Male').show();
 										}
 									});
+
+									var select = $('#selectEvent');
+									select.html(select.find('option').sort(function (x, y) {
+										// to change to descending order switch "<" for ">"
+										return $(x).text() > $(y).text() ? 1 : -1;
+									}));
 								});
 
 								$("#showEvent").click(function () {
