@@ -121,18 +121,20 @@ app.post('/view', function (req, res, next) {
 							result: '',
 							data: '',
 							success: 'none',
-							students: ''
+							students: '',
+							event_id: ''
 
 						})
 					} else {
 						events;
-
+						req;
 						// render to views/event/list.ejs template file
 						res.render('result/add', {
 							title: 'result Add',
 							result: '',
 							success: 'block',
 							event_name: req.body.event,
+							event_id: req.body.event_id,
 							data: events,
 							students: student
 						})
@@ -162,7 +164,8 @@ app.get('/add', function (req, res, next) {
 				res.render('result/add', {
 					title: 'Select Event',
 					data: '',
-					students: ''
+					students: '',
+					event_id: ''
 				})
 			} else {
 				events = rows;
@@ -172,7 +175,8 @@ app.get('/add', function (req, res, next) {
 					data: rows,
 					success: 'none',
 					result: '',
-					students: ''
+					students: '',
+					event_id: ''
 				});
 			}
 		});
@@ -194,7 +198,7 @@ app.post('/add', function (req, res, next) {
 		result.first = req.body.rollno[req.body.position.indexOf("First")];
 		result.second = req.body.rollno[req.body.position.indexOf("Second")];
 		result.third = req.body.rollno[req.body.position.indexOf("Third")];
-		result.event_id = req.body.event_id;
+		result.event_id = req.body.eve123;
 		debugger
 		/********************************************
 		 * Express-validator module
@@ -211,16 +215,17 @@ app.post('/add', function (req, res, next) {
 				//if(err) throw err
 				if (err) {
 					req.flash('error', err)
-
+					debugger
 					// render to views/event/add.ejs
 					res.render('result/add', {
-						title: 'Add New event',
-						data: ''
-
+						data: '',
+						success: 'none',
+						result: '',
+						students: '',
+						event_id: ''
 					})
 				} else {
 					req.flash('success', 'Data added successfully!')
-
 					// render to views/event/add.ejs
 					res.redirect('/result')
 				}
