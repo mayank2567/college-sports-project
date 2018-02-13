@@ -127,9 +127,9 @@ app.post('/add', function (req, res, next) {
 					for (let i = 0; i < req.body.event[0].length; i++) {
 						let currEvent = [];
 						currEvent.push(req.body.event[0][i]);
-						debugger
-						conn.query('SELECT id from events where event_name = ?', currEvent, function (err, rows, fields) {
-							debugger
+						
+						conn.query('SELECT id from events where id = ?', currEvent, function (err, rows, fields) {
+							
 							let entry = {
 								rollno: parseInt(student.rollno),
 								event_id: rows[0].id
@@ -278,7 +278,7 @@ app.put('/edit/(:id)', function (req, res, next) {
 			req.body.event = [];
 			req.body.event.push(temp);
 		}
-		debugger
+		
 		req.getConnection(function (error, conn) {
 			conn.query('UPDATE students SET ? WHERE id = ' + req.params.id, student, function (err, result) {
 				//if(err) throw err
@@ -316,7 +316,7 @@ app.put('/edit/(:id)', function (req, res, next) {
 						}
 					});
 					req.flash('success', 'Data updated successfully!')
-					debugger
+					
 					// render to views/student/add.ejs
 					res.redirect(req.params.id);
 				}

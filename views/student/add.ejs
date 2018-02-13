@@ -22,7 +22,7 @@ including header content which is common for all pages
 
 
 					<div class="row" style="padding-top:150px; padding-left:120px;">
-						<div class="col-md-3">
+						<!-- <div class="col-md-3">
 							<h1>Register the student</h1>
 						</div>
 						<div class="row">
@@ -30,7 +30,7 @@ including header content which is common for all pages
 
 						</div>
 
-						<div id="my_camera" class="col-md-3"></div>
+						<div id="my_camera" class="col-md-3"></div> -->
 
 					</div>
 
@@ -107,20 +107,22 @@ including header content which is common for all pages
 								<% for(var i=0; i<events.length; i++) {%>
 									<%if(events[i].gender == 'Male'){%>
 										<div class="col-md-4 male" style="border-top:1px;">
-											<input gender="<%= events[i].gender%>" class="chk <%= events[i].event_cat%>" id="event" type="checkbox" name="event" value="<%= events[i].event_name%>"
+											<input gender="<%= events[i].gender%>" class="chk <%= events[i].event_cat%>" id="event" type="checkbox" name="event" value="<%= events[i].id%>"
 											    test="<%= events[i].event_cat%>">
 											<label for="event">
 												<%= events[i].event_name%>
+
 											</label>
 										</div>
 										<% } %>
 											<%if(events[i].gender == 'Female'){%>
 
 												<div class="col-md-4 female" style="border-top:1px;">
-													<input gender="<%= events[i].gender%>" class="chk <%= events[i].event_cat%> " id="event" type="checkbox" name="event" value="<%= events[i].event_name%>"
+													<input gender="<%= events[i].gender%>" class="chk <%= events[i].event_cat%> " id="event" type="checkbox" name="event" value="<%= events[i].id%>"
 													    test="<%= events[i].event_cat%>">
 													<label for="event">
 														<%= events[i].event_name%>
+															<%= events[i].gender%>
 													</label>
 												</div>
 												<% } %>
@@ -142,13 +144,13 @@ including header content which is common for all pages
 
 					<!-- Configure a few settings and attach camera -->
 					<script language="JavaScript">
-						Webcam.set({
-							width: 320,
-							height: 240,
-							image_format: 'jpeg',
-							jpeg_quality: 90
-						});
-						Webcam.attach('#my_camera');
+						// Webcam.set({
+						// 	width: 320,
+						// 	height: 240,
+						// 	image_format: 'jpeg',
+						// 	jpeg_quality: 90
+						// });
+						// Webcam.attach('#my_camera');
 
 						function take_snapshot() {
 							// take snapshot and get image data
@@ -181,6 +183,8 @@ including header content which is common for all pages
 									$(".female").css("display", "none");
 									$(".male").css("display", "block");
 								} else {
+									$(".female").css("display", "none");
+									$(".male").css("display", "block");
 									$(".female").css("display", "block");
 									$(".male").css("display", "none");
 								}
@@ -188,7 +192,7 @@ including header content which is common for all pages
 								// $(".male").css("display", "none");
 								// $(".male").css("display", "none");
 								// if ($('input').attr('gender').val() == 'Female') {
-								// 	debugger
+								// 	
 								// }
 
 							});

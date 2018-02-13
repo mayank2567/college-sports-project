@@ -25,9 +25,9 @@ including header content which is common for all pages
 						<form action="/result/view" method="post" name="form">
 							<h1>View Result of Event</h1>
 							<br>
-							<input type="radio" name="gender" value="Male" checked> Male
+							<input type="radio" name="gender" value="Male"> Male
 							<br>
-							<input type="radio" name="gender" value="Female"> Female
+							<input type="radio" name="gender" value="Female" checked> Female
 							<br>
 							<table width="25%" border="0">
 								<input type="hidden" name="from" value="add">
@@ -35,7 +35,7 @@ including header content which is common for all pages
 								<select id="selectEvent" name="event">
 									<option selected value="Select">Please Select a Event</option>
 									<% for(var i=0; i<data.length; i++) {%>
-										<option eid="<%= data[i].id%>" class="<%= data[i].gender%>" value="<%= data[i].event_name%>">
+										<option eid="<%= data[i].id%>" class="<%= data[i].gender%>" value="<%= data[i].id%>">
 											<%= data[i].event_name%>
 										</option>
 										<br>
@@ -162,20 +162,22 @@ including header content which is common for all pages
 						function setEventId() {
 							$('#event_id').val($('option:selected').attr('eid'));
 							console.log($('#event_id').val());
-							debugger
+
 						}
 						$(document).ready(function () {
 							$('#example1').DataTable();
 
-							$('#selectEvent option.Female').hide();
-							$('#selectEvent option.Male').show();
+							$('#selectEvent option.Male').hide();
+							$('#selectEvent option.Female').show();
 							$('input[type=radio][name=gender]').change(function () {
-								if (this.value == 'Female') {
-									$('#selectEvent option.Male').hide();
-									$('#selectEvent option.Female').show();
-								} else {
+								debugger
+								if (this.value == 'Male') {
 									$('#selectEvent option.Female').hide();
 									$('#selectEvent option.Male').show();
+								} else {
+									$('#selectEvent option.Male').hide();
+									$('#selectEvent option.Female').show();
+
 								}
 							});
 

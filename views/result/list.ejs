@@ -32,7 +32,7 @@ including header content which is common for all pages
 							<select id="selectEvent" name="event">
 								<option selected value="Select">Please Select a Event</option>
 								<% for(var i=0; i<data.length; i++) {%>
-									<option class="<%= data[i].gender%>" value="<%= data[i].event_name%>">
+									<option class="<%= data[i].gender%>" value="<%= data[i].id%>" test="<%= data[i].gender%>">
 										<%= data[i].event_name%>
 									</option>
 									<br>
@@ -311,12 +311,13 @@ including header content which is common for all pages
 								$('#selectEvent option.Female').hide();
 								$('#selectEvent option.Male').show();
 								$('input[type=radio][name=gender]').change(function () {
-									if (this.value == 'Female') {
-										$('#selectEvent option.Male').hide();
-										$('#selectEvent option.Female').show();
-									} else {
+									debugger
+									if (this.value == 'Male') {
 										$('#selectEvent option.Female').hide();
 										$('#selectEvent option.Male').show();
+									} else {
+										$('#selectEvent option.Male').hide();
+										$('#selectEvent option.Female').show();
 									}
 								});
 							});

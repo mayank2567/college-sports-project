@@ -33,8 +33,12 @@ app.post('/', function (req, res, next) {
 	var students = [];
 	req.getConnection(function (error, conn) {
 
-		conn.query('SELECT id FROM events where event_name = ?', req.body.event, function (err, rows, fields) {
+		debugger
+		conn.query('SELECT id FROM events where id = ?', req.body.event, function (err, rows, fields) {
+			console.log("req ", req.body.event);
+			debugger
 			conn.query('SELECT * FROM result where event_id = ' + parseInt(rows[0].id), function (err, result, fields) {
+				debugger
 				if (result[0]) {
 					conn.query('SELECT rollno FROM event_student where event_id = ' + parseInt(result[0].event_id), function (err, student_rollno, fields) {
 						let sql = 'SELECT * FROM students WHERE';
@@ -59,7 +63,7 @@ app.post('/', function (req, res, next) {
 								})
 							} else {
 								events;
-								debugger
+
 								// render to views/event/list.ejs template file
 
 								res.render('result/list', {
@@ -100,9 +104,9 @@ app.post('/', function (req, res, next) {
 app.post('/view', function (req, res, next) {
 	var students = [];
 	req.getConnection(function (error, conn) {
-
-		conn.query('SELECT id FROM events where event_name = ?', req.body.event, function (err, rows, fields) {
-
+		debugger
+		conn.query('SELECT id FROM events where id = ?', req.body.event, function (err, rows, fields) {
+			debugger
 			conn.query('SELECT rollno FROM event_student where event_id = ' + parseInt(rows[0].id), function (err, student_rollno, fields) {
 				let sql = 'SELECT * FROM students WHERE';
 				for (let i = 0; i < student_rollno.length; i++) {
@@ -134,7 +138,7 @@ app.post('/view', function (req, res, next) {
 							result: '',
 							success: 'block',
 							event_name: req.body.event,
-							event_id: req.body.event_id,
+							event_id: req.body.event,
 							data: events,
 							students: student
 						})
@@ -191,7 +195,7 @@ app.post('/add', function (req, res, next) {
 	// req.assert('second', 'year is required').notEmpty() //Validate year
 	// req.assert('third', 'A valid course is required').notEmpty() //Validate course
 	var errors = req.validationErrors()
-	debugger
+
 	if (!errors) {
 		var result = {};
 		//No errors were found.  Passed Validation!
@@ -214,8 +218,9 @@ app.post('/add', function (req, res, next) {
 			conn.query('INSERT INTO result SET ?', result, function (err, result) {
 				//if(err) throw err
 				if (err) {
-					req.flash('error', err)
 					debugger
+					req.flash('error', err)
+
 					// render to views/event/add.ejs
 					res.render('result/add', {
 						data: '',
@@ -227,6 +232,7 @@ app.post('/add', function (req, res, next) {
 				} else {
 					req.flash('success', 'Data added successfully!')
 					// render to views/event/add.ejs
+					debugger
 					res.redirect('/result')
 				}
 			})
