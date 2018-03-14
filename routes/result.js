@@ -33,12 +33,12 @@ app.post('/', function (req, res, next) {
 	var students = [];
 	req.getConnection(function (error, conn) {
 
-		debugger
+		
 		conn.query('SELECT id FROM events where id = ?', req.body.event, function (err, rows, fields) {
 			console.log("req ", req.body.event);
-			debugger
+			
 			conn.query('SELECT * FROM result where event_id = ' + parseInt(rows[0].id), function (err, result, fields) {
-				debugger
+				
 				if (result[0]) {
 					conn.query('SELECT rollno FROM event_student where event_id = ' + parseInt(result[0].event_id), function (err, student_rollno, fields) {
 						let sql = 'SELECT * FROM students WHERE';
@@ -104,9 +104,9 @@ app.post('/', function (req, res, next) {
 app.post('/view', function (req, res, next) {
 	var students = [];
 	req.getConnection(function (error, conn) {
-		debugger
+		
 		conn.query('SELECT id FROM events where id = ?', req.body.event, function (err, rows, fields) {
-			debugger
+			
 			conn.query('SELECT rollno FROM event_student where event_id = ' + parseInt(rows[0].id), function (err, student_rollno, fields) {
 				let sql = 'SELECT * FROM students WHERE';
 				for (let i = 0; i < student_rollno.length; i++) {
@@ -203,7 +203,7 @@ app.post('/add', function (req, res, next) {
 		result.second = req.body.rollno[req.body.position.indexOf("Second")];
 		result.third = req.body.rollno[req.body.position.indexOf("Third")];
 		result.event_id = req.body.eve123;
-		debugger
+		
 		/********************************************
 		 * Express-validator module
 		 
@@ -218,7 +218,7 @@ app.post('/add', function (req, res, next) {
 			conn.query('INSERT INTO result SET ?', result, function (err, result) {
 				//if(err) throw err
 				if (err) {
-					debugger
+					
 					req.flash('error', err)
 
 					// render to views/event/add.ejs
@@ -232,7 +232,7 @@ app.post('/add', function (req, res, next) {
 				} else {
 					req.flash('success', 'Data added successfully!')
 					// render to views/event/add.ejs
-					debugger
+					
 					res.redirect('/result')
 				}
 			})

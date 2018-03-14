@@ -4,9 +4,9 @@ var fs = require('fs');
 
 var event;
 // SHOW LIST OF students
-app.get('/', function (req, res, next) {
+app.get('/', async function (req, res, next) {
 	req.getConnection(function (error, conn) {
-		conn.query('SELECT * FROM students ORDER BY id DESC', function (err, rows, fields) {
+		conn.query('SELECT * FROM students ORDER BY id DESC',async function (err, rows, fields) {
 			//if(err) throw err
 			if (err) {
 				req.flash('error', err)
@@ -15,8 +15,12 @@ app.get('/', function (req, res, next) {
 					data: ''
 				})
 			} else {
-
-				// render to views/student/list.ejs template file
+				for(let i=0;i<rows.length;i++){
+					
+					rows[i].events = await getEvents(rows[i].rollno,conn);
+					
+				} 
+				// render 0to views/student/list.ejs template file
 				res.render('student/list', {
 					title: 'student List',
 					data: rows
@@ -25,6 +29,33 @@ app.get('/', function (req, res, next) {
 		})
 	})
 })
+
+function getEvents (rollno,conn) {
+	return new Promise((resolve) => {
+		
+		conn.query('SELECT * FROM event_student where rollno = ?',rollno,async function (err, events, fields) {
+			
+			let event = [];
+			for(let i =0;i<events.length;i++){
+				event.push(await getEventName(events[i].event_id,conn));
+			}
+			resolve(event);
+	})
+  })
+}
+
+function getEventName (event,conn) {
+	return new Promise((resolve) => {
+		
+		conn.query('SELECT event_name FROM events where id = ?',event, function (err, eventName, fields) {
+			debugger
+			if(eventName.length>0)
+				resolve(eventName[0].event_name);
+			else
+				resolve();
+		})
+  })
+}
 
 // SHOW ADD student FORM
 app.get('/add', function (req, res, next) {
