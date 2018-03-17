@@ -37,7 +37,7 @@ function getEvents (rollno,conn) {
 			
 			let event = [];
 			for(let i =0;i<events.length;i++){
-				event.push(await getEventName(events[i].event_id,conn));
+				event.push(`${i+1})${await getEventName(events[i].event_id,conn)}`);
 			}
 			resolve(event);
 	})
