@@ -1,6 +1,21 @@
 var express = require('express');
 var app = express();
 var fs = require('fs');
+var csv = require('fast-csv');
+
+var csvStream = csv
+    .format({headers: true})
+    .transform(function(row, next){
+        setImmediate(function(){
+            next(null, {ID: row.ID, Name: row.Name,Year: row.Year,Course: row.Course,RollNo: row.RollNo,Branch: row.Branch,Gender: row.Gender,Events: row.Events});
+        });;
+    }),
+    writableStream = fs.createWriteStream("my.csv");
+ 
+writableStream.on("finish", function(){
+  console.log(`CSV Completed`);
+});
+
 
 var event;
 // SHOW LIST OF students
@@ -16,15 +31,29 @@ app.get('/', async function (req, res, next) {
 				})
 			} else {
 				for(let i=0;i<rows.length;i++){
-					
 					rows[i].events = await getEvents(rows[i].rollno,conn);
-					
-				} 
+				}
+
+				
 				// render 0to views/student/list.ejs template file
 				res.render('student/list', {
 					title: 'student List',
 					data: rows
-				})
+				});
+				csvStream.pipe(writableStream);
+
+				for(let i=0;i<rows.length;i++){
+					csvStream.write({ID: rows[i].id, 
+						Name: rows[i].branch,
+						Year: rows[i].year,
+						Course: rows[i].course,
+						RollNo: rows[i].rollno,
+						Branch: rows[i].branch,
+						Gender: rows[i].gender,
+						Events: rows[i].events
+					});
+				}
+				csvStream.end();
 			}
 		})
 	})
