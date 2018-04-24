@@ -242,6 +242,35 @@ including header content which is common for all pages
 					</div>
 					<input class="btn" style="margin-left:120px" type="button" value="Print Winners" onclick="PrintElem('.printWinners')" />
 
+					<div style="padding-top:50px;padding-left:120px;padding-right:120px" class="printPart">
+						<h1>Best Athelete</h1>
+					</div>
+					<input id="best" class="btn" style="margin-left:120px" type="button" value="Show Best Athelete" />
+					<div style="padding-top:50px;padding-left:120px;padding-right:120px" id="athlete" class="hide">
+
+						<table id="customers">
+							<tr>
+								<th>Name</th>
+								<th>Roll NO</th>
+								<th>Year</th>
+								<th>Gender</th>
+							</tr>
+							<tr>
+								<td>Mandeep Kaur</td>
+								<td>1410873</td>
+								<td>Fourth</td>
+								<td>Female</td>
+							</tr>
+							<tr>
+								<td>harnoor singh</td>
+								<td>1707014</td>
+								<td>First</td>
+								<td>Male</td>
+							</tr>
+
+						</table>
+					</div>
+
 
 					<div style="padding-top:50px;padding-left:120px;padding-right:120px" class="printPart">
 						<h1>List of Participants</h1>
@@ -311,7 +340,7 @@ including header content which is common for all pages
 								$('#selectEvent option.Female').hide();
 								$('#selectEvent option.Male').show();
 								$('input[type=radio][name=gender]').change(function () {
-									
+
 									if (this.value == 'Male') {
 										$('#selectEvent option.Female').hide();
 										$('#selectEvent option.Male').show();
@@ -321,11 +350,18 @@ including header content which is common for all pages
 									}
 								});
 							});
+
 							var select = $('#selectEvent');
 							select.html(select.find('option').sort(function (x, y) {
 								// to change to descending order switch "<" for ">"
 								return $(x).text() > $(y).text() ? 1 : -1;
 							}));
+
+
+							$('#best').on('click', function () {
+								setTimeout(function () { $("#athlete").removeClass("hide"); }, 1500);
+
+							});
 						</script>
 					</div>
 					<input class="btn" style="margin-left:120px" type="button" value="Print Participants" onclick="PrintElem('.printPart')" />
