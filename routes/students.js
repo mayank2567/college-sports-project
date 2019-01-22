@@ -77,7 +77,7 @@ function getEventName (event,conn) {
 	return new Promise((resolve) => {
 		
 		conn.query('SELECT event_name FROM events where id = ?',event, function (err, eventName, fields) {
-			debugger
+			
 			if(eventName.length>0)
 				resolve(eventName[0].event_name);
 			else

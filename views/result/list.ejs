@@ -156,22 +156,27 @@ including header content which is common for all pages
 						<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
 							<thead>
 								<tr>
-									<th>ID</th>
+									<th>Position</th>
 									<th>Event Name</th>
-									<th>First</th>
-									<th>Second</th>
-									<th>Third</th>
+									<!-- <th>Student</th> -->
+									<th>Name</th>
+									<th>Roll No</th>
+									<th>Branch</th>
+									<th>Year</th>
+
 
 
 								</tr>
 							</thead>
 							<tfoot>
 								<tr>
-									<th>ID</th>
+									<th>Position</th>
 									<th>Event Name</th>
-									<th>First</th>
-									<th>Second</th>
-									<th>Third</th>
+									<th>Name</th>
+									<th>Roll No</th>
+									<th>Branch</th>
+									<th>Year</th>
+
 
 
 								</tr>
@@ -189,13 +194,16 @@ including header content which is common for all pages
 													<%= event_name %>
 												</td>
 												<td>
-													<%= event.first %>
+													<%= event.name %>
 												</td>
 												<td>
-													<%= event.second %>
+													<%= event.rollno %>
 												</td>
 												<td>
-													<%= event.third %>
+													<%= event.branch %>
+												</td>
+												<td>
+													<%= event.year %>
 												</td>
 												<!-- <td>
 																				<div style="float:left">
