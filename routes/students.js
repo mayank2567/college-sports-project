@@ -77,7 +77,7 @@ function getEventName (event,conn) {
 	return new Promise((resolve) => {
 		
 		conn.query('SELECT event_name FROM events where id = ?',event, function (err, eventName, fields) {
-			debugger
+			
 			if(eventName.length>0)
 				resolve(eventName[0].event_name);
 			else
@@ -132,7 +132,6 @@ app.post('/add', function (req, res, next) {
 		 
 		req.body.comment = 'a <span>comment</span>';
 		req.body.username = '   a student    ';
-
 		req.sanitize('comment').escape(); // returns 'a &lt;span&gt;comment&lt;/span&gt;'
 		req.sanitize('username').trim(); // returns 'a student'
 		********************************************/
@@ -320,7 +319,6 @@ app.put('/edit/(:id)', function (req, res, next) {
 		 
 		req.body.comment = 'a <span>comment</span>';
 		req.body.username = '   a student    ';
-
 		req.sanitize('comment').escape(); // returns 'a &lt;span&gt;comment&lt;/span&gt;'
 		req.sanitize('username').trim(); // returns 'a student'
 		********************************************/

@@ -50,7 +50,6 @@ app.post('/', function (req, res, next) {
 						conn.query(sql, function (err, student, fields) {
 
 							// if (i == student_rollno.length - 1) {
-							console.log("student ", student);
 							if (err) {
 								req.flash('error', err)
 								res.render('result/list', {
@@ -63,14 +62,28 @@ app.post('/', function (req, res, next) {
 								})
 							} else {
 								events;
+								 console.log("events ", events);
+								 var name;
+								events.map((event)=>{
+									if(event.id == req.body.event){
+										name = event.event_name;
+									}
+								})
+								let finalResult = [];
+								finalResult.push(student.filter(stud => stud.rollno == result[0].first)[0]);
+								finalResult.push(student.filter(stud => stud.rollno == result[0].second)[0]);
+								finalResult.push(student.filter(stud => stud.rollno == result[0].third)[0]);
+								// result[0].first = student.filter(stud => stud.rollno == result[0].first)
+								// result[0].second = student.filter(stud => stud.rollno == result[0].second)
+								// result[0].third = student.filter(stud => stud.rollno == result[0].third)
+
 
 								// render to views/event/list.ejs template file
-
 								res.render('result/list', {
 									title: 'result List',
-									result: result,
+									result: finalResult,
 									success: 'block',
-									event_name: req.body.event,
+									event_name: name,
 									data: events,
 									students: student
 								})
@@ -209,7 +222,6 @@ app.post('/add', function (req, res, next) {
 		 
 		req.body.comment = 'a <span>comment</span>';
 		req.body.username = '   a event    ';
-
 		req.sanitize('comment').escape(); // returns 'a &lt;span&gt;comment&lt;/span&gt;'
 		req.sanitize('username').trim(); // returns 'a event'
 		********************************************/
@@ -301,7 +313,6 @@ app.put('/edit/(:id)', function (req, res, next) {
 		 
 		req.body.comment = 'a <span>comment</span>';
 		req.body.username = '   a event    ';
-
 		req.sanitize('comment').escape(); // returns 'a &lt;span&gt;comment&lt;/span&gt;'
 		req.sanitize('username').trim(); // returns 'a event'
 		********************************************/
