@@ -3,180 +3,209 @@ including header content which is common for all pages
 -->
 <%- include ../layouts/header.ejs %>
 
-	<% if (messages.error) { %>
-		<p class="alert alert-danger" style="z-index:999;">
-			<%- messages.error %>
-		</p>
-		<% } %>
+<% if (messages.error) { %>
+<p class="alert alert-danger" style="z-index:999;">
+	<%- messages.error %>
+</p>
+<% } %>
 
-			<% if (messages.success) { %>
-				<p class="alert alert-success" style="z-index:999;">
-					<%- messages.success %>
-				</p>
-				<% } %>
+<% if (messages.success) { %>
+<p class="alert alert-success" style="z-index:999;">
+	<%- messages.success %>
+</p>
+<% } %>
 
-					<head>
-						<link href="/assets/css/formstyle.css" rel="stylesheet">
-					</head>
+<head>
+	<link href="/assets/css/formstyle.css" rel="stylesheet">
+	<style>
+		.dt-button{
+			font-size: 14px;
+			padding: 5px 12px;
+			background-color: rgb(231, 67, 67);
+			color: #fff;
+			border-style: none;
+			font-weight: bold;
+		}
+	</style>
+</head>
 
-					<form action="/attendence" method="post" name="form" style="padding-top:200px;">
-						<h1>View attendence of the Event</h1>
-						<br>
-						<input type="radio" name="gender" value="Male" checked> Male
-						<br>
-						<input type="radio" name="gender" value="Female"> Female
-						<br>
-						<input type="hidden" name="event_name" id="event">
-						<table width="25%" border="0">
+<form action="/attendence" method="post" name="form" style="padding-top:200px;">
+	<h1>View attendence of the Event</h1>
+	<br>
+	<input type="radio" name="gender" value="Male" checked> Male
+	<br>
+	<input type="radio" name="gender" value="Female"> Female
+	<br>
+	<input type="hidden" name="event_name" id="event">
+	<table width="25%" border="0">
 
-							<select id="selectEvent" name="event_id">
-								<option selected value="Select">Please Select a Event</option>
-								<% for(var i=0; i<data.length; i++) {%>
+		<select id="selectEvent" name="event_id">
+			<option selected value="Select">Please Select a Event</option>
+			<% for(var i=0; i<data.length; i++) {%>
 
-									<option class="<%= data[i].gender%>" value="<%= data[i].id%>">
-										<%= data[i].event_name%>
-									</option>
-									<br>
-									<% } %>
-							</select>
+			<option class="<%= data[i].gender%>" value="<%= data[i].id%>">
+				<%= data[i].event_name%>
+			</option>
+			<br>
+			<% } %>
+		</select>
 
-							<tr>
+		<tr>
 
-								<input id="showEvent" type="submit" name="Submit" value="View" />
+			<input id="showEvent" type="submit" name="Submit" value="View" />
 
-							</tr>
-						</table>
-					</form>
-
-
-
-					<div id="printable" class="print " style="padding-left:120px;padding-right:120px">
-						<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th>ID</th>
-									<th>Event Name</th>
-									<th>Name</th>
-									<th>Branch</th>
-									<th>Course</th>
-									<th>Roll No</th>
-									<th>Gender</th>
-									<th>Attendance</th>
-									<th>Photo</th>
-
-								</tr>
-							</thead>
-							<tfoot>
-								<tr>
-									<th>ID</th>
-									<th>Event Name</th>
-									<th>Name</th>
-									<th>Branch</th>
-									<th>Course</th>
-									<th>Roll No</th>
-									<th>Gender</th>
-									<th>Attendance</th>
-									<th>Photo</th>
-
-								</tr>
-							</tfoot>
-							<tbody>
-								<% if (students) { %>
-									<% let i = 0%>
-										<% students.forEach(function(srudent){ %>
-
-											<tr>
-												<td>
-													<%= ++i %>
-												</td>
-												<td>
-													<%= event_name %>
-												</td>
-												<td>
-													<%= srudent.name %>
-												</td>
-												<td>
-													<%= srudent.branch %>
-												</td>
-												<td>
-													<%= srudent.course %>
-												</td>
-												<td>
-													<%= srudent.rollno %>
-												</td>
-												<td>
-													<%= srudent.gender %>
-												</td>
-												<td>
-													<%= srudent.attendence %>
-												</td>
-												<td>
-
-													<img src="/photos/<%=srudent.rollno %>.jpg" alt="Smiley face" height="48" width="64">
-												</td>
-
-											</tr>
-											<% }) %>
-												<% } %>
-							</tbody>
-						</table>
-						<button class="print btn btn-danger"> Print </button>
-						<script>
-							$(document).ready(function () {
-								$('#example ').DataTable();
-
-								$('#selectEvent option.Female').hide();
-								$('#selectEvent option.Male').show();
-								$('input[type=radio][name=gender]').change(function () {
-									if (this.value == 'Female') {
-										$('#selectEvent option.Male').hide();
-										$('#selectEvent option.Female').show();
-									} else {
-										$('#selectEvent option.Female').hide();
-										$('#selectEvent option.Male').show();
-									}
-								});
-								var select = $('#selectEvent');
-								select.html(select.find('option').sort(function (x, y) {
-									// to change to descending order switch "<" for ">"
-									return $(x).text() > $(y).text() ? 1 : -1;
-								}));
-							});
-							$("#showEvent").click(function () {
-								$("#event").val($('#selectEvent').find(":selected").text().trim());
-
-							});
-
-							function PrintElem(elem) {
-
-								Popup($(elem).html());
-
-							}
-
-							function Popup(data) {
-								var mywindow = window.open('', 'new div', 'height=400,width=600');
-								mywindow.document.write('<html><head><title>my div</title>');
-								/*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
-								mywindow.document.write('</head><body >');
-								mywindow.document.write(data);
-								mywindow.document.write('</body></html>');
-								mywindow.print();
-								mywindow.close();
-								return true;
-							}
-							$(function () {
-								$("#printable").find('.print').on('click', function () {
-									$.print("#printable");
-								});
-
-							});
-						</script>
-					</div>
+		</tr>
+	</table>
+</form>
 
 
-					<!-- <input class="btn" style="margin-left:120px" type="button" value="Print" onclick="PrintElem('.print')" /> -->
 
-					<!--
+<div id="printable" class="print " style="padding-left:120px;padding-right:120px">
+	<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Event Name</th>
+				<th>Name</th>
+				<th>Branch</th>
+				<th>Course</th>
+				<th>Roll No</th>
+				<th>Gender</th>
+				<th>Attendance</th>
+				<th>Chest No</th>
+
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<th>ID</th>
+				<th>Event Name</th>
+				<th>Name</th>
+				<th>Branch</th>
+				<th>Course</th>
+				<th>Roll No</th>
+				<th>Gender</th>
+				<th>Attendance</th>
+				<th>Chest No</th>
+
+			</tr>
+		</tfoot>
+		<tbody>
+			<% if (students) { %>
+			<% let i = 0%>
+			<% students.forEach(function(srudent){ %>
+
+			<tr>
+				<td>
+					<%= ++i %>
+				</td>
+				<td>
+					<%= event_name %>
+				</td>
+				<td>
+					<%= srudent.name %>
+				</td>
+				<td>
+					<%= srudent.branch %>
+				</td>
+				<td>
+					<%= srudent.course %>
+				</td>
+				<td>
+					<%= srudent.rollno %>
+				</td>
+				<td>
+					<%= srudent.gender %>
+				</td>
+				<td>
+					<%= srudent.attendence %>
+				</td>
+				<td>
+					<%= srudent.chest_no %>
+					<!-- <img src="/photos/<%=srudent.rollno %>.jpg" alt="Smiley face" height="48" width="64"> -->
+				</td>
+
+			</tr>
+			<% }) %>
+			<% } %>
+		</tbody>
+	</table>
+	<!-- <button class="print btn btn-danger"> Print </button> -->
+
+	<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+	<script src="https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			$('#example ').DataTable({
+				select: true,
+				dom: 'Bfrtip',
+				buttons: [
+					// 'csv', 'pdf', 'print'
+					'print'
+				],
+			});
+
+			$('#selectEvent option.Female').hide();
+			$('#selectEvent option.Male').show();
+			$('input[type=radio][name=gender]').change(function () {
+				if (this.value == 'Female') {
+					$('#selectEvent option.Male').hide();
+					$('#selectEvent option.Female').show();
+				} else {
+					$('#selectEvent option.Female').hide();
+					$('#selectEvent option.Male').show();
+				}
+			});
+			var select = $('#selectEvent');
+			select.html(select.find('option').sort(function (x, y) {
+				// to change to descending order switch "<" for ">"
+				return $(x).text() > $(y).text() ? 1 : -1;
+			}));
+		});
+		$("#showEvent").click(function () {
+			$("#event").val($('#selectEvent').find(":selected").text().trim());
+
+		});
+
+		function PrintElem(elem) {
+
+			Popup($(elem).html());
+
+		}
+
+		function Popup(data) {
+			var mywindow = window.open('', 'new div', 'height=400,width=600');
+			mywindow.document.write('<html><head><title>my div</title>');
+			/*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+			mywindow.document.write('</head><body >');
+			mywindow.document.write(data);
+			mywindow.document.write('</body></html>');
+			mywindow.print();
+			mywindow.close();
+			return true;
+		}
+		$(function () {
+			$("#printable").find('.print').on('click', function () {
+				$.print("#printable");
+			});
+
+		});
+	</script>
+
+</div>
+
+
+<!-- <input class="btn" style="margin-left:120px" type="button" value="Print" onclick="PrintElem('.print')" /> -->
+
+<!--
 including footer content which is common for all pages
 -->
-					<%- include ../layouts/footer.ejs %>
+<%- include ../layouts/footer.ejs %>

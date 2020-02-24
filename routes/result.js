@@ -33,12 +33,12 @@ app.post('/', function (req, res, next) {
 	var students = [];
 	req.getConnection(function (error, conn) {
 
-		
+
 		conn.query('SELECT id FROM events where id = ?', req.body.event, function (err, rows, fields) {
 			console.log("req ", req.body.event);
-			
+
 			conn.query('SELECT * FROM result where event_id = ' + parseInt(rows[0].id), function (err, result, fields) {
-				
+
 				if (result[0]) {
 					conn.query('SELECT rollno FROM event_student where event_id = ' + parseInt(result[0].event_id), function (err, student_rollno, fields) {
 						let sql = 'SELECT * FROM students WHERE';
@@ -62,10 +62,10 @@ app.post('/', function (req, res, next) {
 								})
 							} else {
 								events;
-								 console.log("events ", events);
-								 var name;
-								events.map((event)=>{
-									if(event.id == req.body.event){
+								console.log("events ", events);
+								var name;
+								events.map((event) => {
+									if (event.id == req.body.event) {
 										name = event.event_name;
 									}
 								})
@@ -117,10 +117,11 @@ app.post('/', function (req, res, next) {
 app.post('/view', function (req, res, next) {
 	var students = [];
 	req.getConnection(function (error, conn) {
-		
-		conn.query('SELECT id FROM events where id = ?', req.body.event, function (err, rows, fields) {
-			
-			conn.query('SELECT rollno FROM event_student where event_id = ' + parseInt(rows[0].id), function (err, student_rollno, fields) {
+		let eventId = req.body.event.split('-')[0];
+		let eventName = req.body.event.split('-')[1];
+		conn.query('SELECT id FROM events where id = ?', eventId, function (err, rows, fields) {
+
+			conn.query('SELECT rollno,attendence FROM event_student where attendence="yes" and event_id = ' + parseInt(rows[0].id), function (err, student_rollno, fields) {
 				let sql = 'SELECT * FROM students WHERE';
 				for (let i = 0; i < student_rollno.length; i++) {
 					sql = sql + ' rollno = ' + parseInt(student_rollno[i].rollno);
@@ -153,7 +154,8 @@ app.post('/view', function (req, res, next) {
 							event_name: req.body.event,
 							event_id: req.body.event,
 							data: events,
-							students: student
+							students: student,
+							eventName : eventName
 						})
 
 					}
@@ -193,7 +195,8 @@ app.get('/add', function (req, res, next) {
 					success: 'none',
 					result: '',
 					students: '',
-					event_id: ''
+					event_id: '',
+					eventName:''
 				});
 			}
 		});
@@ -216,12 +219,13 @@ app.post('/add', function (req, res, next) {
 		result.second = req.body.rollno[req.body.position.indexOf("Second")];
 		result.third = req.body.rollno[req.body.position.indexOf("Third")];
 		result.event_id = req.body.eve123;
-		
+
 		/********************************************
 		 * Express-validator module
 		 
 		req.body.comment = 'a <span>comment</span>';
 		req.body.username = '   a event    ';
+
 		req.sanitize('comment').escape(); // returns 'a &lt;span&gt;comment&lt;/span&gt;'
 		req.sanitize('username').trim(); // returns 'a event'
 		********************************************/
@@ -230,7 +234,7 @@ app.post('/add', function (req, res, next) {
 			conn.query('INSERT INTO result SET ?', result, function (err, result) {
 				//if(err) throw err
 				if (err) {
-					
+
 					req.flash('error', err)
 
 					// render to views/event/add.ejs
@@ -244,7 +248,7 @@ app.post('/add', function (req, res, next) {
 				} else {
 					req.flash('success', 'Data added successfully!')
 					// render to views/event/add.ejs
-					
+
 					res.redirect('/result')
 				}
 			})
@@ -269,7 +273,7 @@ app.post('/add', function (req, res, next) {
 			// gender: req.body.gender
 		})
 	}
-})
+});
 
 // SHOW EDIT event FORM
 app.get('/edit/(:id)', function (req, res, next) {
@@ -296,7 +300,7 @@ app.get('/edit/(:id)', function (req, res, next) {
 			}
 		})
 	})
-})
+});
 
 // EDIT event POST ACTION
 app.put('/edit/(:id)', function (req, res, next) {
@@ -313,6 +317,7 @@ app.put('/edit/(:id)', function (req, res, next) {
 		 
 		req.body.comment = 'a <span>comment</span>';
 		req.body.username = '   a event    ';
+
 		req.sanitize('comment').escape(); // returns 'a &lt;span&gt;comment&lt;/span&gt;'
 		req.sanitize('username').trim(); // returns 'a event'
 		********************************************/
@@ -373,7 +378,7 @@ app.put('/edit/(:id)', function (req, res, next) {
 			gender: req.body.gender
 		})
 	}
-})
+});
 
 // DELETE event
 app.delete('/delete/(:id)', function (req, res, next) {
@@ -395,6 +400,6 @@ app.delete('/delete/(:id)', function (req, res, next) {
 			}
 		})
 	})
-})
+});
 
 module.exports = app

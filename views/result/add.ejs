@@ -4,127 +4,141 @@ including header content which is common for all pages
 <%- include ../layouts/header.ejs %>
 
 
-	<% if (messages.error) { %>
-		<p class="alert alert-danger" style="z-index:999;">
-			<%- messages.error %>
-		</p>
-		<% } %>
+<% if (messages.error) { %>
+<p class="alert alert-danger" style="z-index:999;">
+	<%- messages.error %>
+</p>
+<% } %>
 
-			<% if (messages.success) { %>
-				<p class="alert alert-success" style="z-index:999;">
-					<%- messages.success %>
-				</p>
+<% if (messages.success) { %>
+<p class="alert alert-success" style="z-index:999;">
+	<%- messages.success %>
+</p>
+<% } %>
+
+<head>
+	<link href="/assets/css/formstyle.css" rel="stylesheet">
+</head>
+
+<div id="k1">
+
+	<form action="/result/view" method="post" name="form">
+		<h1>View Result of Event</h1>
+		<br>
+		<input type="radio" name="gender" value="Male"> Male
+		<br>
+		<input type="radio" name="gender" value="Female" checked> Female
+		<br>
+		<table width="25%" border="0">
+			<input type="hidden" name="from" value="add">
+			<input id="event_id" name="event_id" type="hidden">
+			<select id="selectEvent" name="event">
+				<option selected value="Select">Please Select a Event</option>
+				<% for(var i=0; i<data.length; i++) {%>
+				<option eid="<%= data[i].id%>" class="<%= data[i].gender%>" value="<%= data[i].id%>-<%= data[i].event_name%>">
+					<%= data[i].event_name%>
+				</option>
+				<br>
 				<% } %>
+			</select>
 
-					<head>
-						<link href="/assets/css/formstyle.css" rel="stylesheet">
-					</head>
+			<tr>
 
-					<div id="k1">
+				<input type="submit" name="Submit" value="Search" onclick="setEventId()" />
 
-						<form action="/result/view" method="post" name="form">
-							<h1>View Result of Event</h1>
-							<br>
-							<input type="radio" name="gender" value="Male"> Male
-							<br>
-							<input type="radio" name="gender" value="Female" checked> Female
-							<br>
-							<table width="25%" border="0">
-								<input type="hidden" name="from" value="add">
-								<input id="event_id" name="event_id" type="hidden">
-								<select id="selectEvent" name="event">
-									<option selected value="Select">Please Select a Event</option>
-									<% for(var i=0; i<data.length; i++) {%>
-										<option eid="<%= data[i].id%>" class="<%= data[i].gender%>" value="<%= data[i].id%>">
-											<%= data[i].event_name%>
-										</option>
-										<br>
-										<% } %>
-								</select>
+			</tr>
+		</table>
+	</form>
 
-								<tr>
+	<div style="padding-left: 120px;">
+		<% if (eventName) { %>
+			<div>
+				<h2>Selected Event : <%- eventName %></h2>
+			</div>
+		<% } %>
+	</div>
 
-									<input type="submit" name="Submit" value="Search" onclick="setEventId()" />
-
-								</tr>
-							</table>
-						</form>
-						<form action="/result/add" method="post">
-							<input type="hidden" name="eve123" id="eve123" value="<%= event_id %>">
-							<table id="example1" class="table table-striped table-bordered" cellspacing="0" width="100%">
-								<thead>
-									<tr>
-										<th>ID</th>
-										<th>Name</th>
-										<th>Year</th>
-										<th>Course</th>
-										<th>Roll no</th>
-										<th>Branch</th>
-										<th>Gender</th>
-										<th>Position</th>
+	<form action="/result/add" method="post" style="padding-top: 20px;">
+		<input type="hidden" name="eve123" id="eve123" value="<%= event_id %>">
+		<table id="example1" class="table table-striped table-bordered" cellspacing="0" width="100%">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Year</th>
+					<th>Course</th>
+					<th>Roll no</th>
+					<th>Branch</th>
+					<th>Gender</th>
+					<th>Chest No</th>
+					<th>Position</th>
 
 
-									</tr>
-								</thead>
-								<tfoot>
-									<tr>
-										<th>ID</th>
-										<th>Name</th>
-										<th>Year</th>
-										<th>Course</th>
-										<th>Roll No</th>
-										<th>Branch</th>
-										<th>Gender</th>
-										<th>Position</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Year</th>
+					<th>Course</th>
+					<th>Roll No</th>
+					<th>Branch</th>
+					<th>Gender</th>
+					<th>Chest No</th>
+					<th>Position</th>
 
-									</tr>
-								</tfoot>
-								<tbody>
+				</tr>
+			</tfoot>
+			<tbody>
 
-									<% if (students) { %>
-										<% let i = 0%>
-											<% students.forEach(function(student){ %>
+				<% if (students) { %>
+				<% let i = 0%>
+				<% students.forEach(function(student){ %>
 
-												<tr>
-													<td>
-														<%= ++i %>
-													</td>
-													<td>
-														<%= student.name  %>
-													</td>
-													<td>
-														<%= student.year %>
-													</td>
-													<td>
-														<%= student.course %>
-													</td>
-													<td>
-														<%= student.rollno %>
+				<tr>
+					<td>
+						<%= ++i %>
+					</td>
+					<td>
+						<%= student.name  %>
+					</td>
+					<td>
+						<%= student.year %>
+					</td>
+					<td>
+						<%= student.course %>
+					</td>
+					<td>
+						<%= student.rollno %>
 
-															<input name="rollno" type="hidden" value="<%= student.rollno %>">
-													</td>
-													<td>
-														<%= student.branch %>
-													</td>
-													<td>
-														<%= student.gender %>
-													</td>
-													<td>
-														<select id="position" name="position">
-															<option value="Participant">Participant</option>
-															<option value="First">First</option>
-															<option value="Second">Second</option>
-															<option value="Third">Third</option>
-														</select>
-													</td>
-												</tr>
-												<% }) %>
-													<% } %>
-								</tbody>
-							</table>
-							<input type="submit" name="Submit" value="Submit">
-						</form>
-						<!-- <form action="/result/add" method="post" name="form">
+						<input name="rollno" type="hidden" value="<%= student.rollno %>">
+					</td>
+					<td>
+						<%= student.branch %>
+					</td>
+					<td>
+						<%= student.gender %>
+					</td>
+					<td>
+						<%= student.chest_no %>
+					</td>
+					<td>
+						<select id="position" name="position">
+							<option value="Participant">Participant</option>
+							<option value="First">First</option>
+							<option value="Second">Second</option>
+							<option value="Third">Third</option>
+						</select>
+					</td>
+				</tr>
+				<% }) %>
+				<% } %>
+			</tbody>
+		</table>
+		<input type="submit" name="Submit" value="Submit">
+	</form>
+	<!-- <form action="/result/add" method="post" name="form">
 							<h1>Add Result of Event</h1>
 							<br>
 							<input type="radio" name="gender" value="Male" checked> Male
@@ -156,39 +170,39 @@ including header content which is common for all pages
 
 									<input type="submit" value="Submit">
 						</form> -->
-					</div>
+</div>
 
-					<script>
-						function setEventId() {
-							$('#event_id').val($('option:selected').attr('eid'));
-							console.log($('#event_id').val());
+<script>
+	function setEventId() {
+		$('#event_id').val($('option:selected').attr('eid'));
+		console.log($('#event_id').val());
 
-						}
-						$(document).ready(function () {
-							$('#example1').DataTable();
+	}
+	$(document).ready(function () {
+		$('#example1').DataTable();
 
-							$('#selectEvent option.Male').hide();
-							$('#selectEvent option.Female').show();
-							$('input[type=radio][name=gender]').change(function () {
-								
-								if (this.value == 'Male') {
-									$('#selectEvent option.Female').hide();
-									$('#selectEvent option.Male').show();
-								} else {
-									$('#selectEvent option.Male').hide();
-									$('#selectEvent option.Female').show();
+		$('#selectEvent option.Male').hide();
+		$('#selectEvent option.Female').show();
+		$('input[type=radio][name=gender]').change(function () {
 
-								}
-							});
+			if (this.value == 'Male') {
+				$('#selectEvent option.Female').hide();
+				$('#selectEvent option.Male').show();
+			} else {
+				$('#selectEvent option.Male').hide();
+				$('#selectEvent option.Female').show();
 
-							var select = $('#selectEvent');
-							select.html(select.find('option').sort(function (x, y) {
-								// to change to descending order switch "<" for ">"
-								return $(x).text() > $(y).text() ? 1 : -1;
-							}));
-						});
-					</script>
-					<!--
+			}
+		});
+
+		var select = $('#selectEvent');
+		select.html(select.find('option').sort(function (x, y) {
+			// to change to descending order switch "<" for ">"
+			return $(x).text() > $(y).text() ? 1 : -1;
+		}));
+	});
+</script>
+<!--
 including footer content which is common for all pages
 -->
-					<%- include ../layouts/footer.ejs %>
+<%- include ../layouts/footer.ejs %>

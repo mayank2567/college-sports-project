@@ -3,57 +3,57 @@ including header content which is common for all pages
 -->
 <%- include ../layouts/header.ejs %>
 
-	<% if (messages.error) { %>
-		<p class="alert alert-danger" style="z-index:999;">
-			<%- messages.error %>
-		</p>
-		<% } %>
+<% if (messages.error) { %>
+<p class="alert alert-danger" style="z-index:999;">
+	<%- messages.error %>
+</p>
+<% } %>
 
-			<% if (messages.success) { %>
-				<p class="alert alert-success" style="z-index:999;">
-					<%- messages.success %>
-				</p>
-				<% } %>
+<% if (messages.success) { %>
+<p class="alert alert-success" style="z-index:999;">
+	<%- messages.success %>
+</p>
+<% } %>
 
-					<head>
-						<link href="/assets/css/formstyle.css" rel="stylesheet">
-					</head>
-					<form action="/attendence/attend" method="post" name="form" style="padding-top:200px;">
-						<h1>Mark attendence of Event</h1>
-						<br>
-						<input type="radio" name="gender" value="Male" checked> Male
-						<br>
-						<input type="radio" name="gender" value="Female"> Female
-						<br>
-						<input type="hidden" name="event_name" id="event">
+<head>
+	<link href="/assets/css/formstyle.css" rel="stylesheet">
+</head>
+<form action="/attendence/attend" method="post" name="form" style="padding-top:200px;">
+	<h1>Mark attendence of Event</h1>
+	<br>
+	<input type="radio" name="gender" value="Male" checked> Male
+	<br>
+	<input type="radio" name="gender" value="Female"> Female
+	<br>
+	<input type="hidden" name="event_name" id="event">
 
-						<table width="25%" border="0">
+	<table width="25%" border="0">
 
-							<select id="selectEvent" name="event_id">
-								<!-- <option value="Select">Please Select a Event</option> -->
-								<!-- <optgroup label="Select Event" selected> -->
-								<option value="" disabled selected>Select Event</option>
-								<% if (data) { %>
-									<% data.forEach(function(row){ %>
-										<option class="<%= row.gender%>" value="<%= row.id %>">
-											<%= row.event_name %>
-										</option>
-										<% }) %>
-											<% } %>
-												<!-- </optgroup> -->
-							</select>
-							<tr>
-
-
-								<input id="showEvent" type="submit" name="Submit" value="View" />
+		<select id="selectEvent" name="event_id">
+			<!-- <option value="Select">Please Select a Event</option> -->
+			<!-- <optgroup label="Select Event" selected> -->
+			<option value="" disabled selected>Select Event</option>
+			<% if (data) { %>
+			<% data.forEach(function(row){ %>
+			<option class="<%= row.gender%>" value="<%= row.id %>">
+				<%= row.event_name %>
+			</option>
+			<% }) %>
+			<% } %>
+			<!-- </optgroup> -->
+		</select>
+		<tr>
 
 
-							</tr>
-						</table>
-					</form>
-					<form action="/attendence/add" method="post" name="form" style="padding-top:0px !important">
+			<input id="showEvent" type="submit" name="Submit" value="View" />
 
-						<!-- <table style="display : <%= success %>" width='80%' border=0>
+
+		</tr>
+	</table>
+</form>
+<form action="/attendence/add" method="post" name="form" style="padding-top:0px !important">
+
+	<!-- <table style="display : <%= success %>" width='80%' border=0>
 							<tr style='text-align:left; background-color:#CCC'>
 								<th>ID</th>
 								<th>Event Name</th>
@@ -64,14 +64,14 @@ including header content which is common for all pages
 								<th>Gender</th>
 								<th>Attendance</th>
 							</tr> -->
-						<!--
+	<!--
 		Using FOREACH LOOP for the students array
 		
 		myArray.forEach(function(el, index) {
 			// el - current element, i - index
 		});
 	-->
-						<!--		<% if (students) { %>
+	<!--		<% if (students) { %>
 								<% let i = 0%>
 									<% students.forEach(function(student){ %>
 
@@ -100,8 +100,8 @@ including header content which is common for all pages
 													</td>
 													<td>
 														<select name="attendence" id='attendence'> -->
-						<!-- <option value="Select">Please Select a Event</option> -->
-						<!--	<option "<%= (student.attendence == 'yes')?'selected':'' %>" value="yes">Yes</option>
+	<!-- <option value="Select">Please Select a Event</option> -->
+	<!--	<option "<%= (student.attendence == 'yes')?'selected':'' %>" value="yes">Yes</option>
 															<option "<%= (student.attendence == 'no' || student.attendence == '')?'selected':'' %>" value="no">No</option>
 														</select>
 
@@ -118,95 +118,99 @@ including header content which is common for all pages
 						</table>   -->
 
 
-						<div>
-							<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-								<thead>
-									<tr>
-										<th>ID</th>
-										<th>Event Name</th>
-										<th>Student Name</th>
-										<th>Roll No</th>
-										<th>Branch</th>
-										<th>Year</th>
-										<th>Gender</th>
-										<th>Present</th>
-										<th>Absent</th>
-									</tr>
-								</thead>
-								<tfoot>
-									<tr>
-										<th>ID</th>
-										<th>Event Name</th>
-										<th>Student Name</th>
-										<th>Roll No</th>
-										<th>Branch</th>
-										<th>Year</th>
-										<th>Gender</th>
-										<th>Present</th>
-										<th>Absent</th>
+	<div>
+		<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Event Name</th>
+					<th>Student Name</th>
+					<th>Roll No</th>
+					<th>Branch</th>
+					<th>Year</th>
+					<th>Gender</th>
+					<th>Present</th>
+					<th>Absent</th>
+					<th>Chest No</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<th>ID</th>
+					<th>Event Name</th>
+					<th>Student Name</th>
+					<th>Roll No</th>
+					<th>Branch</th>
+					<th>Year</th>
+					<th>Gender</th>
+					<th>Present</th>
+					<th>Absent</th>
+					<th>Chest No</th>
 
 
+				</tr>
+			</tfoot>
+			<tbody>
+				<% if (students) { %>
+				<% let i = 0%>
+				<% students.forEach(function(student){ %>
 
-									</tr>
-								</tfoot>
-								<tbody>
-									<% if (students) { %>
-										<% let i = 0%>
-											<% students.forEach(function(student){ %>
+				<tr>
 
-												<tr>
+					<% if (event_id) { %>
+					<input type="hidden" name="event_id" value="<%= event_id %>" />
 
-													<% if (event_id) { %>
-														<input type="hidden" name="event_id" value="<%= event_id %>" />
+					<% } %>
 
-														<% } %>
+					<td>
+						<%= ++i %>
+					</td>
+					<td>
+						<%= event_name %>
+					</td>
+					<td>
+						<%= student.name %>
+					</td>
+					<td>
+						<%= student.rollno %>
+						<input type="hidden" name="rollno" value="<%= student.rollno %>" />
+					</td>
+					<td>
+						<%= student.branch %>
+					</td>
+					<td>
+						<%= student.year %>
+					</td>
+					<td>
+						<%= student.gender %>
+					</td>
+					<td>
+						<input class="present" type="radio" name="attendence_<%= student.rollno %>" value="yes" checked>
 
-															<td>
-																<%= ++i %>
-															</td>
-															<td>
-																<%= event_name %>
-															</td>
-															<td>
-																<%= student.name %>
-															</td>
-															<td>
-																<%= student.rollno %>
-																	<input type="hidden" name="rollno" value="<%= student.rollno %>" />
-															</td>
-															<td>
-																<%= student.branch %>
-															</td>
-															<td>
-																<%= student.year %>
-															</td>
-															<td>
-																<%= student.gender %>
-															</td>
-															<td>
-																<input class="present" type="radio" name="attendence_<%= student.rollno %>" value="yes" checked>
-
-															</td>
-															<td>
-																<!-- <select name="attendence" id='attendence'>
+					</td>
+					<td>
+						<!-- <select name="attendence" id='attendence'>
 																	<!-- <option value="Select">Please Select a Event</option> -->
-																<!-- <option "<%= (student.attendence == 'yes')?'selected':'' %>" value="yes">Yes</option>
+						<!-- <option "<%= (student.attendence == 'yes')?'selected':'' %>" value="yes">Yes</option>
 																<option "<%= (student.attendence == 'no' || student.attendence == '')?'selected':'' %>" value="no">No</option>
  -->
 
-																<!-- </select> -->
-																<input class="absent" name="attendence_<%= student.rollno %>" type="radio" value="no">
+						<!-- </select> -->
+						<input class="absent" name="attendence_<%= student.rollno %>" type="radio" value="no">
 
 
-															</td>
+					</td>
+					<td>
+						<%= student.chest_no %>
+					</td>
 
 
 
 
-												</tr>
-												<% }) %>
-													<% } %>
-														<!--	<tr>
+				</tr>
+				<% }) %>
+				<% } %>
+				<!--	<tr>
 															<td></td>
 															<td></td>
 															<td></td>
@@ -216,42 +220,42 @@ including header content which is common for all pages
 															<td></td>
 															<td></td>
 														</tr>   -->
-								</tbody>
-							</table>
-							<input type="submit" name="Submit" value="Update" />
-							<script>
-								$(document).ready(function () {
-									$('#example').DataTable();
+			</tbody>
+		</table>
+		<input type="submit" name="Submit" value="Update" />
+		<script>
+			$(document).ready(function () {
+				$('#example').DataTable();
 
-									$('#selectEvent option.Female').hide();
-									$('#selectEvent option.Male').show();
-									$('input[type=radio][name=gender]').change(function () {
-										if (this.value == 'Female') {
-											$('#selectEvent option.Male').hide();
-											$('#selectEvent option.Female').show();
-										} else {
-											$('#selectEvent option.Female').hide();
-											$('#selectEvent option.Male').show();
-										}
-									});
+				$('#selectEvent option.Female').hide();
+				$('#selectEvent option.Male').show();
+				$('input[type=radio][name=gender]').change(function () {
+					if (this.value == 'Female') {
+						$('#selectEvent option.Male').hide();
+						$('#selectEvent option.Female').show();
+					} else {
+						$('#selectEvent option.Female').hide();
+						$('#selectEvent option.Male').show();
+					}
+				});
 
-									var select = $('#selectEvent');
-									select.html(select.find('option').sort(function (x, y) {
-										// to change to descending order switch "<" for ">"
-										return $(x).text() > $(y).text() ? 1 : -1;
-									}));
-								});
+				var select = $('#selectEvent');
+				select.html(select.find('option').sort(function (x, y) {
+					// to change to descending order switch "<" for ">"
+					return $(x).text() > $(y).text() ? 1 : -1;
+				}));
+			});
 
-								$("#showEvent").click(function () {
-									$("#event").val($('#selectEvent').find(":selected").text().trim());
+			$("#showEvent").click(function () {
+				$("#event").val($('#selectEvent').find(":selected").text().trim());
 
-								});
-							</script>
+			});
+		</script>
 
-						</div>
+	</div>
 
-					</form>
-					<!--
+</form>
+<!--
 including footer content which is common for all pages
 -->
-					<%- include ../layouts/footer.ejs %>
+<%- include ../layouts/footer.ejs %>

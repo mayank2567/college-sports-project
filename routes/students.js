@@ -3,94 +3,118 @@ var app = express();
 var fs = require('fs');
 var csv = require('fast-csv');
 
-var csvStream = csv
-    .format({headers: true})
-    .transform(function(row, next){
-        setImmediate(function(){
-            next(null, {ID: row.ID, Name: row.Name,Year: row.Year,Course: row.Course,RollNo: row.RollNo,Branch: row.Branch,Gender: row.Gender,Events: row.Events});
-        });;
-    }),
-    writableStream = fs.createWriteStream("my.csv");
- 
-writableStream.on("finish", function(){
-  console.log(`CSV Completed`);
-});
+// var csvStream = csv
+// 	.format({
+// 		headers: true
+// 	})
+// 	.transform(function (row, next) {
+// 		setImmediate(function () {
+// 			next(null, {
+// 				ID: row.ID,
+// 				Name: row.Name,
+// 				Year: row.Year,
+// 				Course: row.Course,
+// 				RollNo: row.RollNo,
+// 				Branch: row.Branch,
+// 				Gender: row.Gender,
+// 				Events: row.Events
+// 			});
+// 		});;
+// 	}),
+// 	writableStream = fs.createWriteStream("my.csv");
+
+// writableStream.on("finish", function () {
+// 	console.log(`CSV Completed`);
+// });
 
 
 var event;
 // SHOW LIST OF students
 app.get('/', async function (req, res, next) {
-	req.getConnection(function (error, conn) {
-		conn.query('SELECT * FROM students ORDER BY id DESC',async function (err, rows, fields) {
-			//if(err) throw err
-			if (err) {
-				req.flash('error', err)
-				res.render('student/list', {
-					title: 'student List',
-					data: ''
-				})
-			} else {
-				for(let i=0;i<rows.length;i++){
-					rows[i].events = await getEvents(rows[i].rollno,conn);
-				}
+	try {
+		req.getConnection(function (error, conn) {
+			conn.query('SELECT * FROM students ORDER BY id DESC', async function (err, rows, fields) {
+				//if(err) throw err
+				if (err) {
+					req.flash('error', err)
+					res.render('student/list', {
+						title: 'student List',
+						data: ''
+					})
+				} else {
+					for (let i = 0; i < rows.length; i++) {
+						rows[i].events = await getEvents(rows[i].rollno, conn);
+					}
 
-				
-				// render 0to views/student/list.ejs template file
-				res.render('student/list', {
-					title: 'student List',
-					data: rows
-				});
-				csvStream.pipe(writableStream);
 
-				for(let i=0;i<rows.length;i++){
-					csvStream.write({ID: rows[i].id, 
-						Name: rows[i].branch,
-						Year: rows[i].year,
-						Course: rows[i].course,
-						RollNo: rows[i].rollno,
-						Branch: rows[i].branch,
-						Gender: rows[i].gender,
-						Events: rows[i].events
+					// render 0to views/student/list.ejs template file
+					res.render('student/list', {
+						title: 'student List',
+						data: rows
 					});
+					// csvStream.pipe(writableStream);
+
+					// for (let i = 0; i < rows.length; i++) {
+					// 	csvStream.write({
+					// 		ID: rows[i].id,
+					// 		Name: rows[i].branch,
+					// 		Year: rows[i].year,
+					// 		Course: rows[i].course,
+					// 		RollNo: rows[i].rollno,
+					// 		Branch: rows[i].branch,
+					// 		Gender: rows[i].gender,
+					// 		Events: rows[i].events
+					// 	});
+					// }
+					// csvStream.end();
 				}
-				csvStream.end();
-			}
+			})
 		})
-	})
+	} catch (err) {
+		console.log('Error in Show list of student : ' + err)
+	}
 })
 
-function getEvents (rollno,conn) {
+function getEvents(rollno, conn) {
 	return new Promise((resolve) => {
-		
-		conn.query('SELECT * FROM event_student where rollno = ?',rollno,async function (err, events, fields) {
-			
+
+		conn.query('SELECT * FROM event_student where rollno = ?', rollno, async function (err, events, fields) {
+
 			let event = [];
-			for(let i =0;i<events.length;i++){
+			for (let i = 0; i < events.length; i++) {
 				event.push(`${i+1})${await getEventName(events[i].event_id,conn)}`);
 			}
 			resolve(event);
+		})
 	})
-  })
 }
 
-function getEventName (event,conn) {
+function getEventName(event, conn) {
 	return new Promise((resolve) => {
-		
-		conn.query('SELECT event_name FROM events where id = ?',event, function (err, eventName, fields) {
-			
-			if(eventName.length>0)
+
+		conn.query('SELECT event_name FROM events where id = ?', event, function (err, eventName, fields) {
+
+			if (eventName.length > 0)
 				resolve(eventName[0].event_name);
 			else
 				resolve();
 		})
-  })
+	})
 }
 
 // SHOW ADD student FORM
 app.get('/add', function (req, res, next) {
 	req.getConnection(function (error, conn) {
 		conn.query('SELECT * FROM events ', function (err, rows, fields) {
-			event = rows;
+			event = rows.sort(function (a, b) {
+				var nameA = a.event_name.toLowerCase(),
+					nameB = b.event_name.toLowerCase()
+				if (nameA < nameB) //sort string ascending
+					return -1
+				if (nameA > nameB)
+					return 1
+				return 0 //default return value (no sorting)
+			})
 			// render to views/student/add.ejs
 			res.render('student/add', {
 				title: 'Add New student',
@@ -100,7 +124,7 @@ app.get('/add', function (req, res, next) {
 				rollno: '',
 				gender: '',
 				branch: '',
-				events: rows
+				events: event
 			});
 		});
 	});
@@ -114,6 +138,7 @@ app.post('/add', function (req, res, next) {
 	req.assert('rollno', 'rollno is required').notEmpty()
 	req.assert('gender', 'gender is required').notEmpty()
 	req.assert('branch', 'branch is required').notEmpty()
+	req.assert('chest_no', 'Chest number is required').notEmpty()
 	// req.assert('photo', 'Snap is required').notEmpty()
 	req.assert('event', 'Please select a Event').notEmpty()
 	var errors = req.validationErrors()
@@ -141,7 +166,8 @@ app.post('/add', function (req, res, next) {
 			course: req.sanitize('course').escape().trim(),
 			rollno: req.sanitize('rollno').escape().trim(),
 			gender: req.sanitize('gender').escape().trim(),
-			branch: req.sanitize('branch').escape().trim()
+			branch: req.sanitize('branch').escape().trim(),
+			chest_no: req.sanitize('chest_no').escape().trim(),
 		}
 		var event = [];
 		req.getConnection(function (error, conn) {
@@ -157,7 +183,7 @@ app.post('/add', function (req, res, next) {
 				if (err) {
 					req.flash('error', err)
 					req.getConnection(function (error, conn) {
-						conn.query('SELECT * FROM events ', function (err, rows, fields) {
+						conn.query('SELECT * FROM events', function (err, rows, fields) {
 							event = rows;
 
 							// render to views/student/add.ejs
@@ -169,6 +195,7 @@ app.post('/add', function (req, res, next) {
 								gender: student.gender,
 								branch: student.branch,
 								title: 'Add New student',
+								chest_no: student.chest_no,
 								events: rows
 							});
 						});
@@ -186,9 +213,9 @@ app.post('/add', function (req, res, next) {
 					for (let i = 0; i < req.body.event[0].length; i++) {
 						let currEvent = [];
 						currEvent.push(req.body.event[0][i]);
-						
+
 						conn.query('SELECT id from events where id = ?', currEvent, function (err, rows, fields) {
-							
+
 							let entry = {
 								rollno: parseInt(student.rollno),
 								event_id: rows[0].id
@@ -218,6 +245,7 @@ app.post('/add', function (req, res, next) {
 								rollno: '',
 								gender: '',
 								branch: '',
+								chest_no: '',
 								events: rows
 							});
 						});
@@ -251,6 +279,7 @@ app.post('/add', function (req, res, next) {
 					rollno: '',
 					gender: '',
 					branch: '',
+					chest_no: '',
 					events: rows
 				});
 			});
@@ -292,6 +321,7 @@ app.get('/edit/(:id)', function (req, res, next) {
 							rollno: rows[0].rollno,
 							gender: rows[0].gender,
 							branch: rows[0].branch,
+							chest_no: rows[0].chest_no,
 							events: event
 						})
 					});
@@ -308,6 +338,7 @@ app.put('/edit/(:id)', function (req, res, next) {
 	req.assert('course', 'A valid course is required').notEmpty()
 	req.assert('rollno', 'rollno is required').notEmpty()
 	req.assert('gender', 'gender is required').notEmpty()
+	req.assert('chest_no', 'Chest number is required').notEmpty()
 	req.assert('branch', 'branch is required').notEmpty() //Validate course
 
 	var errors = req.validationErrors()
@@ -328,6 +359,7 @@ app.put('/edit/(:id)', function (req, res, next) {
 			course: req.sanitize('course').escape().trim(),
 			rollno: req.sanitize('rollno').escape().trim(),
 			gender: req.sanitize('gender').escape().trim(),
+			chest_no: req.sanitize('chest_no').escape().trim(),
 			branch: req.sanitize('branch').escape().trim()
 		}
 
@@ -336,7 +368,7 @@ app.put('/edit/(:id)', function (req, res, next) {
 			req.body.event = [];
 			req.body.event.push(temp);
 		}
-		
+
 		req.getConnection(function (error, conn) {
 			conn.query('UPDATE students SET ? WHERE id = ' + req.params.id, student, function (err, result) {
 				//if(err) throw err
@@ -352,6 +384,7 @@ app.put('/edit/(:id)', function (req, res, next) {
 						course: req.body.course,
 						rollno: req.body.rollno,
 						gender: req.body.gender,
+						chest_no: req.body.chest_no,
 						branch: req.body.branch
 					})
 				} else {
@@ -374,7 +407,7 @@ app.put('/edit/(:id)', function (req, res, next) {
 						}
 					});
 					req.flash('success', 'Data updated successfully!')
-					
+
 					// render to views/student/add.ejs
 					res.redirect(req.params.id);
 				}
@@ -399,6 +432,7 @@ app.put('/edit/(:id)', function (req, res, next) {
 			course: req.body.course,
 			rollno: req.body.rollno,
 			gender: req.body.gender,
+			chest_no: req.body.chest_no,
 			branch: req.body.branch
 		})
 	}

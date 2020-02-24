@@ -17,6 +17,16 @@ including header content which is common for all pages
 
 <head>
 	<link href="/assets/css/formstyle.css" rel="stylesheet">
+	<style>
+		.dt-button {
+			font-size: 14px;
+			padding: 5px 12px;
+			background-color: rgb(231, 67, 67);
+			color: #fff;
+			border-style: none;
+			font-weight: bold;
+		}
+	</style>
 </head>
 
 <form action="/result" method="post" name="form" style="padding-top:200px;">
@@ -151,9 +161,9 @@ including header content which is common for all pages
 		<thead>
 			<tr>
 				<th>Position</th>
+				<th>Chest No</th>
 				<th>Event Name</th>
-				<th>Student</th>
-				<th>Name</th>
+				<th>Student Name</th>
 				<th>Roll No</th>
 				<th>Branch</th>
 				<th>Year</th>
@@ -165,6 +175,7 @@ including header content which is common for all pages
 		<tfoot>
 			<tr>
 				<th>Position</th>
+				<th>Chest No</th>
 				<th>Event Name</th>
 				<th>Name</th>
 				<th>Roll No</th>
@@ -182,6 +193,9 @@ including header content which is common for all pages
 			<tr>
 				<td>
 					<%= ++i %>
+				</td>
+				<td>
+					<%= event.chest_no %>
 				</td>
 				<td>
 					<%= event_name %>
@@ -214,7 +228,15 @@ including header content which is common for all pages
 		</tbody>
 	</table>
 
-
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 
 	<script>
 		function PrintElem(elem) {
@@ -232,11 +254,18 @@ including header content which is common for all pages
 								return true;
 							}
 							$(document).ready(function () {
-								$('#example').DataTable();
+								$('#example').DataTable({
+									select: true,
+									dom: 'Bfrtip',
+									buttons: [
+									// 'csv', 'pdf', 'print'
+									'print'
+									],
+								});
 							});
 						</script>
 </div>
-<input class="btn" style="margin-left:120px" type="button" value="Print Winners" onclick="PrintElem('.printWinners')" />
+<!-- <input class="btn" style="margin-left:120px" type="button" value="Print Winners" onclick="PrintElem('.printWinners')" /> -->
 
 
 <div style="padding-top:50px;padding-left:120px;padding-right:120px" class="printPart">
@@ -245,6 +274,7 @@ including header content which is common for all pages
 		<thead>
 			<tr>
 				<th>ID</th>
+				<th>Chest No</th>
 				<th>Name</th>
 				<th>Year</th>
 				<th>Course</th>
@@ -258,6 +288,7 @@ including header content which is common for all pages
 		<tfoot>
 			<tr>
 				<th>ID</th>
+				<th>Chest No</th>
 				<th>Name</th>
 				<th>Year</th>
 				<th>Course</th>
@@ -275,6 +306,9 @@ including header content which is common for all pages
 			<tr>
 				<td>
 					<%= ++i %>
+				</td>
+				<td>
+					<%= student.chest_no  %>
 				</td>
 				<td>
 					<%= student.name  %>
@@ -301,7 +335,14 @@ including header content which is common for all pages
 	</table>
 	<script>
 		$(document).ready(function () {
-								$('#example1').DataTable();
+								$('#example1').DataTable({
+									select: true,
+									dom: 'Bfrtip',
+									buttons: [
+									// 'csv', 'pdf', 'print'
+									'print'
+									],
+								});
 								$('#selectEvent option.Female').hide();
 								$('#selectEvent option.Male').show();
 								$('input[type=radio][name=gender]').change(function () {
@@ -322,7 +363,7 @@ including header content which is common for all pages
 							}));
 						</script>
 </div>
-<input class="btn" style="margin-left:120px" type="button" value="Print Participants" onclick="PrintElem('.printPart')" />
+<!-- <input class="btn" style="margin-left:120px" type="button" value="Print Participants" onclick="PrintElem('.printPart')" /> -->
 
 <!--
 including footer content which is common for all pages

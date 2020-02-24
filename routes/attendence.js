@@ -121,7 +121,7 @@ app.post('/attend', function (req, res, next) {
 		conn.query('SELECT * FROM event_student where event_id = ' + parseInt(req.body.event_id), function (err, rows, fields) {
 			let sql = 'SELECT * FROM students WHERE';
 			if (rows.length == 0) {
-				res.render('attendance/list', {
+				res.render('attendence/list', {
 					title: 'No Item Found',
 					data: events,
 					success: 'none',
